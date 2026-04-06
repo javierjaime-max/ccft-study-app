@@ -2,15 +2,12 @@
 -- CCFT Study App — Initial Schema
 -- =============================================
 
--- Enable UUID extension
-create extension if not exists "uuid-ossp";
-
 -- =============================================
 -- TABLE: study_sessions
 -- One row per daily study session completed
 -- =============================================
 create table public.study_sessions (
-  id            uuid primary key default uuid_generate_v4(),
+  id            uuid primary key default gen_random_uuid(),
   user_id       uuid not null references auth.users(id) on delete cascade,
   completed_at  timestamptz not null default now(),
   domain        text not null,           -- D1–D7
@@ -36,7 +33,7 @@ create policy "Users can manage their own sessions"
 -- One row per term per user — upserted on rating
 -- =============================================
 create table public.flashcard_progress (
-  id          uuid primary key default uuid_generate_v4(),
+  id          uuid primary key default gen_random_uuid(),
   user_id     uuid not null references auth.users(id) on delete cascade,
   term        text not null,
   status      text not null default 'unseen'
@@ -58,7 +55,7 @@ create policy "Users can manage their own flashcard progress"
 -- One row per judgment call logged
 -- =============================================
 create table public.judgment_log (
-  id           uuid primary key default uuid_generate_v4(),
+  id           uuid primary key default gen_random_uuid(),
   user_id      uuid not null references auth.users(id) on delete cascade,
   logged_at    timestamptz not null default now(),
   judged_date  date not null,
@@ -84,7 +81,7 @@ create policy "Users can manage their own judgment log"
 -- One row per document per user
 -- =============================================
 create table public.reading_progress (
-  id          uuid primary key default uuid_generate_v4(),
+  id          uuid primary key default gen_random_uuid(),
   user_id     uuid not null references auth.users(id) on delete cascade,
   doc_id      text not null,             -- matches document ID in app data
   read_at     timestamptz not null default now(),
