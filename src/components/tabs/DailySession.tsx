@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react'
 import { supabase } from '../../lib/supabase'
-import { VOCAB_DATA, DOMAIN_COLORS, DOMAIN_LABELS } from '../../data/vocab'
+import { DOMAIN_COLORS, DOMAIN_LABELS } from '../../data/vocab'
+import type { VocabTerm } from '../../data/vocab'
+import { useVocabTerms } from '../../hooks/useVocabTerms'
 
 interface Props { userId: string }
 
@@ -45,10 +47,11 @@ const SCENARIOS: Record<string, string[]> = {
 }
 
 export default function DailySession({ userId }: Props) {
+  const { terms } = useVocabTerms()
   const [domain, setDomain] = useState<string | null>(null)
   const [part, setPart] = useState<1 | 2 | 3>(1)
-  const [term1, setTerm1] = useState<(typeof VOCAB_DATA)[0] | null>(null)
-  const [term2, setTerm2] = useState<(typeof VOCAB_DATA)[0] | null>(null)
+  const [term1, setTerm1] = useState<VocabTerm | null>(null)
+  const [term2, setTerm2] = useState<VocabTerm | null>(null)
   const [scenario, setScenario] = useState('')
   const [part2Response, setPart2Response] = useState('')
   const [part3Response, setPart3Response] = useState('')
@@ -65,7 +68,7 @@ export default function DailySession({ userId }: Props) {
     setCompleted(false)
     startTime.current = Date.now()
 
-    const domainTerms = VOCAB_DATA.filter(t => t.domains.includes(d))
+    const domainTerms = terms.filter(t => t.domains.includes(d))
     const shuffled = [...domainTerms].sort(() => Math.random() - 0.5)
     setTerm1(shuffled[0] ?? null)
     setTerm2(shuffled[1] ?? null)

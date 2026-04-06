@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
-import { VOCAB_DATA, DOMAIN_COLORS } from '../../data/vocab'
+import { DOMAIN_COLORS } from '../../data/vocab'
+import { useVocabTerms } from '../../hooks/useVocabTerms'
 
 interface Props { userId: string }
 type Status = 'unseen' | 'learning' | 'known'
 
 export default function Flashcards({ userId }: Props) {
+  const { terms, loading: termsLoading } = useVocabTerms()
   const [progress, setProgress] = useState<Record<string, Status>>({})
   const [domainFilter, setDomainFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState<'all' | Status>('all')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [flipped, setFlipped] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [progressLoading, setProgressLoading] = useState(true)
 
   useEffect(() => {
     supabase
@@ -22,11 +24,13 @@ export default function Flashcards({ userId }: Props) {
         const map: Record<string, Status> = {}
         ;(data ?? []).forEach(r => { map[r.term] = r.status as Status })
         setProgress(map)
-        setLoading(false)
+        setProgressLoading(false)
       })
   }, [userId])
 
-  const filtered = VOCAB_DATA.filter(t => {
+  const loading = termsLoading || progressLoading
+
+  const filtered = terms.filter(t => {
     const domainMatch = domainFilter === 'all' || t.domains.includes(domainFilter)
     const status = progress[t.term] ?? 'unseen'
     const statusMatch = statusFilter === 'all' || status === statusFilter
@@ -54,8 +58,8 @@ export default function Flashcards({ userId }: Props) {
 
   const known = Object.values(progress).filter(s => s === 'known').length
   const learning = Object.values(progress).filter(s => s === 'learning').length
-  const unseen = VOCAB_DATA.length - known - learning
-  const pct = Math.round((known / VOCAB_DATA.length) * 100)
+  const unseen = terms.length - known - learning
+  const pct = terms.length > 0 ? Math.round((known / terms.length) * 100) : 0
 
   if (loading) return <div className="text-[#666] text-sm py-8 text-center">Loading...</div>
 
