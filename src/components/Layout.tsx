@@ -1,29 +1,29 @@
 import { useState } from 'react'
 import type { User } from '@supabase/supabase-js'
 import { useAuth } from '../hooks/useAuth'
-import DailyReading from './tabs/DailyReading'
+import Dashboard from './tabs/Dashboard'
 import DailySession from './tabs/DailySession'
+import FaultFinder from './tabs/FaultFinder'
 import Flashcards from './tabs/Flashcards'
-import JudgmentLog from './tabs/JudgmentLog'
 import SessionHistory from './tabs/SessionHistory'
 
-type Tab = 'reading' | 'session' | 'flashcards' | 'judgment' | 'history'
+type Tab = 'dashboard' | 'session' | 'faultfinder' | 'flashcards' | 'history'
 
 interface Props {
   user: User
 }
 
 const TABS: { id: Tab; label: string; short: string }[] = [
-  { id: 'reading', label: 'Daily Reading', short: 'Read' },
+  { id: 'dashboard', label: 'Dashboard', short: 'Home' },
   { id: 'session', label: 'Daily Session', short: 'Study' },
+  { id: 'faultfinder', label: 'Fault Finder', short: 'Faults' },
   { id: 'flashcards', label: 'Flashcards', short: 'Cards' },
-  { id: 'judgment', label: 'Judgment Log', short: 'Judge' },
   { id: 'history', label: 'History', short: 'Stats' },
 ]
 
 export default function Layout({ user }: Props) {
   const { signOut } = useAuth()
-  const [activeTab, setActiveTab] = useState<Tab>('reading')
+  const [activeTab, setActiveTab] = useState<Tab>('dashboard')
 
   return (
     <div
@@ -64,10 +64,12 @@ export default function Layout({ user }: Props) {
       {/* Content */}
       <main className="flex-1 pb-20 md:pb-0 overflow-y-auto">
         <div className="max-w-3xl mx-auto px-4 py-6">
-          {activeTab === 'reading' && <DailyReading userId={user.id} />}
+          {activeTab === 'dashboard' && (
+            <Dashboard userId={user.id} onNavigate={(tab) => setActiveTab(tab as Tab)} />
+          )}
           {activeTab === 'session' && <DailySession userId={user.id} />}
+          {activeTab === 'faultfinder' && <FaultFinder userId={user.id} />}
           {activeTab === 'flashcards' && <Flashcards userId={user.id} />}
-          {activeTab === 'judgment' && <JudgmentLog userId={user.id} />}
           {activeTab === 'history' && <SessionHistory userId={user.id} />}
         </div>
       </main>
