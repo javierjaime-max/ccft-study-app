@@ -8,8 +8,17 @@ export interface StudyDocument {
   focusAreas: string[]
 }
 
-// Replace url values with your OneDrive share links
-export const DOCUMENTS: StudyDocument[] = [
+const DOMAIN_LINKS: Record<string, string> = {
+  D1: 'https://onthelinefitness-my.sharepoint.com/:f:/p/javier/IgCtIqj93aDoSLjYshbaKin1AVOQuqf4U2ntEIlYl_1vET4?e=kdSkgB',
+  D2: 'https://onthelinefitness-my.sharepoint.com/:f:/p/javier/IgCC1noDs9kJSZXCM4r5sRniAcFhZXukUENPA4XTiOeE8oQ?e=J7Tld7',
+  D3: 'https://onthelinefitness-my.sharepoint.com/:f:/p/javier/IgA6QJ06aT2YRpYR6pgD1ke7AaNsliRRQOferC1bUUzuZ9U?e=MWgzAb',
+  D4: 'https://onthelinefitness-my.sharepoint.com/:f:/p/javier/IgAgI28Kpqt0QoPHwBZaErmrAdxcCjx47H64-BeTP91mrF4?e=eqedgu',
+  D5: 'https://onthelinefitness-my.sharepoint.com/:f:/p/javier/IgC1OzChwyfaQ5inxI-WSxeEAXofi-F0OlRnxSG3dbRKfgc?e=yyEldu',
+  D6: 'https://onthelinefitness-my.sharepoint.com/:f:/p/javier/IgAdlfLQmgEBQ4fgXnuoTAmMAbyiu8029CbVYqoo3DMmpLY?e=etrfs7',
+  D7: 'https://onthelinefitness-my.sharepoint.com/:f:/p/javier/IgAfvyI_h9y9R55c37cuhrXfAbLXgSzRI4GEOaSygJWJf1Y?e=zkHF1b',
+}
+
+const RAW_DOCUMENTS: Omit<StudyDocument, 'url'>[] = [
 
   // ── D1: Screening & Ongoing Assessment (11) ──────────────────────────────
   {
@@ -18,7 +27,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Full skeletal, muscular, cardiac, and renal anatomy for coaching application.',
     domain: 'D1',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Skeletal system', 'Muscular system (actin/myosin)', 'Cardiac anatomy', 'Respiratory system', 'Renal system'],
   },
   {
@@ -27,7 +35,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Consensus document on pre-participation screening — risk stratification and clearance protocols.',
     domain: 'D1',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Pre-participation screening', 'Risk stratification', 'PAR-Q', 'Medical clearance', 'ACSM guidelines'],
   },
   {
@@ -36,7 +43,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Assessing athlete capacity and fitness measurement standards.',
     domain: 'D1',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Fitness benchmarks', 'Assessment standards', 'Performance measurement', 'Capacity evaluation'],
   },
   {
@@ -45,7 +51,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Comprehensive squat mechanics, fault identification, and progression standards.',
     domain: 'D1',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Squat mechanics', 'Points of performance', 'Static faults', 'Dynamic faults', 'Mobility requirements'],
   },
   {
@@ -54,7 +59,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Physiological changes with aging and implications for coaching older athletes.',
     domain: 'D1',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Sarcopenia', 'VO2 max decline', 'Bone density', 'Masters considerations', 'Longevity and fitness'],
   },
   {
@@ -63,7 +67,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Goal-setting framework for athletes — intake, assessment, and ongoing evaluation.',
     domain: 'D1',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Goal setting', 'Athlete intake', 'Progress tracking', 'Outcome vs process goals'],
   },
   {
@@ -72,7 +75,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Tracking athlete progress through logging — what to record and how to use data.',
     domain: 'D1',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Training logs', 'Progress tracking', 'Data-driven coaching', 'Athlete assessment'],
   },
   {
@@ -81,7 +83,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Screening and programming considerations for pregnant athletes.',
     domain: 'D1',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Pregnancy screening', 'Trimester modifications', 'Core considerations', 'Medical clearance', 'Return to sport'],
   },
   {
@@ -90,7 +91,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Psychological screening and mental performance assessment for athletes.',
     domain: 'D1',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Mental performance', 'Psychological readiness', 'Mindset assessment', 'Athlete psychology'],
   },
   {
@@ -99,7 +99,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'DOMS mechanism, screening implications, and recovery protocols for coaches.',
     domain: 'D1',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['DOMS', 'EIMD', 'Recovery monitoring', 'Readiness assessment', 'Soreness vs injury'],
   },
   {
@@ -108,7 +107,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Clinical case report relevant to athlete screening and medical history considerations.',
     domain: 'D1',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Medical history screening', 'Clinical considerations', 'Risk assessment', 'Case-based learning'],
   },
 
@@ -119,7 +117,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'The foundational programming template — work/rest ratios, modality prescription.',
     domain: 'D2',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['3-on/1-off template', 'Modality cycling', 'Work:rest ratios', 'Daily WOD structure', 'Programming variance'],
   },
   {
@@ -128,7 +125,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'The Girls, Heroes, and benchmark workouts — purpose, design, and application.',
     domain: 'D2',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['The Girls', 'Hero workouts', 'Benchmark purpose', 'Progress tracking', 'Benchmark standards'],
   },
   {
@@ -137,7 +133,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Partner and team workout design — scaling, accountability, and competition prep.',
     domain: 'D2',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Team programming', 'Partner WODs', 'Competition prep', 'Accountability', 'Team dynamics'],
   },
   {
@@ -146,7 +141,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Deconstructing Fran — intensity, time domains, and benchmark manipulation.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Intensity and time domains', 'Benchmark deconstruction', 'Scaling Fran', 'Load and rep schemes'],
   },
   {
@@ -155,7 +149,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Why CrossFit rejects VO2 max as the primary fitness metric — power output model.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['VO2 max limitations', 'Power output as metric', 'CrossFit fitness model', 'Metabolic conditioning'],
   },
   {
@@ -164,7 +157,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'The hopper model of fitness programming — variance and broad modal domain.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Hopper model', 'Broad modal domain', 'Programming variance', 'Fitness hierarchy'],
   },
   {
@@ -173,7 +165,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Power output measurement, optimization, and programming for maximum fitness.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Power output', 'Work capacity', 'Watts and calories', 'Intensity measurement', 'Energy systems'],
   },
   {
@@ -182,7 +173,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'The definitive scaling framework — 4 scaling elements, experience levels, completion windows.',
     domain: 'D2',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['4 scaling elements', '6 general movement patterns', 'Experience levels', 'Completion window', 'Pre-scaled workouts'],
   },
   {
@@ -191,7 +181,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Programming volume, variance, and intensity — when more is not more.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Volume defined', 'Variance principle', 'Singlets/couplets/triplets', 'Chipper workouts', 'Intensity hierarchy'],
   },
   {
@@ -200,7 +189,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Programming and screening considerations for athletes with diabetes.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Type 1 and 2 diabetes', 'Blood glucose monitoring', 'Exercise and insulin', 'Programming modifications', 'Medical considerations'],
   },
   {
@@ -209,7 +197,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Physiological adaptations to CrossFit training — what changes and why.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Neuromuscular adaptations', 'Cardiovascular changes', 'Body composition', 'Hormonal response', 'Long-term adaptation'],
   },
   {
@@ -218,7 +205,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Conjugate method applied to CrossFit — maximal effort, dynamic effort, and variation.',
     domain: 'D2',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Conjugate periodization', 'Maximal effort', 'Dynamic effort', 'Westside influence', 'CrossFit programming'],
   },
   {
@@ -227,7 +213,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Linear programming models for strength development within CrossFit.',
     domain: 'D2',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Linear progression', 'Novice programming', 'Strength development', 'Periodization basics'],
   },
   {
@@ -236,7 +221,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Programming for pregnant athletes — trimester-specific modifications and intensity management.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Trimester programming', 'Intensity management', 'Core considerations', 'Movement modifications', 'Return to sport'],
   },
   {
@@ -245,7 +229,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Programming philosophy beyond the daily workout — athlete-centered design.',
     domain: 'D2',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Athlete-centered programming', 'Long-term development', 'Programming philosophy', 'Individual variation'],
   },
   {
@@ -254,7 +237,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Reference table for trimester-by-trimester exercise modifications.',
     domain: 'D2',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Trimester modifications', 'Exercise reference', 'Movement substitutions', 'Contraindicated movements'],
   },
   {
@@ -263,7 +245,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Louie Simmons on conjugate periodization and its application to functional fitness.',
     domain: 'D2',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Westside Barbell method', 'Conjugate periodization', 'Speed and strength', 'Concurrent training'],
   },
   {
@@ -272,7 +253,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Acute:chronic workload ratio, StARRT framework, and return-to-play continuum.',
     domain: 'D2',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Acute:chronic ratio', 'StARRT framework', 'Internal vs external load', 'Return to play', 'Injury prevention'],
   },
 
@@ -283,7 +263,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Core anatomy and physiology for CrossFit coaches — systems and their roles in training.',
     domain: 'D3',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Muscular system', 'Energy pathways', 'Cardiovascular function', 'Neuromuscular control'],
   },
   {
@@ -292,7 +271,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Teaching the Olympic lifting transition — scoop mechanics and second pull execution.',
     domain: 'D3',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Olympic lifting', 'The scoop', 'Second pull mechanics', 'Teaching progression', 'Coaching cues'],
   },
   {
@@ -301,7 +279,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Why aerobic training alone limits performance — teaching the full metabolic spectrum.',
     domain: 'D3',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Aerobic vs anaerobic', 'Metabolic pathways', 'Teaching energy systems', 'Training stimulus'],
   },
   {
@@ -310,7 +287,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Teaching the ring support position — points of performance and progressions.',
     domain: 'D3',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Ring support', 'Gymnastics progressions', 'Points of performance', 'Teaching rings'],
   },
   {
@@ -319,7 +295,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Spine anatomy, neutral spine concept, and coaching athletes to maintain midline stability.',
     domain: 'D3',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Neutral spine', 'Midline stabilization', 'Lumbar mechanics', 'Teaching spinal position', 'Fault correction'],
   },
   {
@@ -328,7 +303,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Deep-dive anatomy resource for coaching application across all movement patterns.',
     domain: 'D3',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Applied anatomy', 'Muscle function', 'Movement biomechanics', 'Coaching application'],
   },
   {
@@ -337,7 +311,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Ben Bergeron on what elite coaching looks like — standards, expectations, and excellence.',
     domain: 'D3',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Coaching standards', 'Athlete development', 'Communication', 'Expectations', 'Elite coaching'],
   },
   {
@@ -346,7 +319,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'CrossFit Level 1 Training Guide — foundational coaching framework covering all 7 domains.',
     domain: 'D3',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['10 general physical skills', '4 fitness models', 'Mechanics → Consistency → Intensity', 'Points of performance', 'Coaching standards'],
   },
   {
@@ -355,7 +327,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Hip mechanics, teaching hip extension, and hip-dominant movement patterns.',
     domain: 'D3',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Hip mechanics', 'Hip extension', 'Teaching the hip', 'Posterior chain', 'Movement cues'],
   },
   {
@@ -364,7 +335,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Teaching inversions — handstand mechanics, progressions, and fault correction.',
     domain: 'D3',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Handstand', 'Inversion progressions', 'Gymnastics teaching', 'Fault correction', 'Shoulder mechanics'],
   },
   {
@@ -373,7 +343,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Biomechanical leverage in CrossFit movements — joint angles and mechanical advantage.',
     domain: 'D3',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Biomechanics', 'Leverage and torque', 'Joint mechanics', 'Teaching efficiency', 'Movement optimization'],
   },
   {
@@ -382,7 +351,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Performing the common uncommonly well — the foundational philosophy of CrossFit coaching.',
     domain: 'D3',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Virtuosity defined', 'Novice\'s curse', 'Gymnastics (Risk, Originality, Virtuosity)', 'Programming philosophy', 'Coaching standards'],
   },
 
@@ -393,7 +361,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Coaching barbell movements — faults, cues, and real-time correction strategies.',
     domain: 'D4',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Barbell coaching', 'Real-time correction', 'Fault identification', 'Coaching cues', 'Load and fatigue'],
   },
   {
@@ -402,7 +369,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Bill Starr on the bench press — technique, programming, and strength development.',
     domain: 'D4',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Bench press technique', 'Pressing mechanics', 'Strength programming', 'Accessory work'],
   },
   {
@@ -411,7 +377,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Data-driven training — tracking, metrics, and performance analysis in CrossFit.',
     domain: 'D4',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Training metrics', 'Performance tracking', 'Data analysis', 'Progress measurement', 'Results-based coaching'],
   },
   {
@@ -420,7 +385,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'CrossFit Level 2 Training Guide — advanced coaching, seeing/correcting, 6 areas of effective training.',
     domain: 'D4',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['9 foundational movement sheets', '6 areas of effective training', 'Static vs dynamic faults', 'Threshold training', 'Midline stabilization'],
   },
   {
@@ -429,7 +393,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'What excellence in CrossFit coaching looks like — standards, processes, and mindset.',
     domain: 'D4',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Coaching excellence', 'Process standards', 'Athletic development', 'Performance culture', 'Coaching philosophy'],
   },
   {
@@ -438,7 +401,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Foundational movement theory — how to analyze, teach, and correct movement patterns.',
     domain: 'D4',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Movement analysis', 'Motor learning', 'Teaching movement', 'Correction hierarchy', 'Coaching process'],
   },
   {
@@ -447,7 +409,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Rowing mechanics, the drive sequence, and coaching athletes on the erg.',
     domain: 'D4',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Drive sequence', 'Damper setting', 'Stroke rate vs power', 'Catch and finish', 'Rowing coaching cues'],
   },
 
@@ -458,7 +419,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Special populations coaching for older athletes — self-awareness matrix, repetition budgets.',
     domain: 'D5',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Early vs late masters', 'Self-awareness belief matrix', 'Repetition budget', 'Movement substitution', 'SpO2 monitoring'],
   },
   {
@@ -467,7 +427,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'CrossFit Kids programming — age groups, learning styles, behavior management.',
     domain: 'D5',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Age groups (5-12, 12-18)', 'Learning modalities', 'Neuromotor development', 'Behavior management', 'Nutrition for youth'],
   },
 
@@ -478,7 +437,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Sugar\'s role in metabolic disease — clinical evidence and coaching application.',
     domain: 'D6',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Sugar and metabolism', 'Fructose vs glucose', 'Metabolic disease', 'Nutrition counseling scope', 'Lifestyle coaching'],
   },
   {
@@ -487,7 +445,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Exercise oncology — programming and lifestyle education for athletes with cancer history.',
     domain: 'D6',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Exercise oncology', 'Cancer and fitness', 'Special populations', 'Lifestyle education scope'],
   },
   {
@@ -496,7 +453,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Macronutrient distribution, meal timing, and practical nutrition guidance for coaches.',
     domain: 'D6',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Macronutrients', 'Meal timing', 'Protein targets', 'Nutrition guidance scope', 'Practical coaching'],
   },
   {
@@ -505,7 +461,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Supplementation, performance nutrition, and evidence-based guidance for athletes.',
     domain: 'D6',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Supplementation', 'Performance nutrition', 'Evidence-based guidance', 'Scope of practice', 'Athlete nutrition'],
   },
   {
@@ -514,7 +469,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'IF protocols, research overview, and how to counsel athletes asking about fasting.',
     domain: 'D6',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['IF protocols', 'Performance impact', 'Counseling athletes', 'Scope of practice', 'Fasting research'],
   },
   {
@@ -523,7 +477,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Evaluating nutrition claims — how coaches separate evidence from marketing.',
     domain: 'D6',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Nutrition science literacy', 'Evidence evaluation', 'Common myths', 'Coaching guidance', 'Critical thinking'],
   },
   {
@@ -532,7 +485,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Sleep science, performance impact, and lifestyle coaching for sleep optimization.',
     domain: 'D6',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Sleep stages', 'Performance and sleep', 'Sleep hygiene', 'Recovery optimization', 'Lifestyle education'],
   },
   {
@@ -541,7 +493,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Practical fueling strategies for CrossFit athletes — pre/intra/post-workout nutrition.',
     domain: 'D6',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Pre-workout nutrition', 'Intra-workout fueling', 'Post-workout recovery', 'Practical application', 'Athlete guidance'],
   },
 
@@ -552,7 +503,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'How CrossFit engages with peer-reviewed research — standards for evidence-based practice.',
     domain: 'D7',
     priority: 'medium',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Evidence-based practice', 'Research literacy', 'Professional standards', 'Academic engagement'],
   },
   {
@@ -561,7 +511,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Official exam guide — domains, weights, eligibility, recertification, disciplinary process.',
     domain: 'D7',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Domain weights (D1-D7)', 'Exam format (160 Q, 3:55)', 'Eligibility paths', 'Recertification (36 CEUs)', 'Disciplinary process'],
   },
   {
@@ -570,7 +519,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Official content outline — exact topic weighting by domain used to construct the exam.',
     domain: 'D7',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Topic breakdown by domain', 'Exam weighting', 'Knowledge areas', 'Cognitive levels', 'Study priorities'],
   },
   {
@@ -579,7 +527,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Official CrossFit-provided study material for CCFT candidates.',
     domain: 'D7',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Official content', 'Exam preparation', 'Domain coverage', 'Key concepts', 'Practice application'],
   },
   {
@@ -588,7 +535,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Risk management and professional responsibility — understanding and communicating exercise risk.',
     domain: 'D7',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Exercise risk', 'Rhabdomyolysis', 'Informed consent', 'Scope of practice', 'Professional liability'],
   },
   {
@@ -597,7 +543,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Skin infections, MRSA, and hygiene standards — professional responsibility in the gym.',
     domain: 'D7',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['MRSA', 'Skin infections', 'Gym hygiene standards', 'Athlete education', 'Professional responsibility'],
   },
   {
@@ -606,7 +551,6 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Waiver law, informed consent, and professional protection — what coaches must understand.',
     domain: 'D7',
     priority: 'high',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Waivers and liability', 'Informed consent', 'Legal protection', 'Professional responsibility', 'Risk disclosure'],
   },
   {
@@ -615,10 +559,12 @@ export const DOCUMENTS: StudyDocument[] = [
     description: 'Emergency action plans, first aid requirements, and health/safety standards for CrossFit facilities.',
     domain: 'D7',
     priority: 'critical',
-    url: 'ONEDRIVE_LINK_PLACEHOLDER',
     focusAreas: ['Emergency action plan', 'First aid/CPR requirements', 'Facility standards', 'Incident reporting', 'Professional standards'],
   },
 ]
+
+// Attach folder URL from domain
+export const DOCUMENTS: StudyDocument[] = RAW_DOCUMENTS.map(doc => ({ ...doc, url: DOMAIN_LINKS[doc.domain] }))
 
 export const DOMAIN_WEIGHTS: Record<string, number> = {
   D1: 8,
