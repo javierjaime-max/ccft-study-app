@@ -70,8 +70,8 @@ export default function DailySession({ userId }: Props) {
     try {
       const result = await evaluateScenario(domain, scenario, part3Response)
       setFeedback(result.feedback)
-    } catch {
-      setEvalError('Evaluation failed. Check your connection and try again.')
+    } catch (err) {
+      setEvalError(err instanceof Error ? err.message : String(err))
     } finally {
       setEvaluating(false)
     }
