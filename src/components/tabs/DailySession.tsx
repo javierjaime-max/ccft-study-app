@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase'
 import { DOMAIN_COLORS, DOMAIN_LABELS } from '../../data/vocab'
 import type { VocabTerm } from '../../data/vocab'
 import { useVocabTerms } from '../../hooks/useVocabTerms'
+import { evaluateScenario } from '../../lib/claude'
 
 interface Props { userId: string }
 
@@ -57,7 +58,24 @@ export default function DailySession({ userId }: Props) {
   const [part3Response, setPart3Response] = useState('')
   const [showDef, setShowDef] = useState(false)
   const [completed, setCompleted] = useState(false)
+  const [feedback, setFeedback] = useState('')
+  const [evaluating, setEvaluating] = useState(false)
+  const [evalError, setEvalError] = useState('')
   const startTime = useRef<number>(Date.now())
+
+  async function evaluate() {
+    if (!domain || !part3Response.trim()) return
+    setEvaluating(true)
+    setEvalError('')
+    try {
+      const result = await evaluateScenario(domain, scenario, part3Response)
+      setFeedback(result.feedback)
+    } catch {
+      setEvalError('Evaluation failed. Check your connection and try again.')
+    } finally {
+      setEvaluating(false)
+    }
+  }
 
   function pickDomain(d: string) {
     setDomain(d)
@@ -66,6 +84,8 @@ export default function DailySession({ userId }: Props) {
     setPart2Response('')
     setPart3Response('')
     setCompleted(false)
+    setFeedback('')
+    setEvalError('')
     startTime.current = Date.now()
 
     const domainTerms = terms.filter(t => t.domains.includes(d))
@@ -276,16 +296,39 @@ export default function DailySession({ userId }: Props) {
             </label>
             <textarea
               value={part3Response}
-              onChange={e => setPart3Response(e.target.value)}
+              onChange={e => { setPart3Response(e.target.value); setFeedback(''); setEvalError('') }}
               placeholder="What would you do as a certified trainer?"
               className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder-[#444] focus:outline-none focus:border-[#003566] transition-colors resize-none"
               rows={5}
             />
           </div>
+
+          {/* Claude evaluation */}
+          {!feedback && (
+            <div className="flex items-center justify-between">
+              {evalError && <p className="text-[#c41e3a] text-xs">{evalError}</p>}
+              {!evalError && <span />}
+              <button
+                onClick={evaluate}
+                disabled={!part3Response.trim() || evaluating}
+                className="bg-[#1a1a1a] hover:bg-[#222] border border-white/10 hover:border-[#003566]/60 text-[#a4a4a4] hover:text-white text-xs font-semibold tracking-[2px] uppercase px-5 py-2.5 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                {evaluating ? 'Evaluating...' : 'Evaluate with Claude →'}
+              </button>
+            </div>
+          )}
+
+          {feedback && (
+            <div className="bg-[#0a0a0a] border border-[#003566]/40 rounded-lg p-4 space-y-2">
+              <div className="text-[#003566] text-[10px] font-semibold tracking-[2px] uppercase">Claude's Evaluation</div>
+              <p className="text-[#e8e8e8] text-sm leading-relaxed">{feedback}</p>
+            </div>
+          )}
+
           <div className="flex justify-end">
             <button
               onClick={completeSession}
-              className="bg-[#003566] hover:bg-[#004a8f] text-white text-xs font-semibold tracking-[2px] uppercase px-6 py-3 rounded-lg transition-colors text-sm"
+              className="bg-[#003566] hover:bg-[#004a8f] text-white text-xs font-semibold tracking-[2px] uppercase px-6 py-3 rounded-lg transition-colors"
             >
               Complete Session ✓
             </button>

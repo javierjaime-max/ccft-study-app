@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
     )
   }
 
-  const client = new Anthropic({ apiKey: Deno.env.get('ANTHROPIC_API_KEY') })
+  const client = new Anthropic({ apiKey: Deno.env.get('Claude') })
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
