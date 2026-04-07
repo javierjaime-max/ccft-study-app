@@ -1,33 +1,25 @@
 import { useState } from 'react'
 import type { User } from '@supabase/supabase-js'
 import { useAuth } from '../hooks/useAuth'
-import Dashboard from './tabs/Dashboard'
-import DailySession from './tabs/DailySession'
-import FaultFinder from './tabs/FaultFinder'
-import Flashcards from './tabs/Flashcards'
-import DailyReading from './tabs/DailyReading'
-import JudgmentLog from './tabs/JudgmentLog'
-import SessionHistory from './tabs/SessionHistory'
+import Today from './tabs/Today'
+import Practice from './tabs/Practice'
+import Progress from './tabs/Progress'
 
-type Tab = 'dashboard' | 'session' | 'faultfinder' | 'flashcards' | 'reading' | 'judgment' | 'history'
+type Tab = 'today' | 'practice' | 'progress'
 
 interface Props {
   user: User
 }
 
 const TABS: { id: Tab; label: string; short: string }[] = [
-  { id: 'dashboard', label: 'Dashboard', short: 'Home' },
-  { id: 'session', label: 'Daily Session', short: 'Study' },
-  { id: 'faultfinder', label: 'Fault Finder', short: 'Faults' },
-  { id: 'flashcards', label: 'Flashcards', short: 'Cards' },
-  { id: 'reading', label: 'Reading', short: 'Read' },
-  { id: 'judgment', label: 'Judgment Log', short: 'Judge' },
-  { id: 'history', label: 'History', short: 'Stats' },
+  { id: 'today', label: 'Today', short: 'Today' },
+  { id: 'practice', label: 'Practice', short: 'Practice' },
+  { id: 'progress', label: 'Progress', short: 'Progress' },
 ]
 
 export default function Layout({ user }: Props) {
   const { signOut } = useAuth()
-  const [activeTab, setActiveTab] = useState<Tab>('dashboard')
+  const [activeTab, setActiveTab] = useState<Tab>('today')
 
   return (
     <div
@@ -49,12 +41,12 @@ export default function Layout({ user }: Props) {
       </nav>
 
       {/* Desktop Tab Bar */}
-      <div className="hidden md:flex border-b border-white/5 bg-[#0a0a0a] sticky top-[60px] z-40 overflow-x-auto">
+      <div className="hidden md:flex border-b border-white/5 bg-[#0a0a0a] sticky top-[60px] z-40">
         {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-5 py-4 text-xs font-semibold tracking-[2px] uppercase transition-colors border-b-2 whitespace-nowrap ${
+            className={`px-8 py-4 text-xs font-semibold tracking-[2px] uppercase transition-colors border-b-2 ${
               activeTab === tab.id
                 ? 'text-white border-[#003566]'
                 : 'text-[#666] border-transparent hover:text-[#a4a4a4]'
@@ -68,25 +60,19 @@ export default function Layout({ user }: Props) {
       {/* Content */}
       <main className="flex-1 pb-20 md:pb-0 overflow-y-auto">
         <div className="max-w-3xl mx-auto px-4 py-6">
-          {activeTab === 'dashboard' && (
-            <Dashboard userId={user.id} onNavigate={(tab) => setActiveTab(tab as Tab)} />
-          )}
-          {activeTab === 'session' && <DailySession userId={user.id} />}
-          {activeTab === 'faultfinder' && <FaultFinder userId={user.id} />}
-          {activeTab === 'flashcards' && <Flashcards userId={user.id} />}
-          {activeTab === 'reading' && <DailyReading userId={user.id} />}
-          {activeTab === 'judgment' && <JudgmentLog userId={user.id} />}
-          {activeTab === 'history' && <SessionHistory userId={user.id} />}
+          {activeTab === 'today' && <Today userId={user.id} />}
+          {activeTab === 'practice' && <Practice userId={user.id} />}
+          {activeTab === 'progress' && <Progress userId={user.id} />}
         </div>
       </main>
 
-      {/* Mobile Bottom Tab Bar — scrollable for 7 tabs */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#111] border-t border-white/5 flex overflow-x-auto z-50">
+      {/* Mobile Bottom Tab Bar */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#111] border-t border-white/5 flex z-50">
         {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-shrink-0 py-3 px-3 flex flex-col items-center gap-1 transition-colors ${
+            className={`flex-1 py-3 flex flex-col items-center gap-1 transition-colors ${
               activeTab === tab.id ? 'text-white' : 'text-[#555]'
             }`}
           >
