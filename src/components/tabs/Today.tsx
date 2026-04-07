@@ -258,33 +258,6 @@ export default function Today({ userId }: Props) {
 
   const totalSteps = domain && !DOMAINS_WITHOUT_FAULT.includes(domain) ? 4 : 3
 
-  function stepNumber(s: Step): number {
-    switch (s) {
-      case 'reading': return 1
-      case 'flashcards': return 2
-      case 'scenario':
-      case 'concepts':
-      case 'reinforce': return 3
-      case 'fault-loading':
-      case 'fault-identify':
-      case 'fault-result': return 4
-      default: return 0
-    }
-  }
-
-  function stepLabel(s: Step): string {
-    switch (s) {
-      case 'reading': return 'Reading'
-      case 'flashcards': return 'Flashcards'
-      case 'scenario': return 'Scenario'
-      case 'concepts': return 'Concepts'
-      case 'reinforce': return 'Reinforce'
-      case 'fault-loading':
-      case 'fault-identify':
-      case 'fault-result': return 'Fault Drill'
-      default: return ''
-    }
-  }
 
   async function startDomain(d: string) {
     setDomain(d)
@@ -1104,7 +1077,7 @@ export default function Today({ userId }: Props) {
             <span className="text-[#555] text-xs">{DOMAIN_LABELS[domain!]}</span>
             <span className="text-[#333] text-xs">·</span>
             <span className="text-[#555] text-xs">
-              {totalSteps} step{totalSteps !== 1 ? 's' : ''} completed
+              {totalSteps} steps completed
             </span>
           </div>
         </div>
