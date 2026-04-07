@@ -28,12 +28,12 @@ export default function FaultFinder({ userId }: Props) {
   const [result, setResult] = useState<FaultEvaluation | null>(null)
   const [error, setError] = useState('')
 
-  async function generate() {
-    if (!domain || !movement) return
+  async function generate(selectedMovement: string) {
+    if (!domain) return
     setStep('loading')
     setError('')
     try {
-      const data = await generateFaultScenario(domain, movement)
+      const data = await generateFaultScenario(domain, selectedMovement)
       setScenario(data)
       setStep('identify')
     } catch (err) {
@@ -140,11 +140,12 @@ export default function FaultFinder({ userId }: Props) {
 
         <div className="bg-[#111] border border-white/5 rounded-xl p-5 space-y-3">
           <div className="text-[#a4a4a4] text-xs font-semibold tracking-widest uppercase">Select Movement</div>
+          {error && <p className="text-[#c41e3a] text-xs">{error}</p>}
           <div className="grid grid-cols-2 gap-2">
             {moves.map(m => (
               <button
                 key={m}
-                onClick={() => { setMovement(m); generate() }}
+                onClick={() => { setMovement(m); generate(m) }}
                 className="bg-[#0a0a0a] hover:bg-[#141414] border border-white/5 hover:border-white/10 rounded-lg px-4 py-3 text-sm text-[#a4a4a4] hover:text-white transition-colors text-left"
               >
                 {m}
