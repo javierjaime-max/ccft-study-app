@@ -14,7 +14,7 @@ export function useVocabTerms(): UseVocabTermsResult {
   useEffect(() => {
     supabase
       .from('vocab_terms')
-      .select('term, definition, source, domains')
+      .select('term, definition, source, domains, related_terms, parent_term')
       .order('term', { ascending: true })
       .then(({ data }) => {
         setTerms(
@@ -23,6 +23,8 @@ export function useVocabTerms(): UseVocabTermsResult {
             def: row.definition,
             src: row.source,
             domains: row.domains,
+            relatedTerms: row.related_terms ?? [],
+            parentTerm: row.parent_term ?? null,
           }))
         )
         setLoading(false)

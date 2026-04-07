@@ -5,9 +5,11 @@ import Dashboard from './tabs/Dashboard'
 import DailySession from './tabs/DailySession'
 import FaultFinder from './tabs/FaultFinder'
 import Flashcards from './tabs/Flashcards'
+import DailyReading from './tabs/DailyReading'
+import JudgmentLog from './tabs/JudgmentLog'
 import SessionHistory from './tabs/SessionHistory'
 
-type Tab = 'dashboard' | 'session' | 'faultfinder' | 'flashcards' | 'history'
+type Tab = 'dashboard' | 'session' | 'faultfinder' | 'flashcards' | 'reading' | 'judgment' | 'history'
 
 interface Props {
   user: User
@@ -18,6 +20,8 @@ const TABS: { id: Tab; label: string; short: string }[] = [
   { id: 'session', label: 'Daily Session', short: 'Study' },
   { id: 'faultfinder', label: 'Fault Finder', short: 'Faults' },
   { id: 'flashcards', label: 'Flashcards', short: 'Cards' },
+  { id: 'reading', label: 'Reading', short: 'Read' },
+  { id: 'judgment', label: 'Judgment Log', short: 'Judge' },
   { id: 'history', label: 'History', short: 'Stats' },
 ]
 
@@ -45,12 +49,12 @@ export default function Layout({ user }: Props) {
       </nav>
 
       {/* Desktop Tab Bar */}
-      <div className="hidden md:flex border-b border-white/5 bg-[#0a0a0a] sticky top-[60px] z-40">
+      <div className="hidden md:flex border-b border-white/5 bg-[#0a0a0a] sticky top-[60px] z-40 overflow-x-auto">
         {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-6 py-4 text-xs font-semibold tracking-[2px] uppercase transition-colors border-b-2 ${
+            className={`px-5 py-4 text-xs font-semibold tracking-[2px] uppercase transition-colors border-b-2 whitespace-nowrap ${
               activeTab === tab.id
                 ? 'text-white border-[#003566]'
                 : 'text-[#666] border-transparent hover:text-[#a4a4a4]'
@@ -70,21 +74,23 @@ export default function Layout({ user }: Props) {
           {activeTab === 'session' && <DailySession userId={user.id} />}
           {activeTab === 'faultfinder' && <FaultFinder userId={user.id} />}
           {activeTab === 'flashcards' && <Flashcards userId={user.id} />}
+          {activeTab === 'reading' && <DailyReading userId={user.id} />}
+          {activeTab === 'judgment' && <JudgmentLog userId={user.id} />}
           {activeTab === 'history' && <SessionHistory userId={user.id} />}
         </div>
       </main>
 
-      {/* Mobile Bottom Tab Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#111] border-t border-white/5 flex z-50">
+      {/* Mobile Bottom Tab Bar — scrollable for 7 tabs */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#111] border-t border-white/5 flex overflow-x-auto z-50">
         {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 py-3 flex flex-col items-center gap-1 transition-colors ${
+            className={`flex-shrink-0 py-3 px-3 flex flex-col items-center gap-1 transition-colors ${
               activeTab === tab.id ? 'text-white' : 'text-[#555]'
             }`}
           >
-            <span className="text-[10px] font-semibold tracking-wider uppercase">{tab.short}</span>
+            <span className="text-[9px] font-semibold tracking-wider uppercase">{tab.short}</span>
             {activeTab === tab.id && (
               <span className="w-4 h-0.5 bg-[#003566] rounded-full" />
             )}

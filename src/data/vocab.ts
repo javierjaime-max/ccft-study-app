@@ -1,14 +1,14 @@
-// Terms now live in Supabase `vocab_terms` table.
+// Terms live in Supabase `vocab_terms` table.
 // Use the useVocabTerms() hook to fetch at runtime.
-// See: supabase/migrations/20260405000002_vocab_terms.sql (seed batch 1)
-//      supabase/migrations/20260405000003_vocab_terms_seed_batch2.sql
-//      supabase/migrations/20260405000004_vocab_terms_seed_batch3.sql
+// Seed: supabase/migrations/20260406000003_vocab_brain_full.sql
 
 export interface VocabTerm {
   term: string
   def: string
   src: string
   domains: string[]
+  relatedTerms: string[]
+  parentTerm: string | null
 }
 
 export const DOMAIN_COLORS: Record<string, string> = {
