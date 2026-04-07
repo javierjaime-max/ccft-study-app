@@ -57,7 +57,9 @@ Return JSON only, no markdown:
       ],
     })
 
-    const text = message.content[0].type === 'text' ? message.content[0].text : '{}'
+    let text = message.content[0].type === 'text' ? message.content[0].text : '{}'
+    // Strip markdown code fences if Claude wraps the JSON
+    text = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim()
     let parsed: { feedback: string; score: number; key_concepts: string[] }
     try {
       parsed = JSON.parse(text)

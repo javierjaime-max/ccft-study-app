@@ -59,7 +59,8 @@ Return JSON only, no markdown:
         ],
       })
 
-      const text = message.content[0].type === 'text' ? message.content[0].text : '{}'
+      let text = message.content[0].type === 'text' ? message.content[0].text : '{}'
+      text = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim()
       let parsed
       try {
         parsed = JSON.parse(text)
@@ -119,7 +120,8 @@ Return JSON only:
         ],
       })
 
-      const text = message.content[0].type === 'text' ? message.content[0].text : '{}'
+      let text = message.content[0].type === 'text' ? message.content[0].text : '{}'
+      text = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim()
       let parsed
       try {
         parsed = JSON.parse(text)
