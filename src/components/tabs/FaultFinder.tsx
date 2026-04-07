@@ -89,6 +89,7 @@ export default function FaultFinder({ userId }: Props) {
 
   function tryAnother() {
     setStep('pick')
+    setMovement(null)
     setScenario(null)
     setSelected(null)
     setCue('')
