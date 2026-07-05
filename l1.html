@@ -13,6 +13,36 @@
   body { margin:0; background:var(--soft); color:var(--ink);
           font-family:Georgia,'Times New Roman',serif; font-size:12.5pt; line-height:1.7; }
   .wrap { max-width:8.1in; margin:0 auto; background:var(--bg); padding:0.7in 0.85in; }
+
+  /* ---- responsive shell: sidebar + content ---- */
+  .shell { max-width:1180px; margin:0 auto; display:grid;
+            grid-template-columns:264px minmax(0,1fr); gap:26px; padding:22px 22px 52px;
+            align-items:start; }
+  .sidebar { position:sticky; top:62px; }
+  .sidenav { border:1px solid var(--line); border-radius:12px; background:var(--bg); }
+  .sidenav > summary { display:none; }
+  .sidenav-body { padding:16px 15px 12px; max-height:calc(100vh - 100px); overflow-y:auto; }
+  .side-title { font-family:Georgia,serif; font-size:15pt; font-weight:bold; margin:0 0 12px; }
+  .sidenav-body .toc-tools { flex-direction:column; align-items:stretch; gap:8px; margin-bottom:14px; }
+  .sidenav-body .ch-filter { width:100%; }
+  .ctl-row { display:flex; gap:7px; }
+  .ctl-row .ctl { flex:1 1 0; }
+  .sidenav-body .toc-group { margin-bottom:14px; }
+  .content { background:var(--bg); border:1px solid var(--line); border-radius:14px;
+              padding:26px 32px 34px; min-width:0; }
+  .content .hero { padding-top:2px; }
+  @media (max-width:900px) {
+    .shell { display:block; max-width:none; padding:0; }
+    .sidebar { position:static; }
+    .sidenav { border:0; border-bottom:1px solid var(--line); border-radius:0; }
+    .sidenav > summary { display:block; cursor:pointer; padding:13px 16px;
+                          font-family:Arial,Helvetica,sans-serif; font-weight:bold; font-size:11pt;
+                          list-style:none; background:var(--soft); }
+    .sidenav > summary::-webkit-details-marker { display:none; }
+    .sidenav-body { max-height:none; overflow:visible; }
+    .side-title { display:none; }
+    .content { border:0; border-radius:0; padding:16px 16px 28px; }
+  }
   a { color:#1a5a9a; }
 
   /* ---- landing hero ---- */
@@ -194,7 +224,7 @@
   .appbar { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.97);
              -webkit-backdrop-filter:saturate(1.1) blur(6px); backdrop-filter:saturate(1.1) blur(6px);
              border-bottom:1px solid var(--line); font-family:Arial,Helvetica,sans-serif; }
-  .appbar-inner { max-width:8.1in; margin:0 auto; padding:9px 0.85in; display:flex; align-items:center;
+  .appbar-inner { max-width:1180px; margin:0 auto; padding:9px 24px; display:flex; align-items:center;
                    justify-content:space-between; gap:12px; }
   .brand { font-weight:bold; font-size:1.02rem; color:var(--ink); text-decoration:none; white-space:nowrap; }
   .appnav { display:flex; align-items:center; gap:8px; }
@@ -274,47 +304,51 @@
     </nav>
   </div>
 </header>
-<div class="wrap" id="top" style="--accent:#1a5a9a">
-  <div class="hero">
-    <h1>CrossFit Level 1 Training Guide</h1>
-    <p class="sub">Study companion &mdash; read it alongside the official Level 1 guide</p>
-    <div class="hero-modes">
-      <span class="mode">&#128214; Section chapter</span>
-      <span class="mode">&#128396;&#65039; Find &amp; highlight</span>
-      <span class="mode">&#127911; Audio walkthrough</span>
-    </div>
-    <div class="hero-actions">
-      <a class="cta primary" href="#contents">Browse 27 sections &darr;</a>
-      <a class="cta" href="https://journal.crossfit.com/article/training-guide-compiled" target="_blank" rel="noopener">Open official guide</a>
-      <a class="cta" href="index.html">&larr; Article guide</a>
-    </div>
-    <details class="about">
-      <summary>About this page &amp; how to use it</summary>
-      <div class="about-body">
-        <p>Study companion for the official <strong>CrossFit Level 1 Training Guide</strong> (258 pages). Three ways
-           to work each section: <strong>read</strong> the chapter, <strong>hunt &amp; highlight</strong> in the
-           official guide, and <strong>listen</strong> to the audio walkthrough (the &#127911; next to the guide
-           link). Your check-offs save in this browser.</p>
-        <p class="tiny">The Level 1 &amp; Level 2 guides are the CORE of the CCFT material &mdash; the methodology
-           the whole exam is built on. Give them weight.</p>
+<div class="shell" id="top" style="--accent:#1a5a9a">
+  <aside class="sidebar">
+    <details class="sidenav" id="contents" open>
+      <summary class="sidenav-toggle">&#9776; Contents &amp; filter</summary>
+      <div class="sidenav-body">
+        <div class="side-title">Contents</div>
+        <div class="toc-tools">
+          <input type="search" id="ch-filter" class="ch-filter" placeholder="Filter sections&hellip;" autocomplete="off">
+          <div class="ctl-row">
+            <button type="button" class="ctl" data-act="expand">Expand all</button>
+            <button type="button" class="ctl" data-act="collapse">Collapse all</button>
+          </div>
+        </div>
+        <div class="toc-list"><div class="toc-group"><a class="toc-a" href="#s1">1. Understanding CrossFit</a><a class="toc-a" href="#s2">2. Foundations — The Case for Broad, Inclusive Fitness</a><a class="toc-a" href="#s3">3. What Is Fitness? (Part 1): The Four Models</a><a class="toc-a" href="#s4">4. What Is Fitness? (Part 2): Defining Fitness and Health</a><a class="toc-a" href="#s5">5. Technique: Mechanics, Consistency, Intensity</a><a class="toc-a" href="#s6">6. Nutrition: Avoiding Disease and Optimizing Performance</a><a class="toc-a" href="#s7">7. Fitness, Luck and Health — CrossFit as Non-Medical Health Care</a><a class="toc-a" href="#s8">8. Zone Meal Plans and Block Prescriptions: Making the Diet Practical</a><a class="toc-a" href="#s9">9. Supplementation</a><a class="toc-a" href="#s10">10. A Theoretical Template for CrossFit&#x27;s Programming</a><a class="toc-a" href="#s11">11. Scaling CrossFit — Modify the Workout, Keep the Stimulus</a><a class="toc-a" href="#s12">12. &quot;The Girls&quot; for Grandmas: Scaling Benchmarks for Anyone</a><a class="toc-a" href="#s13">13. Running a CrossFit Class: Lesson Plans and WOD Scales</a><a class="toc-a" href="#s14">14. Anatomy and Physiology for Jocks: A Shared Movement Language</a><a class="toc-a" href="#s15">15. Squat Clinic — Nature&#x27;s Movement, the Faults, and the Fixes</a><a class="toc-a" href="#s16">16. The Overhead Squat — The Ultimate Core Movement and Heart of the Snatch</a><a class="toc-a" href="#s17">17. Shoulder Press, Push Press, Push Jerk: The Overhead Progression</a><a class="toc-a" href="#s18">18. The Deadlift and Sumo Deadlift High Pull</a><a class="toc-a" href="#s19">19. Medicine-Ball Cleans</a><a class="toc-a" href="#s20">20. The Glute-Ham Developer (GHD): Building a Bulletproof Midline</a><a class="toc-a" href="#s21">21. Where Do I Go From Here? — The Six Coaching Abilities and How to Grow</a><a class="toc-a" href="#s22">22. Responsible Training — Keeping Clients Safe Beyond the Movements</a><a class="toc-a" href="#s23">23. Fundamentals, Virtuosity and Mastery</a><a class="toc-a" href="#s24">24. Professional Training and Building a Practice</a><a class="toc-a" href="#s25">25. Credentials, License, and FAQ: What CF-L1 Actually Lets You Do</a><a class="toc-a" href="#s26">26. The Nine Foundational Movements — Teach, See, Correct</a><a class="toc-a" href="#s27">27. Four Additional Movements — Pull-up, Thruster, Muscle-up, Snatch</a></div></div>
       </div>
     </details>
-  </div>
+  </aside>
 
-  <nav class="toc" id="contents">
-    <div class="toc-bar">
-      <h3>Contents</h3>
-      <div class="toc-tools">
-        <input type="search" id="ch-filter" class="ch-filter" placeholder="Filter sections&hellip;" autocomplete="off">
-        <button type="button" class="ctl" data-act="expand">Expand all</button>
-        <button type="button" class="ctl" data-act="collapse">Collapse all</button>
+  <main class="content">
+    <div class="hero">
+      <h1>CrossFit Level 1 Training Guide</h1>
+      <p class="sub">Study companion &mdash; read it alongside the official Level 1 guide</p>
+      <div class="hero-modes">
+        <span class="mode">&#128214; Section chapter</span>
+        <span class="mode">&#128396;&#65039; Find &amp; highlight</span>
+        <span class="mode">&#127911; Audio walkthrough</span>
       </div>
+      <div class="hero-actions">
+        <a class="cta" href="https://journal.crossfit.com/article/training-guide-compiled" target="_blank" rel="noopener">Open official guide</a>
+        <a class="cta" href="index.html">&larr; Article guide</a>
+      </div>
+      <details class="about">
+        <summary>About this page &amp; how to use it</summary>
+        <div class="about-body">
+          <p>Study companion for the official <strong>CrossFit Level 1 Training Guide</strong> (258 pages). Three ways
+             to work each section: <strong>read</strong> the chapter, <strong>hunt &amp; highlight</strong> in the
+             official guide, and <strong>listen</strong> to the audio walkthrough (the &#127911; next to the guide
+             link). Your check-offs save in this browser.</p>
+          <p class="tiny">The Level 1 &amp; Level 2 guides are the CORE of the CCFT material &mdash; the methodology
+             the whole exam is built on. Give them weight.</p>
+        </div>
+      </details>
     </div>
-    <p class="toc-hint">27 sections &mdash; tap any to jump &amp; open it.</p>
-    <div class="toc-list"><div class="toc-group"><a class="toc-a" href="#s1">1. Understanding CrossFit</a><a class="toc-a" href="#s2">2. Foundations — The Case for Broad, Inclusive Fitness</a><a class="toc-a" href="#s3">3. What Is Fitness? (Part 1): The Four Models</a><a class="toc-a" href="#s4">4. What Is Fitness? (Part 2): Defining Fitness and Health</a><a class="toc-a" href="#s5">5. Technique: Mechanics, Consistency, Intensity</a><a class="toc-a" href="#s6">6. Nutrition: Avoiding Disease and Optimizing Performance</a><a class="toc-a" href="#s7">7. Fitness, Luck and Health — CrossFit as Non-Medical Health Care</a><a class="toc-a" href="#s8">8. Zone Meal Plans and Block Prescriptions: Making the Diet Practical</a><a class="toc-a" href="#s9">9. Supplementation</a><a class="toc-a" href="#s10">10. A Theoretical Template for CrossFit&#x27;s Programming</a><a class="toc-a" href="#s11">11. Scaling CrossFit — Modify the Workout, Keep the Stimulus</a><a class="toc-a" href="#s12">12. &quot;The Girls&quot; for Grandmas: Scaling Benchmarks for Anyone</a><a class="toc-a" href="#s13">13. Running a CrossFit Class: Lesson Plans and WOD Scales</a><a class="toc-a" href="#s14">14. Anatomy and Physiology for Jocks: A Shared Movement Language</a><a class="toc-a" href="#s15">15. Squat Clinic — Nature&#x27;s Movement, the Faults, and the Fixes</a><a class="toc-a" href="#s16">16. The Overhead Squat — The Ultimate Core Movement and Heart of the Snatch</a><a class="toc-a" href="#s17">17. Shoulder Press, Push Press, Push Jerk: The Overhead Progression</a><a class="toc-a" href="#s18">18. The Deadlift and Sumo Deadlift High Pull</a><a class="toc-a" href="#s19">19. Medicine-Ball Cleans</a><a class="toc-a" href="#s20">20. The Glute-Ham Developer (GHD): Building a Bulletproof Midline</a><a class="toc-a" href="#s21">21. Where Do I Go From Here? — The Six Coaching Abilities and How to Grow</a><a class="toc-a" href="#s22">22. Responsible Training — Keeping Clients Safe Beyond the Movements</a><a class="toc-a" href="#s23">23. Fundamentals, Virtuosity and Mastery</a><a class="toc-a" href="#s24">24. Professional Training and Building a Practice</a><a class="toc-a" href="#s25">25. Credentials, License, and FAQ: What CF-L1 Actually Lets You Do</a><a class="toc-a" href="#s26">26. The Nine Foundational Movements — Teach, See, Correct</a><a class="toc-a" href="#s27">27. Four Additional Movements — Pull-up, Thruster, Muscle-up, Snatch</a></div></div>
-  </nav>
 
-  
+    
 <details class="chapter" id="s1" data-title="understanding crossfit" style="--accent:#1a5a9a">
   <summary class="ch-summary">
     <span class="ch-chevron" aria-hidden="true">&#8250;</span>
@@ -910,14 +944,27 @@
 </details>
 
 
-  <p class="footnote">Study companion for the official CrossFit L1 Training Guide.
-     27 sections. Static &mdash; no AI, no login. Your check-offs save in this browser only.</p>
+    <p class="footnote">Study companion for the official CrossFit L1 Training Guide.
+       27 sections. Static &mdash; no AI, no login. Your check-offs save in this browser only.</p>
+  </main>
 </div>
 <a href="#top" class="fab-top" aria-label="Back to top">&uarr;</a>
 <script>
 (function(){
   document.querySelectorAll('.jump-menu a').forEach(function(el){
     el.addEventListener('click', function(){ var d=document.querySelector('.jump[open]'); if(d) d.removeAttribute('open'); });
+  });
+
+  // --- sidebar: collapse on small screens (open on desktop) ---
+  var sidenav = document.querySelector('.sidenav');
+  var isNarrow = function(){ return window.matchMedia('(max-width:900px)').matches; };
+  if(sidenav && isNarrow()) sidenav.open = false;
+  document.querySelectorAll('.contents-link, a[href="#contents"]').forEach(function(a){
+    a.addEventListener('click', function(){ if(sidenav && isNarrow()) sidenav.open = true; });
+  });
+  // close the mobile sidebar after picking a title
+  document.querySelectorAll('.toc-a').forEach(function(a){
+    a.addEventListener('click', function(){ if(sidenav && isNarrow()) sidenav.open = false; });
   });
 
   // --- open a collapsed chapter when you navigate to it ---

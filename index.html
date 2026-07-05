@@ -14,6 +14,36 @@
   body { margin:0; background:var(--soft); color:var(--ink);
           font-family:Georgia,'Times New Roman',serif; font-size:12.5pt; line-height:1.7; }
   .wrap { max-width:8.1in; margin:0 auto; background:var(--bg); padding:0.7in 0.85in; }
+
+  /* ---- responsive shell: sidebar + content ---- */
+  .shell { max-width:1180px; margin:0 auto; display:grid;
+            grid-template-columns:264px minmax(0,1fr); gap:26px; padding:22px 22px 52px;
+            align-items:start; }
+  .sidebar { position:sticky; top:62px; }
+  .sidenav { border:1px solid var(--line); border-radius:12px; background:var(--bg); }
+  .sidenav > summary { display:none; }
+  .sidenav-body { padding:16px 15px 12px; max-height:calc(100vh - 100px); overflow-y:auto; }
+  .side-title { font-family:Georgia,serif; font-size:15pt; font-weight:bold; margin:0 0 12px; }
+  .sidenav-body .toc-tools { flex-direction:column; align-items:stretch; gap:8px; margin-bottom:14px; }
+  .sidenav-body .ch-filter { width:100%; }
+  .ctl-row { display:flex; gap:7px; }
+  .ctl-row .ctl { flex:1 1 0; }
+  .sidenav-body .toc-group { margin-bottom:14px; }
+  .content { background:var(--bg); border:1px solid var(--line); border-radius:14px;
+              padding:26px 32px 34px; min-width:0; }
+  .content .hero { padding-top:2px; }
+  @media (max-width:900px) {
+    .shell { display:block; max-width:none; padding:0; }
+    .sidebar { position:static; }
+    .sidenav { border:0; border-bottom:1px solid var(--line); border-radius:0; }
+    .sidenav > summary { display:block; cursor:pointer; padding:13px 16px;
+                          font-family:Arial,Helvetica,sans-serif; font-weight:bold; font-size:11pt;
+                          list-style:none; background:var(--soft); }
+    .sidenav > summary::-webkit-details-marker { display:none; }
+    .sidenav-body { max-height:none; overflow:visible; }
+    .side-title { display:none; }
+    .content { border:0; border-radius:0; padding:16px 16px 28px; }
+  }
   a { color:#1a5a9a; }
 
   /* ---- landing hero ---- */
@@ -195,7 +225,7 @@
   .appbar { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.97);
              -webkit-backdrop-filter:saturate(1.1) blur(6px); backdrop-filter:saturate(1.1) blur(6px);
              border-bottom:1px solid var(--line); font-family:Arial,Helvetica,sans-serif; }
-  .appbar-inner { max-width:8.1in; margin:0 auto; padding:9px 0.85in; display:flex; align-items:center;
+  .appbar-inner { max-width:1180px; margin:0 auto; padding:9px 24px; display:flex; align-items:center;
                    justify-content:space-between; gap:12px; }
   .brand { font-weight:bold; font-size:1.02rem; color:var(--ink); text-decoration:none; white-space:nowrap; }
   .appnav { display:flex; align-items:center; gap:8px; }
@@ -275,55 +305,59 @@
     </nav>
   </div>
 </header>
-<div class="wrap" id="top">
-  <div class="hero">
-    <h1>CCFT Study Guide</h1>
-    <p class="sub">Certified CrossFit Trainer exam. Read it, highlight it, listen to it.</p>
-    <div class="hero-modes">
-      <span class="mode">&#128214; Focused chapter</span>
-      <span class="mode">&#128396;&#65039; Find &amp; highlight</span>
-      <span class="mode">&#127911; Audio walkthrough</span>
-    </div>
-    <div class="hero-actions">
-      <a class="cta primary" href="#contents">Browse all articles &darr;</a>
-      <a class="cta" href="l1.html">Level 1 Guide</a>
-      <a class="cta" href="l2.html">Level 2 Guide</a>
-    </div>
-    <details class="about">
-      <summary>About this guide &amp; how to use it</summary>
-      <div class="about-body">
-        <p>Three ways to study each source, all in one place: <strong>read</strong> the focused chapter,
-           open the PDF and <strong>hunt &amp; highlight</strong> the key points, and <strong>listen</strong>
-           to the audio walkthrough (the &#127911; headphones next to each PDF link). The guide doesn&rsquo;t
-           replace the articles &mdash; it makes your time with them focused.</p>
-        <p>The exam tests <strong>application, not memorization</strong>: 160 questions (140 scored),
-           3h55m, at Pearson VUE. Questions come from the Content Outline; the articles support it.
-           Prioritize by <em>confidence</em> (know-nothing first) and by <em>exam weight</em> &mdash;
-           Training and Educating alone are 43% of the exam.</p>
-        <table class="weights">
-          <thead><tr><th>Domain</th><th>Questions</th><th>Weight</th></tr></thead>
-          <tbody><tr><td>D4 &middot; Training</td><td>34</td><td><strong>24%</strong></td></tr><tr><td>D3 &middot; Educating</td><td>27</td><td><strong>19%</strong></td></tr><tr><td>D5 &middot; Leadership & Management</td><td>23</td><td><strong>16%</strong></td></tr><tr><td>D2 &middot; Programming</td><td>19</td><td><strong>14%</strong></td></tr><tr><td>D6 &middot; Lifestyle Education</td><td>15</td><td><strong>11%</strong></td></tr><tr><td>D1 &middot; Screening & Ongoing Assessment</td><td>11</td><td><strong>8%</strong></td></tr><tr><td>D7 &middot; Professional Responsibilities</td><td>11</td><td><strong>8%</strong></td></tr></tbody>
-        </table>
-        <p class="tiny">The Level 1 &amp; Level 2 Training Guides are the foundation of all CCFT material and
-           have their own dedicated pages (buttons above).</p>
+<div class="shell" id="top">
+  <aside class="sidebar">
+    <details class="sidenav" id="contents" open>
+      <summary class="sidenav-toggle">&#9776; Contents &amp; filter</summary>
+      <div class="sidenav-body">
+        <div class="side-title">Contents</div>
+        <div class="toc-tools">
+          <input type="search" id="ch-filter" class="ch-filter" placeholder="Filter titles&hellip;" autocomplete="off">
+          <div class="ctl-row">
+            <button type="button" class="ctl" data-act="expand">Expand all</button>
+            <button type="button" class="ctl" data-act="collapse">Collapse all</button>
+          </div>
+        </div>
+        <div class="toc-list"><div class="toc-group"><div class="toc-d" style="--accent:#1a6aa8"><a href="#d1">D1 &middot; Screening & Ongoing Assessment <span class="toc-n">(11)</span></a><span class="toc-w">8%</span></div><a class="toc-a" href="#ch1">Who&#x27;s Safe to Train, and Who Needs a Doctor First</a><a class="toc-a" href="#ch2">The Measure of Man: Reading an Athlete&#x27;s Build So You Don&#x27;t Force a Bad Position</a><a class="toc-a" href="#ch3">Dissecting the Squat: Is It a Mobility Problem or a Motor-Control Problem?</a><a class="toc-a" href="#ch4">Aging, Performance and Health</a><a class="toc-a" href="#ch5">Coaching the Mental Side of CrossFit</a><a class="toc-a" href="#ch6">Why Use a Training Log</a><a class="toc-a" href="#ch7">CrossFit Training During Pregnancy and Motherhood</a><a class="toc-a" href="#ch8">The Mind Game: Coaching the Mental Side of Fitness</a><a class="toc-a" href="#ch9">Muscle Damage and Soreness: Reading What Your Athletes Feel</a><a class="toc-a" href="#ch10">Compartment Syndrome &amp; Rhabdo — When &#x27;Sore&#x27; Is Actually an Emergency</a><a class="toc-a" href="#ch11">Reading the Bodyweight Squat: A 10-Point Screen</a></div><div class="toc-group"><div class="toc-d" style="--accent:#157a52"><a href="#d2">D2 &middot; Programming <span class="toc-n">(18)</span></a><span class="toc-w">14%</span></div><a class="toc-a" href="#ch12">A Theoretical Template for CrossFit&#x27;s Programming</a><a class="toc-a" href="#ch13">Benchmark Workouts: The Girls</a><a class="toc-a" href="#ch14">Team Workouts — Running CrossFit for a Whole Group at Once</a><a class="toc-a" href="#ch15">Fooling Around with Fran: Work, Power, and Intensity</a><a class="toc-a" href="#ch16">VO2 Max: Not the Gold Standard?</a><a class="toc-a" href="#ch17">The Fish Diagram: Why Beginners Get Fast Gains and Vets Need Variety</a><a class="toc-a" href="#ch18">Human Power Output — Why CrossFit Metcons Hit Every Engine at Once</a><a class="toc-a" href="#ch19">Scaling CrossFit Workouts — Keeping the Stimulus, Not Just the Movements</a><a class="toc-a" href="#ch20">A Deft Dose of Volume</a><a class="toc-a" href="#ch21">No Limits: CrossFitting With Type 1 Diabetes</a><a class="toc-a" href="#ch22">How a Hard Workout Actually Makes You Fitter</a><a class="toc-a" href="#ch23">Conjugate CrossFit</a><a class="toc-a" href="#ch24">End of the Line? Why Linear Progression Eventually Stalls</a><a class="toc-a" href="#ch25">The High-Performance Pregnancy</a><a class="toc-a" href="#ch26">Does CrossFit Actually Work? The Data Says Yes</a><a class="toc-a" href="#ch27">Pregnancy: A Practical Guide for Scaling</a><a class="toc-a" href="#ch28">The Westside Conjugate System</a><a class="toc-a" href="#ch29">Building the Engine Back Up After an Injury</a></div><div class="toc-group"><div class="toc-d" style="--accent:#9a6312"><a href="#d3">D3 &middot; Educating <span class="toc-n">(11)</span></a><span class="toc-w">19%</span></div><a class="toc-a" href="#ch30">Anatomy for Coaches: 4 Parts, 3 Joints, 2 Motions, 3 Rules</a><a class="toc-a" href="#ch31">The Scoop and the Second Pull</a><a class="toc-a" href="#ch32">The Aerobic Paradox: Why Hard Beats Long-and-Slow</a><a class="toc-a" href="#ch33">Using the Ring Support: Variations and the Ring Dip</a><a class="toc-a" href="#ch34">Spine Mechanics for Lifters: Why a Flat Back Actually Protects You</a><a class="toc-a" href="#ch35">Anatomy and Physiology: A Primer for CrossFit Trainers</a><a class="toc-a" href="#ch36">The Deeper Side of Coaching</a><a class="toc-a" href="#ch37">The Athletic Hip</a><a class="toc-a" href="#ch38">Getting Inverted: Teaching the Handstand</a><a class="toc-a" href="#ch39">Getting Some Leverage: Why Bar Position and Balance Change Everything</a><a class="toc-a" href="#ch40">Virtuosity: Doing the Common Uncommonly Well</a></div><div class="toc-group"><div class="toc-d" style="--accent:#7a3aa8"><a href="#d4">D4 &middot; Training <span class="toc-n">(6)</span></a><span class="toc-w">24%</span></div><a class="toc-a" href="#ch41">Where Barbells Come From</a><a class="toc-a" href="#ch42">The Bench Press: Technique, Faults, and Spotting</a><a class="toc-a" href="#ch43">Building Mental Toughness</a><a class="toc-a" href="#ch44">The Pursuit of Excellence</a><a class="toc-a" href="#ch45">Movement 101: The Words Coaches Use to Describe How the Body Moves</a><a class="toc-a" href="#ch46">Five Roads to a 7-Minute 2K Row</a></div><div class="toc-group"><div class="toc-d" style="--accent:#a83a52"><a href="#d5">D5 &middot; Leadership & Management <span class="toc-n">(2)</span></a><span class="toc-w">16%</span></div><a class="toc-a" href="#ch47">The CrossFit Kids Training Guide</a><a class="toc-a" href="#ch48">Coaching the Aging Athlete (Masters)</a></div><div class="toc-group"><div class="toc-d" style="--accent:#1a8aa0"><a href="#d6">D6 &middot; Lifestyle Education <span class="toc-n">(8)</span></a><span class="toc-w">11%</span></div><a class="toc-a" href="#ch49">Sugar Bombs: The Truth About Sports Drinks</a><a class="toc-a" href="#ch50">Cancer, Carbs and Where a Coach Has to Stop Talking</a><a class="toc-a" href="#ch51">Carbohydrate Selections: The Right Carb for the Right Job</a><a class="toc-a" href="#ch52">How Much Food Should I Eat?</a><a class="toc-a" href="#ch53">My Experiments With Intermittent Fasting</a><a class="toc-a" href="#ch54">Milk: Fact vs. Intolerance</a><a class="toc-a" href="#ch55">Sleep: Get Horizontal</a><a class="toc-a" href="#ch56">Race-Day Fueling</a></div><div class="toc-group"><div class="toc-d" style="--accent:#5a5a2a"><a href="#d7">D7 &middot; Professional Responsibilities <span class="toc-n">(8)</span></a><span class="toc-w">8%</span></div><a class="toc-a" href="#ch57">How Often Lifters Actually Get Hurt (and Where)</a><a class="toc-a" href="#ch58">The CCFT Candidate Handbook: Your Job, Your Rules, Your Credential</a><a class="toc-a" href="#ch59">The CCFT Content Outline (Your Exam Blueprint)</a><a class="toc-a" href="#ch60">The CCFT Study Material Reference List (Your Map to the Exam)</a><a class="toc-a" href="#ch61">Safety First: Screening, Consent, and Insurance</a><a class="toc-a" href="#ch62">Skin Infections and the CrossFit Athlete</a><a class="toc-a" href="#ch63">Protecting Your Business: The Waiver</a><a class="toc-a" href="#ch64">Health &amp; Safety: A Primer for CrossFit Trainers</a></div></div>
       </div>
     </details>
-  </div>
+  </aside>
 
-  <nav class="toc" id="contents">
-    <div class="toc-bar">
-      <h3>Contents</h3>
-      <div class="toc-tools">
-        <input type="search" id="ch-filter" class="ch-filter" placeholder="Filter titles&hellip;" autocomplete="off">
-        <button type="button" class="ctl" data-act="expand">Expand all</button>
-        <button type="button" class="ctl" data-act="collapse">Collapse all</button>
+  <main class="content">
+    <div class="hero">
+      <h1>CCFT Study Guide</h1>
+      <p class="sub">Certified CrossFit Trainer exam. Read it, highlight it, listen to it.</p>
+      <div class="hero-modes">
+        <span class="mode">&#128214; Focused chapter</span>
+        <span class="mode">&#128396;&#65039; Find &amp; highlight</span>
+        <span class="mode">&#127911; Audio walkthrough</span>
       </div>
+      <div class="hero-actions">
+        <a class="cta" href="l1.html">Level 1 Guide</a>
+        <a class="cta" href="l2.html">Level 2 Guide</a>
+      </div>
+      <details class="about">
+        <summary>About this guide &amp; how to use it</summary>
+        <div class="about-body">
+          <p>Three ways to study each source, all in one place: <strong>read</strong> the focused chapter,
+             open the PDF and <strong>hunt &amp; highlight</strong> the key points, and <strong>listen</strong>
+             to the audio walkthrough (the &#127911; headphones next to each PDF link). The guide doesn&rsquo;t
+             replace the articles &mdash; it makes your time with them focused.</p>
+          <p>The exam tests <strong>application, not memorization</strong>: 160 questions (140 scored),
+             3h55m, at Pearson VUE. Questions come from the Content Outline; the articles support it.
+             Prioritize by <em>confidence</em> (know-nothing first) and by <em>exam weight</em> &mdash;
+             Training and Educating alone are 43% of the exam.</p>
+          <table class="weights">
+            <thead><tr><th>Domain</th><th>Questions</th><th>Weight</th></tr></thead>
+            <tbody><tr><td>D4 &middot; Training</td><td>34</td><td><strong>24%</strong></td></tr><tr><td>D3 &middot; Educating</td><td>27</td><td><strong>19%</strong></td></tr><tr><td>D5 &middot; Leadership & Management</td><td>23</td><td><strong>16%</strong></td></tr><tr><td>D2 &middot; Programming</td><td>19</td><td><strong>14%</strong></td></tr><tr><td>D6 &middot; Lifestyle Education</td><td>15</td><td><strong>11%</strong></td></tr><tr><td>D1 &middot; Screening & Ongoing Assessment</td><td>11</td><td><strong>8%</strong></td></tr><tr><td>D7 &middot; Professional Responsibilities</td><td>11</td><td><strong>8%</strong></td></tr></tbody>
+          </table>
+          <p class="tiny">The Level 1 &amp; Level 2 Training Guides are the foundation of all CCFT material and
+             have their own dedicated pages (buttons above).</p>
+        </div>
+      </details>
     </div>
-    <p class="toc-hint">Tap any title to jump &amp; open it. Each article is collapsed &mdash; tap to expand.</p>
-    <div class="toc-list"><div class="toc-group"><div class="toc-d" style="--accent:#1a6aa8"><a href="#d1">D1 &middot; Screening & Ongoing Assessment <span class="toc-n">(11)</span></a><span class="toc-w">8%</span></div><a class="toc-a" href="#ch1">Who&#x27;s Safe to Train, and Who Needs a Doctor First</a><a class="toc-a" href="#ch2">The Measure of Man: Reading an Athlete&#x27;s Build So You Don&#x27;t Force a Bad Position</a><a class="toc-a" href="#ch3">Dissecting the Squat: Is It a Mobility Problem or a Motor-Control Problem?</a><a class="toc-a" href="#ch4">Aging, Performance and Health</a><a class="toc-a" href="#ch5">Coaching the Mental Side of CrossFit</a><a class="toc-a" href="#ch6">Why Use a Training Log</a><a class="toc-a" href="#ch7">CrossFit Training During Pregnancy and Motherhood</a><a class="toc-a" href="#ch8">The Mind Game: Coaching the Mental Side of Fitness</a><a class="toc-a" href="#ch9">Muscle Damage and Soreness: Reading What Your Athletes Feel</a><a class="toc-a" href="#ch10">Compartment Syndrome &amp; Rhabdo — When &#x27;Sore&#x27; Is Actually an Emergency</a><a class="toc-a" href="#ch11">Reading the Bodyweight Squat: A 10-Point Screen</a></div><div class="toc-group"><div class="toc-d" style="--accent:#157a52"><a href="#d2">D2 &middot; Programming <span class="toc-n">(18)</span></a><span class="toc-w">14%</span></div><a class="toc-a" href="#ch12">A Theoretical Template for CrossFit&#x27;s Programming</a><a class="toc-a" href="#ch13">Benchmark Workouts: The Girls</a><a class="toc-a" href="#ch14">Team Workouts — Running CrossFit for a Whole Group at Once</a><a class="toc-a" href="#ch15">Fooling Around with Fran: Work, Power, and Intensity</a><a class="toc-a" href="#ch16">VO2 Max: Not the Gold Standard?</a><a class="toc-a" href="#ch17">The Fish Diagram: Why Beginners Get Fast Gains and Vets Need Variety</a><a class="toc-a" href="#ch18">Human Power Output — Why CrossFit Metcons Hit Every Engine at Once</a><a class="toc-a" href="#ch19">Scaling CrossFit Workouts — Keeping the Stimulus, Not Just the Movements</a><a class="toc-a" href="#ch20">A Deft Dose of Volume</a><a class="toc-a" href="#ch21">No Limits: CrossFitting With Type 1 Diabetes</a><a class="toc-a" href="#ch22">How a Hard Workout Actually Makes You Fitter</a><a class="toc-a" href="#ch23">Conjugate CrossFit</a><a class="toc-a" href="#ch24">End of the Line? Why Linear Progression Eventually Stalls</a><a class="toc-a" href="#ch25">The High-Performance Pregnancy</a><a class="toc-a" href="#ch26">Does CrossFit Actually Work? The Data Says Yes</a><a class="toc-a" href="#ch27">Pregnancy: A Practical Guide for Scaling</a><a class="toc-a" href="#ch28">The Westside Conjugate System</a><a class="toc-a" href="#ch29">Building the Engine Back Up After an Injury</a></div><div class="toc-group"><div class="toc-d" style="--accent:#9a6312"><a href="#d3">D3 &middot; Educating <span class="toc-n">(11)</span></a><span class="toc-w">19%</span></div><a class="toc-a" href="#ch30">Anatomy for Coaches: 4 Parts, 3 Joints, 2 Motions, 3 Rules</a><a class="toc-a" href="#ch31">The Scoop and the Second Pull</a><a class="toc-a" href="#ch32">The Aerobic Paradox: Why Hard Beats Long-and-Slow</a><a class="toc-a" href="#ch33">Using the Ring Support: Variations and the Ring Dip</a><a class="toc-a" href="#ch34">Spine Mechanics for Lifters: Why a Flat Back Actually Protects You</a><a class="toc-a" href="#ch35">Anatomy and Physiology: A Primer for CrossFit Trainers</a><a class="toc-a" href="#ch36">The Deeper Side of Coaching</a><a class="toc-a" href="#ch37">The Athletic Hip</a><a class="toc-a" href="#ch38">Getting Inverted: Teaching the Handstand</a><a class="toc-a" href="#ch39">Getting Some Leverage: Why Bar Position and Balance Change Everything</a><a class="toc-a" href="#ch40">Virtuosity: Doing the Common Uncommonly Well</a></div><div class="toc-group"><div class="toc-d" style="--accent:#7a3aa8"><a href="#d4">D4 &middot; Training <span class="toc-n">(6)</span></a><span class="toc-w">24%</span></div><a class="toc-a" href="#ch41">Where Barbells Come From</a><a class="toc-a" href="#ch42">The Bench Press: Technique, Faults, and Spotting</a><a class="toc-a" href="#ch43">Building Mental Toughness</a><a class="toc-a" href="#ch44">The Pursuit of Excellence</a><a class="toc-a" href="#ch45">Movement 101: The Words Coaches Use to Describe How the Body Moves</a><a class="toc-a" href="#ch46">Five Roads to a 7-Minute 2K Row</a></div><div class="toc-group"><div class="toc-d" style="--accent:#a83a52"><a href="#d5">D5 &middot; Leadership & Management <span class="toc-n">(2)</span></a><span class="toc-w">16%</span></div><a class="toc-a" href="#ch47">The CrossFit Kids Training Guide</a><a class="toc-a" href="#ch48">Coaching the Aging Athlete (Masters)</a></div><div class="toc-group"><div class="toc-d" style="--accent:#1a8aa0"><a href="#d6">D6 &middot; Lifestyle Education <span class="toc-n">(8)</span></a><span class="toc-w">11%</span></div><a class="toc-a" href="#ch49">Sugar Bombs: The Truth About Sports Drinks</a><a class="toc-a" href="#ch50">Cancer, Carbs and Where a Coach Has to Stop Talking</a><a class="toc-a" href="#ch51">Carbohydrate Selections: The Right Carb for the Right Job</a><a class="toc-a" href="#ch52">How Much Food Should I Eat?</a><a class="toc-a" href="#ch53">My Experiments With Intermittent Fasting</a><a class="toc-a" href="#ch54">Milk: Fact vs. Intolerance</a><a class="toc-a" href="#ch55">Sleep: Get Horizontal</a><a class="toc-a" href="#ch56">Race-Day Fueling</a></div><div class="toc-group"><div class="toc-d" style="--accent:#5a5a2a"><a href="#d7">D7 &middot; Professional Responsibilities <span class="toc-n">(8)</span></a><span class="toc-w">8%</span></div><a class="toc-a" href="#ch57">How Often Lifters Actually Get Hurt (and Where)</a><a class="toc-a" href="#ch58">The CCFT Candidate Handbook: Your Job, Your Rules, Your Credential</a><a class="toc-a" href="#ch59">The CCFT Content Outline (Your Exam Blueprint)</a><a class="toc-a" href="#ch60">The CCFT Study Material Reference List (Your Map to the Exam)</a><a class="toc-a" href="#ch61">Safety First: Screening, Consent, and Insurance</a><a class="toc-a" href="#ch62">Skin Infections and the CrossFit Athlete</a><a class="toc-a" href="#ch63">Protecting Your Business: The Waiver</a><a class="toc-a" href="#ch64">Health &amp; Safety: A Primer for CrossFit Trainers</a></div></div>
-  </nav>
 
-  <section class="domain" id="d1" style="--accent:#1a6aa8"><div class="domain-head"><h2>D1 &middot; Screening & Ongoing Assessment</h2><span>8% of exam &middot; 11 questions</span></div>
+    <section class="domain" id="d1" style="--accent:#1a6aa8"><div class="domain-head"><h2>D1 &middot; Screening & Ongoing Assessment</h2><span>8% of exam &middot; 11 questions</span></div>
 <details class="chapter" id="ch1" data-title="who&#x27;s safe to train, and who needs a doctor first" style="--accent:#1a6aa8">
   <summary class="ch-summary">
     <span class="ch-chevron" aria-hidden="true">&#8250;</span>
@@ -1989,14 +2023,27 @@
 </details>
 <p class="back-top"><a href="#top">&uarr; Back to top &amp; contents</a></p></section>
 
-  <p class="footnote">Generated for study use. 64 of 64 articles included.
-     The Level 1 &amp; Level 2 Training Guides have their own dedicated study pages (linked above).</p>
+    <p class="footnote">Generated for study use. 64 of 64 articles included.
+       The Level 1 &amp; Level 2 Training Guides have their own dedicated study pages (linked above).</p>
+  </main>
 </div>
 <a href="#top" class="fab-top" aria-label="Back to top">&uarr;</a>
 <script>
 (function(){
   document.querySelectorAll('.jump-menu a').forEach(function(el){
     el.addEventListener('click', function(){ var d=document.querySelector('.jump[open]'); if(d) d.removeAttribute('open'); });
+  });
+
+  // --- sidebar: collapse on small screens (open on desktop) ---
+  var sidenav = document.querySelector('.sidenav');
+  var isNarrow = function(){ return window.matchMedia('(max-width:900px)').matches; };
+  if(sidenav && isNarrow()) sidenav.open = false;
+  document.querySelectorAll('.contents-link, a[href="#contents"]').forEach(function(a){
+    a.addEventListener('click', function(){ if(sidenav && isNarrow()) sidenav.open = true; });
+  });
+  // close the mobile sidebar after picking a title
+  document.querySelectorAll('.toc-a').forEach(function(a){
+    a.addEventListener('click', function(){ if(sidenav && isNarrow()) sidenav.open = false; });
   });
 
   // --- open a collapsed chapter when you navigate to it ---
