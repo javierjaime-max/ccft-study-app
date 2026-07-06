@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Level Three Delta &mdash; CCFT Study</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='6'%20fill='%231b1b1b'/%3E%3Ctext%20x='16'%20y='23'%20font-family='Georgia,serif'%20font-size='19'%20text-anchor='middle'%20fill='%23ffffff'%3EC%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#1b1b1b">
+<style>
+  :root { --ink:#1b1b1b; --muted:#5c5c5c; --line:#e0e0e0; --bg:#ffffff; --soft:#f6f6f4; }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--soft); color:var(--ink);
+          font-family:Georgia,'Times New Roman',serif; font-size:12.5pt; line-height:1.7; }
+  .wrap { max-width:8.1in; margin:0 auto; background:var(--bg); padding:0.7in 0.85in; }
+
+  /* ---- responsive shell: sidebar + content ---- */
+  .shell { max-width:1180px; margin:0 auto; display:grid;
+            grid-template-columns:264px minmax(0,1fr); gap:26px; padding:22px 22px 52px;
+            align-items:start; }
+  .sidebar { position:sticky; top:62px; }
+  .sidenav { border:1px solid var(--line); border-radius:12px; background:var(--bg); }
+  .sidenav > summary { display:none; }
+  .sidenav-body { padding:16px 15px 12px; max-height:calc(100vh - 100px); overflow-y:auto; }
+  .side-title { font-family:Georgia,serif; font-size:15pt; font-weight:bold; margin:0 0 12px; }
+  .sidenav-body .toc-tools { flex-direction:column; align-items:stretch; gap:8px; margin-bottom:14px; }
+  .sidenav-body .ch-filter { width:100%; }
+  .ctl-row { display:flex; gap:7px; }
+  .ctl-row .ctl { flex:1 1 0; }
+  .sidenav-body .toc-group { margin-bottom:14px; }
+  .content { background:var(--bg); border:1px solid var(--line); border-radius:14px;
+              padding:26px 32px 34px; min-width:0; }
+  .content .hero { padding-top:2px; }
+  @media (max-width:900px) {
+    .shell { display:block; max-width:none; padding:0; }
+    .sidebar { position:static; }
+    .sidenav { border:0; border-bottom:1px solid var(--line); border-radius:0; }
+    .sidenav > summary { display:block; cursor:pointer; padding:13px 16px;
+                          font-family:Arial,Helvetica,sans-serif; font-weight:bold; font-size:11pt;
+                          list-style:none; background:var(--soft); }
+    .sidenav > summary::-webkit-details-marker { display:none; }
+    .sidenav-body { max-height:none; overflow:visible; }
+    .side-title { display:none; }
+    .content { border:0; border-radius:0; padding:16px 16px 28px; }
+  }
+  a { color:#1a5a9a; }
+
+  /* ---- landing hero ---- */
+  .hero { padding:10px 0 8px; margin-bottom:14px; }
+  .hero h1 { font-size:30pt; margin:0 0 4px; letter-spacing:-0.5px; }
+  .hero .sub { color:var(--muted); font-size:13pt; margin:0 0 16px; }
+  .hero-modes { display:flex; gap:8px; flex-wrap:wrap; margin:0 0 16px;
+                 font-family:Arial,Helvetica,sans-serif; }
+  .hero-modes .mode { background:var(--soft); border:1px solid var(--line); border-radius:999px;
+                       padding:6px 13px; font-size:10.5pt; white-space:nowrap; }
+  .hero-actions { display:flex; gap:10px; flex-wrap:wrap; margin:0 0 12px; }
+  .cta { display:inline-block; padding:11px 18px; border-radius:9px; text-decoration:none;
+          font-family:Arial,Helvetica,sans-serif; font-weight:bold; font-size:11pt;
+          background:var(--soft); color:var(--ink) !important; border:1px solid var(--line); }
+  .cta.primary { background:#1a5a9a; color:#fff !important; border-color:#1a5a9a; }
+  .cta:hover { filter:brightness(0.96); }
+  .about { border:1px solid var(--line); border-radius:10px; background:var(--bg); }
+  .about > summary { cursor:pointer; padding:12px 16px; font-family:Arial,Helvetica,sans-serif;
+                      font-weight:bold; font-size:10.5pt; color:var(--muted); list-style:none; }
+  .about > summary::-webkit-details-marker { display:none; }
+  .about > summary::before { content:'\203A'; display:inline-block; margin-right:9px;
+                              transition:transform .15s; color:var(--accent,#1a5a9a); font-weight:bold; }
+  .about[open] > summary::before { transform:rotate(90deg); }
+  .about-body { padding:2px 18px 14px; font-size:11pt; }
+  .about-body p { margin:0 0 9px; }
+  .about-body .tiny { font-size:10pt; color:var(--muted); }
+  table.weights { border-collapse:collapse; width:100%; margin:14px 0; font-size:11pt;
+                   font-family:Arial,Helvetica,sans-serif; }
+  table.weights th, table.weights td { text-align:left; padding:6px 10px; border-bottom:1px solid var(--line); }
+  table.weights th { background:var(--soft); }
+
+  .toc { margin:22px 0 10px; padding:18px 22px; border:1px solid var(--line); border-radius:12px;
+          background:var(--bg); font-family:Arial,Helvetica,sans-serif; }
+  .toc > h3 { margin:0 0 3px; font-family:Georgia,serif; font-size:17pt; }
+  .toc-hint { margin:0 0 16px; font-size:10pt; color:var(--muted); }
+  .toc-list { }
+  .toc-group { margin-bottom:18px; }
+  .toc-d { display:flex; justify-content:space-between; align-items:baseline; gap:8px;
+            font-size:11.5pt; font-weight:bold; color:var(--accent);
+            border-bottom:2px solid var(--accent); padding-bottom:5px; margin-bottom:5px; }
+  .toc-w { flex:none; }
+  .toc-a { display:block; color:var(--ink); text-decoration:none; font-size:10.5pt; line-height:1.3;
+            padding:7px 11px; border-radius:7px; border-left:3px solid transparent; }
+  .toc-a:hover { background:var(--soft); border-left-color:var(--accent); color:var(--accent); }
+  .toc-bar { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+  .toc-tools { display:flex; gap:7px; align-items:center; flex-wrap:wrap; }
+  .ch-filter { font-family:Arial,Helvetica,sans-serif; font-size:10.5pt; padding:7px 11px;
+                border:1px solid var(--line); border-radius:8px; min-width:130px; }
+  .ctl { font-family:Arial,Helvetica,sans-serif; font-size:10pt; font-weight:bold; cursor:pointer;
+          padding:7px 11px; border:1px solid var(--line); border-radius:8px; background:var(--soft);
+          color:var(--ink); }
+  .ctl:hover { background:#ececec; }
+
+  .domain-head { margin:34px 0 8px; padding:10px 14px; border-radius:6px;
+                  background:var(--accent); color:#fff; }
+  .domain-head h2 { margin:0; font-size:16pt; }
+  .domain-head span { font-size:10.5pt; opacity:0.92; font-family:Arial,Helvetica,sans-serif; }
+
+  /* ---- collapsible chapter ---- */
+  .chapter { margin:12px 0; border:1px solid var(--line); border-left:5px solid var(--accent);
+              border-radius:10px; background:var(--bg); overflow:hidden; }
+  .ch-summary { list-style:none; cursor:pointer; padding:13px 16px 13px 14px; display:flex;
+                 gap:11px; align-items:flex-start; }
+  .ch-summary::-webkit-details-marker { display:none; }
+  .ch-chevron { flex:none; font-size:20pt; line-height:1; color:var(--accent); font-weight:bold;
+                 transform:rotate(0deg); transition:transform .15s; margin-top:2px; }
+  .chapter[open] .ch-chevron { transform:rotate(90deg); }
+  .chapter[open] { box-shadow:0 2px 10px rgba(0,0,0,0.06); }
+  .ch-sum-text { flex:1 1 auto; min-width:0; }
+  .ch-summary:hover .ch-title { color:var(--accent); }
+  .ch-meta { font-family:Arial,Helvetica,sans-serif; font-size:9.5pt; margin-bottom:4px;
+              display:flex; gap:9px; flex-wrap:wrap; align-items:center; }
+  .ch-badge { background:var(--accent); color:#fff; padding:2px 9px; border-radius:10px; }
+  .ch-weight { color:var(--muted); }
+  .ch-audio-dot { margin-left:auto; }
+  .ch-title { font-size:14pt; margin:1px 0 4px; word-break:break-word; line-height:1.25; }
+  .ch-oneliner { margin:0; font-size:11pt; color:var(--muted); font-family:Arial,Helvetica,sans-serif;
+                  line-height:1.4; }
+  .chapter[open] .ch-oneliner { display:none; }
+  .ch-body { padding:2px 18px 18px; }
+  .pdf-link { font-family:Arial,Helvetica,sans-serif; font-size:10.5pt; font-weight:bold; }
+  .pdf-link.missing { color:#b06a00; font-weight:normal; font-style:italic; }
+  .ep-players { display:flex; flex-direction:column; gap:6px; width:100%; margin-top:8px; }
+  .ep-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .ep-lab { font-family:Arial,Helvetica,sans-serif; font-size:10.5pt; font-weight:bold;
+            color:var(--accent); white-space:nowrap; }
+  .ep-audio { height:34px; max-width:100%; flex:1 1 220px; min-width:200px; }
+
+  .block { margin:14px 0; }
+  .block h3 { font-size:11.5pt; margin:0 0 6px; color:var(--accent);
+               font-family:Arial,Helvetica,sans-serif; }
+  .block p { margin:0; }
+  .block ul { margin:0; padding-left:22px; }
+  .block li { margin-bottom:5px; }
+  .focus li { }
+
+  .tasks { background:var(--soft); border-radius:6px; padding:10px 14px; }
+  .tasks ul { list-style:none; padding-left:0; }
+  .tasks li { margin-bottom:4px; }
+  .task-id { display:inline-block; min-width:42px; font-family:Arial,Helvetica,sans-serif;
+              font-weight:bold; color:var(--accent); }
+
+  dl.terms { margin:0; }
+  .term { display:flex; gap:10px; padding:5px 0; border-bottom:1px solid var(--line); }
+  .term dt { flex:0 0 30%; font-weight:bold; }
+  .term dd { flex:1; margin:0; }
+
+  .red-flags { background:#fdf3f2; border:1px solid #f0c9c4; border-radius:6px; padding:10px 14px; }
+  .red-flags h3 { color:#b23a2a; }
+  .red-flags li { color:#9a2e20; }
+
+  .exam { background:#f0f5fa; border-left:4px solid #1a5a9a; padding:10px 14px; border-radius:4px; }
+  .exam h3 { color:#1a5a9a; }
+
+  .self-test { background:var(--soft); border-radius:6px; padding:12px 16px; }
+  .q { margin:10px 0; padding-bottom:8px; border-bottom:1px dotted var(--line); }
+  .q-stem { margin:0 0 6px; }
+  .q-opts { margin:0 0 6px; padding-left:24px; }
+  .q-opts li { margin-bottom:3px; }
+  .q-ans { font-family:Arial,Helvetica,sans-serif; font-size:10.5pt; }
+  .q-ans summary { cursor:pointer; color:var(--accent); font-weight:bold; }
+  .q-ans p { margin:6px 0 0; background:#fff; border:1px solid var(--line); border-radius:4px; padding:8px 10px; }
+
+  .footnote { color:var(--muted); font-size:10pt; font-family:Arial,Helvetica,sans-serif;
+               margin-top:24px; padding-top:10px; border-top:1px solid var(--line); }
+
+  @media screen and (max-width:640px) {
+    .wrap { padding:18px 16px; } body { font-size:12pt; }
+    .term { flex-direction:column; gap:0; } .term dt { flex-basis:auto; }
+    .ch-tier { margin-left:0; }
+  }
+  /* ── Magazine chapter styling ─────────────────────────── */
+  .ico { width:1.05em; height:1.05em; flex:none; fill:none; stroke:currentColor;
+          stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; vertical-align:-3px; margin-right:8px; }
+  .block h3 { display:flex; align-items:center; }
+  .ch-sub { font-family:Arial,Helvetica,sans-serif; font-size:10pt; color:var(--muted);
+             display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:6px; }
+  .ch-file { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:8.5pt; color:#8f8d84;
+              background:var(--soft); padding:2px 7px; border-radius:5px; }
+  .pdf-link .ico { margin-right:5px; }
+
+  .tldr { display:flex; gap:11px; align-items:flex-start; background:var(--soft);
+           border-left:5px solid var(--accent); border-radius:8px; padding:13px 16px; margin:16px 0 4px; }
+  .tldr .ico { color:var(--accent); width:1.3em; height:1.3em; margin:2px 0 0; }
+  .tldr p { margin:0; font-size:12.5pt; font-weight:bold; color:#33312c; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:7px; }
+  .task-chip { background:var(--soft); border:1px solid var(--line); border-radius:14px;
+                padding:4px 11px; font-family:Arial,Helvetica,sans-serif; font-size:9pt; }
+  .task-chip b { color:var(--accent); }
+
+  .hunt { background:#fcfbf8; border:1px solid var(--line); border-top:3px solid var(--accent);
+           border-radius:10px; padding:14px 17px; }
+  .hunt h3 { color:var(--accent); }
+  .hunt-progress { margin-left:auto; font-family:Arial,Helvetica,sans-serif; font-size:8.5pt;
+                    font-weight:normal; color:var(--muted); background:#fff; border:1px solid var(--line);
+                    border-radius:11px; padding:2px 10px; }
+  .hunt-progress.done { background:#e8f5ec; border-color:#bfe3cc; color:#1d7a44; }
+  .hunt-help { font-size:10.5pt; color:var(--muted); margin:2px 0 12px;
+                font-family:Arial,Helvetica,sans-serif; }
+  .hunt-item { display:flex; gap:12px; align-items:flex-start; padding:11px 0;
+                border-bottom:1px dashed var(--line); }
+  .hunt-item:last-child { border-bottom:none; padding-bottom:0; }
+  .hunt-check { width:21px; height:21px; flex:none; margin-top:1px; accent-color:var(--accent); cursor:pointer; }
+  .hunt-body { flex:1; }
+  .hunt-clue { display:block; cursor:pointer; font-weight:bold; }
+  .hunt-check:checked ~ .hunt-body .hunt-clue { text-decoration:line-through; color:var(--muted); }
+  .hunt-reveal { margin-top:5px; font-family:Arial,Helvetica,sans-serif; font-size:10.5pt; }
+  .hunt-reveal summary { cursor:pointer; color:var(--accent); font-weight:bold; }
+  .hunt-reveal p { margin:7px 0 0; background:#fff; border:1px solid var(--line); border-radius:6px; padding:9px 12px; }
+  .focus li { margin-bottom:6px; }
+
+  /* ── Website navigation ───────────────────────────────── */
+  html { scroll-behavior:smooth; }
+  .chapter { scroll-margin-top:74px; }
+  .domain { scroll-margin-top:64px; }
+  #top { scroll-margin-top:64px; }
+
+  .appbar { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.97);
+             -webkit-backdrop-filter:saturate(1.1) blur(6px); backdrop-filter:saturate(1.1) blur(6px);
+             border-bottom:1px solid var(--line); font-family:Arial,Helvetica,sans-serif; }
+  .appbar-inner { max-width:1180px; margin:0 auto; padding:9px 24px; display:flex; align-items:center;
+                   justify-content:space-between; gap:12px; }
+  .brand { font-weight:bold; font-size:1.02rem; color:var(--ink); text-decoration:none; white-space:nowrap; }
+  .appnav { display:flex; align-items:center; gap:8px; }
+  .appnav .contents-link { color:var(--ink); text-decoration:none; font-size:0.92rem; padding:9px 10px; border-radius:7px; }
+  .appnav .contents-link:hover { background:var(--soft); }
+  .jump { position:relative; }
+  .jump > summary { list-style:none; cursor:pointer; padding:9px 15px; border:1px solid var(--line);
+                     border-radius:8px; background:var(--soft); font-weight:bold; color:var(--ink); white-space:nowrap;
+                     font-size:0.92rem; }
+  .jump > summary::-webkit-details-marker { display:none; }
+  .jump[open] > summary { background:#e9eef3; }
+  .jump-menu { position:absolute; right:0; top:calc(100% + 6px); background:#fff; border:1px solid var(--line);
+                border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.15); min-width:300px; padding:6px;
+                z-index:60; max-height:72vh; overflow-y:auto; }
+  .jump-menu a { display:flex; justify-content:space-between; gap:12px; padding:11px 12px; border-radius:7px;
+                  color:var(--ink); text-decoration:none; font-size:0.92rem; line-height:1.3; }
+  .jump-menu a:hover { background:var(--soft); }
+  .jump-menu .jw { color:var(--muted); font-weight:bold; white-space:nowrap; }
+
+  .toc-d a { color:inherit; text-decoration:none; }
+  .toc-n { color:var(--muted); font-weight:normal; }
+  .back-top { margin:16px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:10.5pt; }
+  .back-top a { text-decoration:none; }
+
+  .fab-top { position:fixed; right:16px; bottom:16px; z-index:40; width:48px; height:48px; border-radius:50%;
+              background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center;
+              text-decoration:none; font-size:22px; line-height:1; box-shadow:0 4px 16px rgba(0,0,0,0.3); }
+
+  /* ── Responsive: tablet & mobile ──────────────────────── */
+  @media (max-width:900px) {
+    .appbar-inner { padding:9px 20px; }
+  }
+  @media (max-width:640px) {
+    .appbar-inner { padding:8px 16px; }
+    .brand { font-size:0.96rem; }
+    .appnav .contents-link { display:none; }
+    .jump-menu { min-width:min(82vw, 320px); }
+    .fab-top { width:44px; height:44px; right:14px; bottom:14px; }
+  }
+
+  @media print {
+    body { background:#fff; font-size:11pt; }
+    .wrap { max-width:none; padding:0; }
+    a { color:var(--ink); }
+    .appbar, .fab-top, .back-top { display:none !important; }
+    .chapter, .domain, #top { scroll-margin-top:0; }
+    .q-ans[open] summary { display:none; }
+    .chapter { break-inside:auto; }
+  }
+</style>
+
+<style>
+  .framing { font-style:italic; color:#444; background:#f6f6f4; border-left:4px solid var(--accent,#7a3aa8);
+             padding:10px 15px; margin:0 0 16px; border-radius:0 6px 6px 0; }
+  .ch-body h2 { font-size:1.12rem; margin:22px 0 6px; }
+  .ch-body h3 { font-size:1.0rem; margin:16px 0 4px; color:var(--accent,#7a3aa8);
+                font-family:Arial,Helvetica,sans-serif; }
+  .ch-body p { margin:0 0 10px; }
+  .ch-body strong { color:#111; }
+  .ch-body ul,.ch-body ol { margin:0 0 12px; padding-left:22px; }
+  .ch-body li { margin-bottom:5px; }
+  .ch-body table { border-collapse:collapse; width:100%; margin:12px 0; font-size:0.92rem; }
+  .ch-body th,.ch-body td { text-align:left; padding:6px 9px; border-bottom:1px solid #ddd; }
+  .ch-body th { background:#f2f2ef; }
+  /* the contrast labels the buckets bold inline: keep them scannable */
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-pdf" viewBox="0 0 24 24"><path d="M6 2h7l5 5v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="M13 2v6h6"/></symbol>
+<symbol id="i-tldr" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+<symbol id="i-why" viewBox="0 0 24 24"><path d="M5 4a2 2 0 0 1 2-2h11v18H7a2 2 0 0 0-2 2z"/><path d="M18 17H7a2 2 0 0 0-2 2"/></symbol>
+<symbol id="i-tasks" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-focus" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-hunt" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="M12.5 5.5l4 4"/></symbol>
+<symbol id="i-exam" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a3 3 0 0 1 6 0v1"/><path d="M9 12h6M9 16h4"/></symbol>
+<symbol id="i-terms" viewBox="0 0 24 24"><path d="M3 12 12 3h8v8l-9 9z"/><circle cx="15.5" cy="8.5" r="1.2"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18h.01"/></symbol>
+<symbol id="i-quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 1 1 3.6 2.2c-.9.5-1.6 1-1.6 2.1"/><path d="M12 17h.01"/></symbol>
+</defs></svg>
+<header class="appbar">
+  <div class="appbar-inner">
+    <a class="brand" href="index.html">&larr; CCFT Study Guide</a>
+    <nav class="appnav">
+      <a class="contents-link" href="#contents">Contents</a>
+      <details class="jump">
+        <summary>Deltas &#9662;</summary>
+        <div class="jump-menu">
+          <a href="#top"><span>&uarr; Top &amp; contents</span></a>
+          <a href="#d1"><span>1. Clearing an Athlete Before You Train Them</span></a><a href="#d2"><span>2. Pregnancy, Diabetes, Masters, Kids, Return-from-Injury</span></a><a href="#d3"><span>3. When &#x27;Sore&#x27; Is Actually an Emergency</span></a><a href="#d4"><span>4. Scope, Paperwork &amp; the Credential&#x27;s Rules</span></a><a href="#d5"><span>5. Energy Systems, VO₂, Power &amp; Anthropometry</span></a><a href="#d6"><span>6. Nutrition, Sleep &amp; the Mental Game</span></a>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+<div class="shell" id="top" style="--accent:#7a3aa8">
+  <aside class="sidebar">
+    <details class="sidenav" id="contents" open>
+      <summary class="sidenav-toggle">&#9776; Contents &amp; filter</summary>
+      <div class="sidenav-body">
+        <div class="side-title">The Six Deltas</div>
+        <div class="toc-tools">
+          <input type="search" id="ch-filter" class="ch-filter" placeholder="Filter deltas&hellip;" autocomplete="off">
+          <div class="ctl-row">
+            <button type="button" class="ctl" data-act="expand">Expand all</button>
+            <button type="button" class="ctl" data-act="collapse">Collapse all</button>
+          </div>
+        </div>
+        <div class="toc-list"><div class="toc-group"><a class="toc-a" href="#d1">1. Clearing an Athlete Before You Train Them</a><a class="toc-a" href="#d2">2. Pregnancy, Diabetes, Masters, Kids, Return-from-Injury</a><a class="toc-a" href="#d3">3. When &#x27;Sore&#x27; Is Actually an Emergency</a><a class="toc-a" href="#d4">4. Scope, Paperwork &amp; the Credential&#x27;s Rules</a><a class="toc-a" href="#d5">5. Energy Systems, VO₂, Power &amp; Anthropometry</a><a class="toc-a" href="#d6">6. Nutrition, Sleep &amp; the Mental Game</a></div></div>
+      </div>
+    </details>
+  </aside>
+
+  <main class="content">
+    <div class="hero">
+      <h1>The Level Three Delta</h1>
+      <p class="sub">Only what the CCFT adds beyond your L1 &amp; L2 &mdash; the fast cram guide</p>
+      <div class="hero-modes">
+        <span class="mode">&#9889; What&rsquo;s new vs. your experience</span>
+        <span class="mode">&#127919; Bright lines &amp; traps</span>
+        <span class="mode">&#128218; Cram sheets</span>
+      </div>
+      <div class="hero-actions">
+        <a class="cta" href="index.html">&larr; Article guide</a>
+        <a class="cta" href="l1.html">Level 1</a>
+        <a class="cta" href="l2.html">Level 2</a>
+      </div>
+      <details class="about">
+        <summary>What this is &amp; how to use it</summary>
+        <div class="about-body">
+          <p>You already coach. You hold a current L2 and 375+ hours on the floor. This is <strong>not</strong>
+             the whole manual re-taught &mdash; it is only the <strong>delta</strong>: the screening, populations,
+             medicine, profession, physiology, and whole-person judgment the L1/L2 never covered, condensed to
+             exam depth. Every item is a contrast: <strong>what you already know</strong>, then
+             <strong>what&rsquo;s new at L3</strong>, then a pointer to the full manual chapter that goes deep.</p>
+          <p class="tiny">Read it front to back to find your gaps; drill each Cram Sheet the week before you sit
+             the exam. If an item feels obvious, good &mdash; that&rsquo;s baseline you own. Slow down where it
+             doesn&rsquo;t.</p>
+        </div>
+      </details>
+    </div>
+
+    
+<details class="chapter" id="d1" data-title="screening &amp; referral — clearing an athlete before you train them" style="--accent:#1a6aa8">
+  <summary class="ch-summary">
+    <span class="ch-chevron" aria-hidden="true">&#8250;</span>
+    <div class="ch-sum-text">
+      <div class="ch-meta">
+        <span class="ch-badge">Delta 1 of 6</span>
+      </div>
+      <h2 class="ch-title">Clearing an Athlete Before You Train Them</h2>
+      <p class="ch-oneliner">At L1/L2 you scaled the workout in front of you. The L3 adds the step BEFORE that: reading and clearing the person — health-history clearance, movement screening, and the bright line where a coach must stop and refer.</p>
+    </div>
+  </summary>
+  <div class="ch-body">
+    <p class="framing">At L1/L2 you scaled the workout in front of you. The L3 adds the step BEFORE that: reading and clearing the person — health-history clearance, movement screening, and the bright line where a coach must stop and refer.</p>
+    <p>At L1 and L2 you scaled the workout in front of you — met the athlete where they were and adjusted the day&rsquo;s stimulus. The L3 adds the step <em>before</em> that: reading and clearing the person before they ever touch a barbell. Three moves you were never formally taught: (1) a health-history screen that stratifies risk and decides who trains, who trains under your eye, and who sees a doctor first; (2) a formal 10-point bodyweight-squat screen that names the root cause of a fault, not just the fault; and (3) an honest read on how often lifters actually get hurt and where, so you manage risk without fear-mongering or hand-waving. Running through all three is the bright line: the exact point a coach stops and refers out.</p>
+<h2>1. Health-History Clearance &amp; Risk Stratification</h2>
+<p><strong>You already know:</strong> ask a newcomer a few questions and dial back intensity if something seems off.
+<strong>New at L3:</strong> a formal, defensible risk system built on two named forms. The <strong>PAR-Q+</strong> (Physical Activity Readiness Questionnaire) is the short self-screen everyone completes; the <strong>ePARmed-X+ / PARmed-X</strong> is the companion medical form an athlete carries to a physician when they flag something. A dedicated <strong>PARmed-X for PREGNANCY</strong> exists for pregnant athletes with its own contraindication list. These are <em>living documents</em>, revised on roughly a <strong>5-year cycle</strong> — don&rsquo;t lean on a form you learned years ago.</p>
+<p><strong>The old trap the L3 rejects:</strong> the original PAR-Q&rsquo;s all-or-nothing rule — <em>any</em> &ldquo;yes&rdquo; = automatic doctor referral — wrongly benched people who&rsquo;d have been fine. A qualified coach now asks smarter follow-up questions instead of auto-referring. The founding principle: <strong>being sedentary is more dangerous than a single workout.</strong> Screening exists to get people moving safely, not to keep them on the sidelines. The biggest health payoff goes to the <em>least</em>-fit person, and exercise capacity predicts mortality better than many traditional risk factors.</p>
+<h3>The three-tier system (the payload — Recommendation 59)</h3>
+<p>Sort every new athlete into one bucket:
+- <strong>Low risk</strong> → train at moderate intensity, minimal supervision.
+- <strong>Intermediate (moderate) risk</strong> → can train, but <strong>under a qualified coach&rsquo;s guidance</strong>.
+- <strong>High risk</strong> → <strong>medical clearance first</strong>, then train only in a supervised setting.</p>
+<p><strong>Key numbers to carry:</strong> serious events are rare — fatal events in healthy people during a maximal stress test run ~<strong>0.3–0.8 per 10,000 tests</strong>; death during activity is <strong>&lt;0.01 per 10,000 participation-hours.</strong> For cardiac patients, capacity above ~<strong>5 METs</strong> (≈17.5 mL/kg/min) marks lower risk; below that, plus medically unstable or inactive, is high risk. (1 MET = sitting at rest; &gt;6 METs = vigorous.) The screen is no longer capped at ages 15–69 — it applies across the whole lifespan.</p>
+<p><strong>The single riskiest combination:</strong> <em>previously inactive + suddenly vigorous.</em> This is the deconditioned beginner who wants to crush your hardest class on day one. Unsupervised &ldquo;boot-camp&rdquo;-style high-intensity work for overweight, deconditioned, or prediabetic people is specifically called out as a hazard. Scale down, ramp up gradually — that <em>is</em> risk management.</p>
+<h3>The bright line — where a coach refers out</h3>
+<p>Most people are safe to train, and over-benching is its own harm — but these are hard referrals:
+- <strong>Recent stroke or spinal cord injury (within 6 months)</strong> → medical clearance, then supervised training only.
+- <strong>Spinal cord injury</strong> signs — <strong>autonomic dysreflexia</strong> (dangerous BP spike) or <strong>exertional hypotension</strong> (BP crash) → potentially life-threatening; physician.
+- <strong>Active cancer treatment WITH symptoms</strong>, <strong>skeletal/visceral metastases</strong>, or <strong>significant anemia</strong> → physician. (Most cancer patients otherwise benefit from activity, even in treatment.)
+- <strong>Resting BP ≈ 200/110 and up</strong> → caution, further evaluation before ramping. (Most hypertensives should be <em>encouraged</em> to train — it lowers BP.)
+- <strong>Unstable or life-threatening arrhythmia</strong> → cardiologist; don&rsquo;t guess. (Some nonlethal arrhythmias, if stable and active, are only intermediate risk.)
+- <strong>Diabetes:</strong> watch for <strong>hypoglycemia</strong> during/after training (esp. type 1). A middle-aged/older type 2, or any diabetic with cardiac symptoms wanting vigorous work → more screening, likely a physician.
+- <strong>Down syndrome</strong> before any head/neck-stressing activity (gymnastics, diving, contact) → screen for <strong>atlanto-axial instability</strong> first.
+- <strong>Osteoporosis</strong> → avoid trunk flexion and forceful trunk rotation (fracture/crush-fracture risk).
+- <strong>Serious back history</strong> — surgery, spinal fracture, <strong>spondylolysis/spondylolisthesis</strong> (pause strenuous sport <strong>≥3 months</strong>), nerve symptoms → caution, steer to medical opinion.</p>
+<p><strong>Scope self-check:</strong> the fitness field is largely unregulated and full of weak &ldquo;pseudo-certifications.&rdquo; Knowing the limits of your own qualification — where a coach&rsquo;s job ends and a physician&rsquo;s begins — is itself part of being qualified. Get the <strong>written, signed medical release</strong> when a high-risk athlete requires clearance.</p>
+<p><strong>→ Full Level Three Manual, Chapters 6 &amp; 7.</strong></p>
+<h2>2. The 10-Point Bodyweight-Squat Movement Screen</h2>
+<p><strong>You already know:</strong> you can fix a squat by eye and cue the common faults in your sleep.
+<strong>New at L3:</strong> a <em>formal, repeatable screen</em> that sorts every fault into one of <strong>three root-cause buckets</strong> — <strong>coordination (neuromuscular)</strong>, <strong>strength/stability</strong>, or <strong>mobility</strong> — and names the mechanism before you correct it. The exam wants the <em>root cause</em>, not just the fault. One air squat is a window into coordination, strength, joint stability, and mobility across the whole kinetic chain.</p>
+<p><strong>Protocol:</strong> run <strong>10 continuous reps</strong>, filmed from <strong>front, side, and back</strong>. A <strong>perfect score is zero</strong> (10 clean reps); you only mark a fault if the athlete misses the standard on <strong>≥2 of 10 reps</strong>, so one wobble doesn&rsquo;t count. <strong>Stance:</strong> heels ≈ shoulder-width, toes forward or turned out <strong>≤~10°</strong> (too wide adds ~15% knee compression; too narrow adds shear). Cue &ldquo;bend the bar&rdquo;/pull the dowel into the traps to fire lats and stiffen the torso. Brace via a <strong>Valsalva</strong> (~80% breath held) for intra-abdominal pressure.</p>
+<p><strong>The bright line inside the screen:</strong> <strong>any pain or discomfort during any phase → stop the screen and refer to a licensed healthcare professional.</strong> Pain (including neck pain on the pre-squat range checks) is outside your lane.</p>
+<h3>The 10 checkpoints (grouped: Upper Body / Lower Body / Movement Mechanics)</h3>
+<p><strong>Upper body —</strong>
+1. <strong>Head/neck:</strong> neutral to slightly extended, in line with torso; gaze level or slightly up. Hard backward cranking (cervical hyperextension) is dangerous under load and usually masks a stiff upper back.
+2. <strong>Chest/upper back:</strong> chest proud, scapulae back-and-down, thoracic spine rigid. Rolled-forward shoulders (&ldquo;upper crossed syndrome&rdquo;) often signal tight pecs — a <em>mobility</em> fault, not laziness.
+3. <strong>Trunk:</strong> from the side, torso angle stays roughly <strong>parallel to the shin angle</strong>, slight natural lordotic arch. A <strong>rounded (flexed) low back under load raises disc-herniation risk</strong> — non-negotiable before loading. Find the actual driver (weak back, weak core, tight hips, poor coordination) before correcting.</p>
+<p><strong>Lower body —</strong>
+4. <strong>Hips:</strong> level and square; the line across the hips stays parallel to the floor. Watch the dowel for one end dipping (a shift).
+5. <strong>Knees (frontal plane):</strong> track over the toes. <strong>Valgus</strong> is called when the inside of the knee crosses <strong>past the inner ankle bone</strong> — an objective line. Driven by weak hip abductors/external rotators, overactive adductors, and/or limited ankle dorsiflexion → a knee fault is rarely a knee problem. <strong>Active valgus</strong> (athlete pulling knees in by muscle action) is a <em>coordination</em> fault you can cue out.
+6. <strong>Shins (tibial translation):</strong> <strong>no evidence of an injurious &ldquo;knees-past-toes&rdquo; threshold.</strong> Forcing knees back tips the trunk forward and loads hips/low back more — let shins travel naturally with heels down, initiating by sending the hips back.
+7. <strong>Feet:</strong> whole foot planted; pressure toward heel and outside edge (&ldquo;L&rdquo;-loading). Heels lifting or foot rolling is a fault. Poor <strong>dorsiflexion</strong> drives heels-up and knees-in from below; a temporary <strong>heel block</strong> buys a stable platform while you build real ankle mobility.</p>
+<p><strong>Movement mechanics —</strong>
+8. <strong>Descent:</strong> <strong>hip-hinge first</strong>, rigid torso, controlled tempo — descent at least <strong>2:1 up to 4:1</strong> slower than ascent. A &ldquo;knee-loading&rdquo; descent (dumping forward onto the knees) travels with excessive shin travel and heels lifting.
+9. <strong>Depth:</strong> hips at or just below knee level — <strong>thighs at least parallel.</strong> No evidence that below-parallel raises ligament/meniscus risk; <strong>too shallow is the far more common fault</strong> (posterior-chain weakness or tightness).
+10. <strong>Ascent:</strong> hips and shoulders rise <strong>together</strong> to hold torso angle. Hips shooting up first dumps the chest forward and exposes the low back — dangerous once loaded.</p>
+<p><strong>Triage rule:</strong> fix the <strong>most egregious/dangerous fault first</strong> (e.g., hard valgus before a slightly forward gaze) — one cue at a time. <strong>Anatomy caps the standard:</strong> hip-socket depth and torso-to-leg-length ratio (<strong>anthropometrics</strong>) legitimately change what a correct squat looks like — the <strong>pelvic rock</strong> test (rock hips toward heels on all fours, note where the low back rounds) reveals each person&rsquo;s true usable depth and stance. Don&rsquo;t force an athlete past their build. <strong>Master rule:</strong> clean, consistent bodyweight squat <em>before</em> load — mechanics, then consistency, then intensity. Sport experience alone grooves in compensations; it doesn&rsquo;t earn competence.</p>
+<p><strong>→ Full Level Three Manual, Chapters 6 &amp; 7.</strong></p>
+<h2>3. Real Injury Rates — Managing Risk Without Fear</h2>
+<p><strong>You already know:</strong> heavy lifting carries some risk and you keep an eye on people under the bar.
+<strong>New at L3:</strong> the actual numbers, so you neither ban lifts out of fear nor wave off real warning signs. Across the barbell literature (Olympic weightlifting = snatch + clean and jerk; powerlifting = squat, bench, deadlift), the <strong>three most-injured regions in both sports are shoulder, low back, and knee</strong> — your three watch zones. Injury <em>types</em> are dominated by <strong>muscle and tendon</strong> problems (strains, tendonitis, cramps) — soft tissue, not broken bones.</p>
+<p><strong>The rate numbers (per 1,000 training hours):</strong> weightlifting ≈ <strong>2.4–3.3</strong>; powerlifting ≈ <strong>1.0–4.4</strong>. Compare to <strong>football ≈ 9.6</strong> and <strong>wrestling ≈ 5.7</strong> — barbell sports are <strong>~2–3× safer</strong> than contact sports, and in line with non-contact strength/power sports (track ≈ 3.57, alpine skiing ≈ 1.7). The honest answer to &ldquo;isn&rsquo;t lifting dangerous?&rdquo; is <em>no — it&rsquo;s normal for its category.</em></p>
+<p><strong>Mechanism nuggets:</strong> weightlifters see <strong>more knee</strong> injuries (upright, high-bar deep catch loads the knee harder — more torque); powerlifters see <strong>more shoulder</strong> injuries (wide-grip bench puts the shoulder abducted/externally rotated under the heaviest loads in the sport — the same risky position as the snatch catch). Elite deadlift <strong>spine compression averages &gt;17,000 N</strong>, and technique changes how that load distributes — coach position, not just weight.</p>
+<p><strong>The methodological honesty (a real trap):</strong> almost <strong>no study identified WHY</strong> lifters get hurt — only one even looked at risk factors and pinned none down. So &ldquo;studies prove the deadlift causes back injury, so I banned it&rdquo; is <strong>unsupported</strong> — the evidence gives <em>where</em> and <em>how often</em>, not <em>why</em>. Studies also defined &ldquo;injury,&rdquo; &ldquo;severity,&rdquo; &ldquo;incidence&rdquo; vs. &ldquo;prevalence&rdquo; differently, so raw rates aren&rsquo;t cleanly comparable. (Note: some case reports tie <strong>anabolic-androgenic steroids</strong> to tendon ruptures — 96% of bench injuries in one study involved users — but managing that is a physician&rsquo;s job.)</p>
+<p><strong>The bright line:</strong> pain that doesn&rsquo;t behave like normal soreness — sharp, sudden, or not improving with rest — is a <strong>referral</strong>, not a coaching cue. Scale or modify to offload the joint, then send them out. A coach does not diagnose, prescribe medication, or write a rehab protocol.</p>
+<p><strong>→ Full Level Three Manual, Chapters 6 &amp; 7.</strong></p>
+<h2>Cram Sheet</h2>
+<p><strong>Risk stratification (Rec 59):</strong>
+- Low → moderate intensity, minimal supervision. Intermediate → train under a qualified coach. High → medical clearance first, supervised only.
+- Forms: <strong>PAR-Q+</strong> (self-screen) → <strong>ePARmed-X+/PARmed-X</strong> (to physician); <strong>PARmed-X for PREGNANCY</strong>. Revised ~every 5 years. No 15–69 age cap.
+- Event rarity: fatal stress-test event <strong>0.3–0.8 / 10,000 tests</strong>; death in activity <strong>&lt;0.01 / 10,000 hrs.</strong> Cardiac lower-risk cutoff <strong>~5 METs</strong> (≈17.5 mL/kg/min).
+- Riskiest combo: <strong>inactive + suddenly vigorous.</strong> Unsupervised HIIT boot-camp for deconditioned/prediabetic = named hazard.</p>
+<p><strong>Hard referrals (refer out):</strong>
+- Stroke or SCI <strong>&lt;6 months</strong> • SCI autonomic dysreflexia / exertional hypotension • active cancer tx <strong>with symptoms</strong>, skeletal/visceral mets, significant anemia • resting BP <strong>≈200/110+</strong> • unstable/life-threatening arrhythmia • diabetic + cardiac symptoms or older type-2 wanting vigorous work • Down syndrome → <strong>atlanto-axial</strong> screen before head/neck stress • osteoporosis → no trunk flexion/rotation • spondylolysis/spondylolisthesis → pause sport <strong>≥3 months.</strong>
+- Get the <strong>written, signed medical release</strong> for high-risk clearance. Weak/pseudo-certs don&rsquo;t qualify you to clear at-risk clients.</p>
+<p><strong>Squat screen:</strong>
+- <strong>10 reps</strong>, filmed <strong>front/side/back.</strong> Perfect = <strong>0 faults</strong>; mark a fault at <strong>≥2 of 10</strong> bad reps. Stance: heels shoulder-width, toes ≤~10°.
+- <strong>10 points:</strong> 1 head/neck • 2 chest/T-spine • 3 trunk (torso ∥ shin, slight arch) • 4 hips level • 5 knee valgus (inside of knee past inner ankle) • 6 tibial translation (no knees-past-toes rule) • 7 feet planted (&ldquo;L&rdquo; load) • 8 descent (hip-hinge, 2:1–4:1 tempo) • 9 depth (thighs ≥ parallel) • 10 ascent (hips + shoulders rise together).
+- Three root-cause buckets: <strong>coordination / strength-stability / mobility.</strong> Triage the <strong>most dangerous fault first.</strong> Bodyweight competency <strong>before</strong> load.
+- <strong>Pain during any phase → stop and refer.</strong> No injurious knees-past-toes threshold; below-parallel does <em>not</em> raise ligament risk; <strong>too shallow</strong> is the common fault. Anthropometrics cap depth — use the <strong>pelvic-rock</strong> test.</p>
+<p><strong>Injury reality:</strong>
+- Watch zones: <strong>shoulder, low back, knee.</strong> Type: <strong>muscle/tendon</strong> (soft tissue).
+- Rates/1,000 hr: WL <strong>2.4–3.3</strong>, PL <strong>1.0–4.4</strong> vs. football <strong>9.6</strong>, wrestling <strong>5.7.</strong> Barbell = ~2–3× safer than contact sport.
+- Weightlifters → more <strong>knee</strong>; powerlifters → more <strong>shoulder</strong> (wide-grip bench). Deadlift spine compression <strong>&gt;17,000 N.</strong>
+- <strong>No study established WHY</strong> lifters get hurt — don&rsquo;t ban a lift on false causation. Pain not behaving like soreness → <strong>refer.</strong> Coaches don&rsquo;t diagnose or prescribe.</p>
+    <p class="ch-oneliner" style="margin-top:4px">Full depth: Level Three Manual, Ch. 6, 7.</p>
+  </div>
+</details>
+
+<details class="chapter" id="d2" data-title="the atypical athlete — pregnancy, diabetes, masters, kids, return-from-injury" style="--accent:#157a52">
+  <summary class="ch-summary">
+    <span class="ch-chevron" aria-hidden="true">&#8250;</span>
+    <div class="ch-sum-text">
+      <div class="ch-meta">
+        <span class="ch-badge">Delta 2 of 6</span>
+      </div>
+      <h2 class="ch-title">Pregnancy, Diabetes, Masters, Kids, Return-from-Injury</h2>
+      <p class="ch-oneliner">L1/L2 taught you to scale load and range for the healthy adult in front of you. The L3&#x27;s biggest new territory is the athlete who is NOT the textbook adult — the pregnant athlete, the Type 1 diabetic, the 65-year-old, the child, the one rebuilding after injury. Each has its own bright lines, and this is the single densest source of new material.</p>
+    </div>
+  </summary>
+  <div class="ch-body">
+    <p class="framing">L1/L2 taught you to scale load and range for the healthy adult in front of you. The L3&#x27;s biggest new territory is the athlete who is NOT the textbook adult — the pregnant athlete, the Type 1 diabetic, the 65-year-old, the child, the one rebuilding after injury. Each has its own bright lines, and this is the single densest source of new material.</p>
+    <p>You can already scale a workout on the floor without thinking. What the L3 adds is the <strong>special-population bright line</strong> — the exact threshold, contraindication, and warning sign that changes your call for a pregnant athlete, a Type 1 diabetic, a masters lifter, a kid, or someone rebuilding after injury. This is the densest new-material bucket in the whole delta. For each population, the payload is the same shape: what genuinely changes, the numbers that get tested, the warning signs that mean <strong>stop</strong>, and the exact point where you stop coaching and refer out. The scope-of-practice thread runs through all five: you scale, monitor, and manage the <em>limitation</em> — you never diagnose, dose medication, or override a physician. Memorize the numbers below; numbers and named conditions are what the exam rewards.</p>
+<hr />
+<h2>Pregnancy</h2>
+<p><strong>You already know:</strong> substitute a safer movement to keep a workout&rsquo;s stimulus. <strong>New at L3:</strong> an entire caution list keyed to trimester, plus three &ldquo;common rules&rdquo; you must be able to sort into true / half-true / false, and a hard referral line.</p>
+<h3>The three &ldquo;rules&rdquo; myth-check — the classic trap</h3>
+<p><strong>You already know:</strong> old-timers repeat pregnancy training rules. <strong>New at L3:</strong> grade them precisely.
+- <strong>&ldquo;Don&rsquo;t lie on your back after the first trimester&rdquo; = TRUE.</strong> After ~4 months the baby compresses the <strong>vena cava</strong> (the big vein returning blood to the heart), cutting blood/oxygen and causing dizziness. Stop programming supine work — GHD sit-ups, flat sit-ups.
+- <strong>&ldquo;Don&rsquo;t go inverted&rdquo; = HALF-TRUE.</strong> The danger is dizziness and <em>falling</em>, not the inversion itself.
+- <strong>&ldquo;Keep heart rate under 140 bpm&rdquo; = FALSE.</strong> ACOG dropped the 140-bpm cap in <strong>1994</strong> — no real link between heart rate and core temp. Blood volume and cardiac output rise in pregnancy, so HR misleads; a pregnant athlete hits a &ldquo;high&rdquo; number at low effort.</p>
+<h3>Gauge effort by the talk test, not a monitor</h3>
+<p><strong>You already know:</strong> perceived exertion beats a number. <strong>New at L3:</strong> the <strong>talk test</strong> is the named tool — if she can hold a conversation, intensity is safe; if she&rsquo;s too breathed to talk, back off. The hard ceiling is <strong>hypoxia</strong>: redlining a metcon can starve the baby of oxygen and risk brain damage.</p>
+<h3>Relaxin and the joint bright lines</h3>
+<p><strong>New at L3:</strong> <strong>relaxin</strong> surges ~10-fold to loosen pelvic ligaments. Looser joints are vulnerable, so avoid <strong>ballistic moves, fast lateral cuts, and squatting below parallel.</strong> Keep core temp <strong>below 102°F</strong> (above that raises fetal CNS risk) — hydrate, don&rsquo;t overheat even when it&rsquo;s cool out.</p>
+<h3>The trimester loading and midline bright lines</h3>
+<p><strong>New at L3 (hard numbers):</strong>
+- <strong>Cap loading at ~70% of pre-pregnancy 1RM for all lifting past 3–5 months</strong>, no excessive straining. Sub a 5×5 for a 1RM day.
+- <strong>Coning is a hard stop, not a scale-down.</strong> When a ridge (&ldquo;mountaintop&rdquo;) pops down the middle of the belly during effort, <strong>eliminate all sit-up-style midline flexion</strong> — sit-ups, GHD sit-ups, toes-to-bar, knees-to-elbow — and replace with <strong>midline stabilization</strong> (planks, side planks, walking planks) so the abdominals separate at a natural pace.
+- <strong>Past 3–4 months, drop kipping</strong> — it tugs the belly and raises <strong>diastasis recti</strong> risk. Sub strict/banded pull-ups (1 strict per 3 kipping), ring rows, or bent-over DB rows.</p>
+<h3>The substitution toolbox (keep the stimulus, remove the hazard)</h3>
+<p><strong>New at L3:</strong> runs → sled drag/push, row, or AirBike (same metabolic pathway, less impact). Box jumps → step-ups (same jarring-impact logic as running). Deadlift → <strong>sumo stance</strong> once the belly blocks the bar path. Olympic lifts → lift from the hang, use DBs, or switch to the power version. <strong>By ~7 months the belly shortens the rowing stroke so much it kills the metabolic response</strong> — raise the damper to 7+, shorten the catch with knees out, or swap to sled/AirBike. Kettlebell swings → Russian (eye-level) with hard ab contraction. Decisions are <strong>individualized and consent-driven</strong> — most rows in the guide say &ldquo;adjust to her comfort.&rdquo;</p>
+<h3>Beginner rhabdo + the referral line</h3>
+<p><strong>New at L3:</strong> a <strong>brand-new</strong> pregnant athlete is a double rhabdo risk (beginners are already most prone) — start light, low-rep, no intensity ramp. <strong>Braxton Hicks</strong> contractions during activity = stop that activity and consult her doctor.</p>
+<p><strong>STOP-and-refer warning signs (memorize the list):</strong> vaginal bleeding, dizziness, chest pain, <strong>calf pain or swelling</strong> (possible clot — a medical emergency), decreased fetal movement, shortness of breath (dyspnea), headache, muscle weakness, preterm labor, amniotic-fluid leakage. Sit her down, head higher than heart, seek care.</p>
+<p><strong>The scope line:</strong> deciding whether a <em>specific</em> athlete should train hard is a <strong>medical question</strong> — a <strong>high-risk pregnancy is a referral</strong>; the physician sets limits and the coach defers. Note the honest evidence posture: <strong>light</strong> resistance training shows no harm and some benefit (shorter labor); high-intensity work is &ldquo;<strong>promising, not proven</strong>&rdquo; — two case-study moms trained hard, PR&rsquo;d their Olympic lifts, and delivered healthy full-term babies, but that doesn&rsquo;t clear it for everyone. Postpartum: stay cautious the first <strong>4–6 weeks</strong>. Also flag: <strong>Valsalva/pressor effect</strong> under heavy load spikes BP — coach around it.
+<strong>→ Full Level Three Manual, Chapter 8.</strong></p>
+<hr />
+<h2>Type 1 Diabetes</h2>
+<p><strong>You already know:</strong> program around a chronic injury by scaling and tracking. <strong>New at L3:</strong> a <em>managed medical condition</em> is handled the same way — the answer is never &ldquo;exclude&rdquo; and never &ldquo;go all-out Rx,&rdquo; it&rsquo;s <strong>scale + monitor objective data + keep medical management with the athlete and their doctor.</strong></p>
+<h3>The counterintuitive mechanism</h3>
+<p><strong>New at L3:</strong> intense exercise is a <strong>stressor that makes the liver dump glucose</strong>, and a Type 1 diabetic&rsquo;s liver overproduces even more under stress. So a hard WOD can spike blood sugar <strong>UP</strong>, not just burn it down.</p>
+<h3>The numbers that get tested</h3>
+<ul>
+<li>Normal blood glucose ≈ <strong>70–120 mg/dL</strong>.</li>
+<li><strong>HbA1c (A1C)</strong> = ~3-month average blood sugar; a key <strong>health marker</strong>. The case A1C was <strong>7.6% (~190 mg/dL average)</strong> vs. a non-diabetic ~85 — training was quietly driving hidden highs.</li>
+<li>Measured pattern: <strong>intense WODs over ~20 minutes spiked glucose over 250 (once past 300); WODs under ~20 minutes did not.</strong> Solution: scale longer WODs down to finish in ~20 minutes — and &ldquo;there&rsquo;s nothing wrong with scaling a WOD midway through.&rdquo;</li>
+<li>Different energy systems cut differently: a <strong>5K, 800m intervals, or a 1RM day tend to DROP glucose; long grinders spike it.</strong></li>
+<li>The swing goes both ways: after a spike + insulin correction, glucose crashed to <strong>~50 mg/dL</strong> hours later — untreated, that can progress to insulin shock and death.</li>
+</ul>
+<h3>The scope line (bright and absolute)</h3>
+<p><strong>New at L3:</strong> the athlete adjusts her own <strong>basal rate</strong> (lowered ~30% before glucose-dropping WODs, raised ~20% before spiking ones) and <strong>bolus ratio</strong> — <strong>the coach NEVER sets or adjusts insulin, basal, or bolus.</strong> You scale, encourage, keep her safe in the workout, and treat A1C review as <em>education</em>, not diagnosis.
+<strong>Hypoglycemia in class</strong> (shakiness, weakness, confusion): stop her, let her self-treat <strong>with her own supplies</strong>, escalate if she doesn&rsquo;t recover — never inject insulin (a low needs sugar). Stressors stack: driving, classroom hours, diet change + a normally-fine Fran spiked her over 300. Management is ongoing, never set-and-forget. (Bonus health win: as body comp improved she needed <em>less</em> insulin — &ldquo;insulin works more efficiently with muscle than fat,&rdquo; a doctor-supervised outcome.)
+<strong>→ Full Level Three Manual, Chapter 8.</strong></p>
+<hr />
+<h2>Masters / Aging Athlete</h2>
+<p><strong>You already know:</strong> older members need lighter loads and more warm-up. <strong>New at L3:</strong> a formal model of decline, a four-part classification tool, specific load/rest numbers, and a cardiac referral list.</p>
+<h3>The decline curve (know the rates)</h3>
+<p><strong>New at L3:</strong> capacity fades ~<strong>10% per decade</strong> through the 60s, then steepens — <strong>~13% in the 70s, ~15% in the 80s</strong> (≈57% of peak lost by the 80s). <strong>Heavy power (the Olympic lifts) drops earliest and fastest — ~25% by age 40, roughly twice the average</strong> (likely the mobility demand). Best-preserved: power-speed (jumps) and light power (throws). But gains are real at any age — <strong>octogenarians have improved strength up to 200%.</strong> Untrained→intermediate ≈ <strong>2 years</strong>; elite ≈ a decade (only ~1% ever get there — a poor goal for almost everyone). An <strong>elite 70-year-old functions like a 30-year-old intermediate.</strong></p>
+<h3>Health vs. function</h3>
+<p><strong>New at L3:</strong> <strong>health = absence of disease; function = actually being able to do things.</strong> Disease-free but weak and immobile is &ldquo;just as problematic as ill health.&rdquo; The biggest drop in all-cause mortality comes just from going <strong>inactive → active</strong>; lowest death risk sits in the <strong>upper third for strength, upper quarter for endurance.</strong> That&rsquo;s why you push past minimal activity — for function and quality of life, not just added years.</p>
+<h3>The Masters Quadrant (the classification tool)</h3>
+<p><strong>New at L3:</strong> four variables — <strong>Goals, Age, Fitness level, Injury state</strong> → <strong>16 archetypes.</strong> <strong>Goals + Age drive how you COACH; Fitness + Injury drive how you SCALE.</strong>
+- <strong>Goals:</strong> ask &ldquo;<em>What is your reason for training?</em>&rdquo; → <strong>Performance</strong> vs. <strong>Wellness.</strong> (Performance athletes are the only archetype usually needing separate <em>programming</em>.)
+- <strong>Age split at 55</strong> (arbitrary but useful): <strong>early masters (&lt;55)</strong> tend to <strong>over-reach</strong> (false-positive belief, cherry-picking); <strong>late masters (55+)</strong> tend to <strong>under-reach</strong> (false-negative belief, avoidance). You correct in opposite directions.
+- <strong>Injured = any condition forcing you to limit part of the program</strong> — manage the <em>limitation</em>, don&rsquo;t diagnose. Extra risks: <strong>secondary overuse</strong> and <strong>re-injury</strong> (over half of masters injuries are flare-ups of old problems). <strong>Resolve injury / maximize function BEFORE performance; competition goals go on hold.</strong></p>
+<h3>Late-masters load and rest numbers</h3>
+<p><strong>New at L3:</strong> scale volume and load to roughly <strong>70% (70–80%) of Rx&rsquo;d</strong>, start from <strong>Open 55+ scaling</strong>, and <strong>add an extra rest day per week.</strong> Trap: don&rsquo;t define a &ldquo;masters Rx&rdquo; — an Rx sets an <em>upper</em> boundary and becomes a limiter. Better a hard prescription you scale down.</p>
+<h3>It&rsquo;s overuse, not intensity</h3>
+<p><strong>New at L3 (the big myth-buster):</strong> masters injuries correlate with <strong>OVERUSE (volume), not intensity.</strong> Trained masters have low injury rates that don&rsquo;t rise with age. Intensity (kept <strong>relative</strong> — working to the boundary of physical/psychological tolerance and no further, after mechanics-consistency) actually <em>reduces</em> risk by letting you use less volume. Tool: the <strong>repetition budget</strong> — a weekly cap on a high-risk movement (e.g., <strong>~150–200 pull-ups/week</strong>; Fran 45 + Angie 100 + 30 warm-up = 175, in budget). Going far <em>under</em> budget also hurts (under-preparation, soreness).</p>
+<h3>The medical red lines (Domain 1)</h3>
+<p><strong>New at L3:</strong> <strong>sudden cardiac death risk rises sharply after 35</strong>, usual cause <strong>coronary artery disease</strong> (common over 50), <strong>highest in those who DON&rsquo;T habitually train.</strong> <strong>Refer immediately:</strong> suspected coronary artery disease, <strong>chest pain, unexplained shortness of breath, dizziness, or being on heart medication.</strong> Female-specific: <strong>menopause</strong> (hot flashes affect intensity tolerance), <strong>pelvic-floor / exertional urinary incontinence</strong> (leaking with jumping, prolapse risk under load — can affect older men too), post-menopausal <strong>low bone density</strong> (stress-fracture risk). <strong>Partial rotator-cuff tears rarely heal in older athletes</strong> — hence the standing rule to <strong>err on the side of less overhead volume.</strong> Don&rsquo;t normalize these — educate and refer. Medication + exertion (BP + cholesterol meds) can cause muscle pain, dizziness, confusion — a <em>consideration</em>, but the treatment is outside your scope.</p>
+<h3>Skills are non-negotiable; progressions are long</h3>
+<p><strong>New at L3:</strong> don&rsquo;t strip the program — gymnastics and Olympic lifts become <strong>more</strong> essential with age, and you don&rsquo;t let masters avoid movements they dislike (same as kids). But progressions balloon: a younger athlete&rsquo;s pull-up ≈ 6–12 weeks; a deconditioned late master may need <strong>2–3 years and 15+ steps.</strong> Order reverses for deconditioned late masters: <strong>build STRENGTH first, then MECHANICS, then increase EFFORT</strong> — sometimes fixing an underlying gap (e.g., a calf raise) before the skill can be practiced at all. <strong>Substitute</strong> when a movement can&rsquo;t be done safely: snatch → split snatch; kipping pull-up → strict ring pull-up; back squat → DB box squat; barbell deadlift → suitcase/KB deadlift; box jump → step-up. Shoulder impingement: <strong>rings (neutral grip) for hanging; DBs for overhead pressing.</strong></p>
+<h3>Coaching the head</h3>
+<p><strong>New at L3:</strong> mindset is daily coaching, not extra — four skills: <strong>identifying negative self-talk, thought stopping, goal setting, anxiety management.</strong> Anchor athletes in <strong>true beliefs</strong> (false-positive → reckless/injury; false-negative → under-reach/no progress). There&rsquo;s a <strong>critical window</strong> after a setback — do rehab <strong>in class</strong>, because isolation drives self-deselection.</p>
+<h3>The diseased/terminal client</h3>
+<p><strong>New at L3:</strong> you <strong>must</strong> get direct guidance from their <strong>medical team</strong> on <strong>contraindications</strong> (a contraindication = something that makes an activity inadvisable). Model case: an athlete with idiopathic pulmonary fibrosis whose doctors set a hard rule — <strong>SpO₂ must not drop below 90 and had to return to 95</strong> before continuing; the coach worked entirely inside that limit (work:rest no higher than 1:5). Recommending anything about treatment or drugs is never the coach&rsquo;s role.
+<strong>→ Full Level Three Manual, Chapter 8.</strong></p>
+<hr />
+<h2>Kids / Youth</h2>
+<p><strong>You already know:</strong> scale by ability, keep it fun. <strong>New at L3:</strong> age-band structure, ratios, a different injury profile, growth-plate facts, and a whole safeguarding/scope layer.</p>
+<h3>Kids are not little adults — place by maturity, not birthday</h3>
+<p><strong>New at L3:</strong> three bands — <strong>Preschool 3–5, Kids 5–12, Teens 12–18</strong> — but <strong>physical maturity is the EASIEST to scale, so it matters LEAST for placement; cognitive and emotional fit matter more.</strong> Don&rsquo;t combine wide age ranges (you lose kids on both ends).</p>
+<h3>Ratios, class length, and structure (Domain 5 payload)</h3>
+<p><strong>New at L3:</strong>
+- <strong>Preschool 1:5</strong>, 15–20 min: optional whiteboard, skill, warm-up, short AMRAP (~3–5 reps), then a <strong>must-do game</strong> (the single biggest motivator).
+- <strong>Kids 1:10+</strong>, 30–40 min: whiteboard, warm-up, skill warm-up, ~10-min AMRAP, game.
+- <strong>Teens 1:15+</strong>, ~60 min: built like an adult class — brief, general warm-up, long specific warm-up/skill, workout, post-workout skill, cool-down (use it for study/homework — brain is primed).
+- <strong>Start small — ideally 3–5 kids for 4–5 weeks.</strong> No &ldquo;elements/on-ramp&rdquo; for kids (matriculate them straight in); it is <strong>NOT daycare.</strong></p>
+<h3>The injury profile flips</h3>
+<p><strong>New at L3:</strong> <strong>over 75% of kids&rsquo; resistance-training injuries are ACCIDENTS</strong> (dropped weights, tripping, pinching) — vs. ~75% of <em>adult</em> injuries from effort/bad form. So with kids you fight <strong>accidents</strong> (etiquette, rules, working safely with others), not max-effort breakdown. Kids lifting is <strong>safe</strong> — AAP, NSCA, and international consensus endorse supervised, technique-first youth resistance training. <strong>Quality of movement supersedes load</strong> — Preschool basically never loaded; <strong>Kids up to ~10 lb DBs / ~20 lb KB</strong> for the most capable; Teens climb the same way. <strong>1RMs discouraged unless a mature teen is actually competing.</strong></p>
+<h3>Growth plates and rhabdo</h3>
+<p><strong>New at L3:</strong> the <strong>growth plate (physeal plate)</strong> is the vulnerable cartilage where bone lengthens; <strong>most growth-plate injuries occur ages 10–16</strong> — but <strong>none</strong> has been reported in a <em>supervised</em> youth resistance study (danger is unsupervised/impact-collision, not coached lifting). <strong>Rhabdo is rare in kids</strong> (they self-limit when tired — so <strong>never push a young child to keep moving</strong>), but <strong>teens are MORE at risk</strong> — they grind like adults and growth spurts leave muscle taut. <strong>Cut high-rep eccentric work</strong> (jumping pull-ups, heavy KB swings, GHD sit-ups, downhill running); a teen can have rhabdo showing only one or two symptoms.</p>
+<h3>Bone, balance, and the game</h3>
+<p><strong>New at L3:</strong> <strong>impact loading</strong> (jumping/bounding) builds bone, self-scaling and low-risk, biggest payoff <strong>~12–14 years old</strong> — prioritized for all ages. <strong>Vestibular work</strong> (rolls, spins, cartwheels, handstands) trains the inner-ear balance system. Hydration: <strong>drink to thirst, water over sports drinks</strong> (hyponatremia risk is low — not an endurance sport). <strong>Steer families entirely away from energy drinks.</strong> Nutrition message: <strong>choose real food over processed food</strong> (skip calorie counting).</p>
+<h3>Behavior — don&rsquo;t punish with exercise</h3>
+<p><strong>New at L3:</strong> <strong>operant conditioning</strong> — reinforce what you want; <strong>punishing with exercise (burpees, &ldquo;run a lap&rdquo;) ties movement to being in trouble</strong>, the opposite of the goal. Ignore minor attention-seeking, loudly praise the kids doing it right. Cue what <strong>TO do</strong>, not what to stop. Offer <strong>choices, not ultimatums.</strong></p>
+<h3>The safeguarding / scope layer (genuinely new)</h3>
+<p><strong>New at L3:</strong> <strong>~90% of child abuse is by a family member or relative.</strong> Watch for <strong>grooming</strong> (flattery, gifts, excessive 1-on-1 time) and predator red flags (an adult who lingers to watch the kids&rsquo; class or hangs in the lot). Safety controls: parents <strong>walk kids IN at drop-off and come IN at pickup</strong>; kids leave <strong>only</strong> with who dropped them off; teach in the open; keep a well-established presence. Suspected abuse → <strong>report</strong> (can be anonymous). Paperwork: <strong>signed waiver per child + photo/video release</strong>; confirm insurance covers kids; <strong>background checks recommended (not required)</strong>; <strong>CF-L1 required to coach any age</strong>; check state law before administering any medication (asthma inhaler). Flag <strong>Cipro/Levaquin-family antibiotics — tendon-rupture risk with lifting</strong> — but stay in your lane. Special-needs kids: <strong>trial period, parent STAYS during class, add staffing</strong> — and the biggest prize is the <strong>social benefit of inclusion.</strong>
+<strong>→ Full Level Three Manual, Chapter 8.</strong></p>
+<hr />
+<h2>Return-from-Injury / Rebuilding Conditioning</h2>
+<p><strong>You already know:</strong> keep an injured athlete fit by working around the injury. <strong>New at L3:</strong> <em>which energy system to rebuild</em>, how to swap modality without losing the target, and a concrete math tool that tells you when they&rsquo;re ready for more.</p>
+<h3>Which system to rebuild first — the duration cheat sheet</h3>
+<p><strong>New at L3:</strong> three metabolic pathways refill <strong>ATP</strong>, and <strong>effort duration picks the system:</strong>
+- <strong>0–6s = phosphagen</strong> (ATP-PCr; huge power, tiny tank — 1RM, 100m sprint)
+- <strong>6–30s = phosphagen + anaerobic glycolysis</strong>
+- <strong>30–120s = anaerobic glycolysis</strong> (400m; works without O₂, builds fatiguing by-products)
+- <strong>2–3 min = anaerobic + aerobic glycolysis</strong>
+- <strong>&gt;3 min = oxidative</strong> (aerobic; huge capacity, slow rate — endurance <em>and</em> the recovery engine between bursts)</p>
+<p>All three run at once; only the <em>lead</em> shifts. Practical 3-bucket build (Chamari/Padulo): <strong>Explosive</strong> (≤6s work, e.g. 3–5s : 60–120s rest), <strong>High-Intensity</strong> (6s–1min, e.g. 30s : 30s), <strong>Endurance</strong> (&gt;1min, e.g. 3min : 3min). <strong>Repeated sprint ability (RSA)</strong> — the on-off demand CrossFit trains — needs all three: aerobic contributes ≤10% to a <em>single</em> sprint but up to <strong>~49% across repeated sprints</strong> (it powers recovery).</p>
+<h3>The modality swap (the injured-athlete move)</h3>
+<p><strong>New at L3:</strong> <strong>keep the energy-system target; change the tool.</strong> Running off-limits? Run the same 30-on/30-off intervals on a <strong>bike or rower.</strong> Same system, no re-injury. The nine dials (Buchheit/Laursen): work intensity/duration, modality, recovery intensity/duration, number of series, series duration, rest between series.</p>
+<h3>Measure the load with a stopwatch and a spreadsheet</h3>
+<p><strong>New at L3:</strong>
+- <strong>RPE</strong> = athlete&rsquo;s <strong>0–10</strong> effort rating (CR10); free, no gear. Prescribe targets (&ldquo;work at 8–9, recover at 2&rdquo;).
+- <strong>Session RPE (sRPE) = RPE × session minutes.</strong> Example: <strong>7 × 60 = 420 load units.</strong> Collect it ~20–30 min post-session (newer evidence: barely changes 10–30 min, so sooner is fine).
+- <strong>External load</strong> = what they DID (distance, weight, planned work:rest); <strong>internal load</strong> = how they RESPONDED (HR, RPE). Plan external, monitor internal.</p>
+<h3>The acute:chronic workload ratio (the headline tool)</h3>
+<p><strong>New at L3:</strong> <strong>acute = this week&rsquo;s load; chronic = the 4-week average.</strong> Divide: above 1 = a spike. <strong>Yellow over 1, RED over 2.</strong> Rugby athletes over <strong>2.11 had 3.4× the injury risk.</strong> A red ratio is a <strong>back-off signal, not push-harder.</strong> Flip side: a <strong>high chronic load is protective</strong> — build the base, then push; the danger is spiking faster than the base can handle.</p>
+<h3>Task-based, not calendar-based</h3>
+<p><strong>New at L3:</strong> clear on <strong>demonstrated capacity, not elapsed time</strong> (&ldquo;it&rsquo;s been 6 weeks&rdquo; is weak; &ldquo;you can hit these performance goals&rdquo; is right). Structure the decision with <strong>StARRT</strong> (Strategic Assessment of Risk and Risk Tolerance): <strong>health risk, activity risk, risk tolerance.</strong> Do a <strong>needs analysis</strong> — match conditioning to the sport&rsquo;s actual demands; don&rsquo;t drown a power athlete in steady-state (the interference effect blunts explosiveness).</p>
+<h3>The scope line</h3>
+<p><strong>New at L3:</strong> <strong>&ldquo;medically cleared&rdquo; ≠ &ldquo;conditioned enough to compete.&rdquo;</strong> Return-to-play is a <strong>multidisciplinary decision with the medical team</strong> — the coach maintains fitness and restores function within scope but <strong>never overrides medical clearance.</strong>
+<strong>→ Full Level Three Manual, Chapter 8.</strong></p>
+<hr />
+<h2>Cram Sheet</h2>
+<p><strong>Pregnancy</strong>
+- Back-lying after 1st trimester = TRUE (vena cava, ~4 mo). Inverted = HALF-true (fall/dizziness). 140 bpm = FALSE (ACOG dropped it 1994).
+- Gauge effort by <strong>talk test</strong>; hard ceiling = <strong>hypoxia</strong>. Core temp <strong>&lt; 102°F</strong>. <strong>Relaxin</strong> → no ballistic/lateral cuts/below-parallel squats.
+- <strong>Loading ≤ 70% pre-pregnancy 1RM past 3–5 months.</strong> <strong>Coning = eliminate all sit-up-style midline flexion</strong> → planks. Drop <strong>kipping</strong> past 3–4 mo (diastasis recti). Deadlift → <strong>sumo</strong> when belly&rsquo;s in the way. Row dies ~7 mo → damper 7+, or sled/AirBike.
+- Beginner + pregnant = double rhabdo risk → light, low-rep. <strong>STOP signs:</strong> bleeding, dizziness, chest pain, <strong>calf swelling/pain</strong>, decreased fetal movement, dyspnea, headache, weakness, preterm labor, fluid leakage. <strong>High-risk pregnancy = referral.</strong> Evidence: light resistance = no harm/some benefit; high-intensity = &ldquo;promising, not proven.&rdquo; Postpartum caution 4–6 weeks.</p>
+<p><strong>Type 1 Diabetes</strong>
+- Normal glucose <strong>70–120 mg/dL</strong>. <strong>A1C</strong> = 3-mo average (case 7.6% ≈ 190). Intense/long WODs <strong>spike</strong> glucose (liver stress dump); <strong>WODs &gt; ~20 min went over 250</strong> → scale to finish in ~20 min. Sprints/1RM <strong>drop</strong> glucose; can crash to <strong>~50</strong> hours later.
+- <strong>Coach NEVER touches insulin / basal / bolus.</strong> Hypoglycemia in class → stop, self-treat with own sugar/supplies, escalate. A1C review = education, not diagnosis.</p>
+<p><strong>Masters (40+; early &lt;55 / late 55+)</strong>
+- Decline <strong>~10%/decade</strong> (13% 70s, 15% 80s). <strong>Heavy power drops first — ~25% by 40.</strong> Gains real at any age (up to 200%). Health ≠ function.
+- <strong>Masters Quadrant:</strong> Goals, Age, Fitness, Injury → 16 archetypes. Goals+Age = coach; Fitness+Injury = scale. Early = over-reach; late = under-reach. <strong>Resolve injury before performance.</strong>
+- Late masters: <strong>~70% (70–80%) Rx load, +1 rest day/week.</strong> Injuries = <strong>OVERUSE, not intensity.</strong> <strong>Rep budget ~150–200 pull-ups/week.</strong>
+- <strong>Refer:</strong> chest pain, unexplained shortness of breath, dizziness, heart meds, suspected CAD. Sudden cardiac death ↑ after <strong>35</strong>, worst in the untrained. Partial rotator-cuff tears rarely heal → limit overhead volume. Pelvic-floor + post-menopausal bone loss → educate/refer.
+- Diseased client: get <strong>contraindications</strong> from medical team. SpO₂ case: <strong>≥90, back to 95</strong> before continuing.</p>
+<p><strong>Kids (Preschool 3–5 / Kids 5–12 / Teens 12–18)</strong>
+- Place by <strong>cognitive/emotional</strong> maturity, not age. Ratios <strong>1:5 / 1:10 / 1:15</strong>; lengths <strong>15–20 / 30–40 / 60 min</strong>; start with <strong>3–5 kids.</strong>
+- <strong>75%+ of kids&rsquo; injuries are accidents</strong> (vs. 75% adult effort/form). Kids load ≤ <strong>10 lb DB / 20 lb KB</strong>; 1RMs only for competing teens. <strong>Growth plate</strong> injuries peak <strong>10–16</strong> (none in supervised lifting).
+- <strong>Never push a young child</strong> (rhabdo). <strong>Teens MORE at rhabdo risk</strong> → cut high-rep eccentrics. Impact loading peaks <strong>12–14.</strong> Drink to thirst; no energy drinks.
+- <strong>Don&rsquo;t punish with exercise.</strong> ~<strong>90% of abuse is family/relative</strong> → watch grooming; walk-in drop-off/pickup; report suspicions. <strong>CF-L1 required; waiver + photo release per child.</strong></p>
+<p><strong>Return-from-Injury</strong>
+- Duration→system: <strong>0–6s phosphagen; 6–30s phos+glyc; 30–120s glycolytic; 2–3min mixed; &gt;3min oxidative.</strong> Aerobic ≤10% one sprint → <strong>~49% repeated</strong> (recovery engine).
+- <strong>Keep the energy-system target, swap modality</strong> (run → bike/row).
+- <strong>sRPE = RPE × minutes</strong> (7×60 = 420). <strong>Acute:chronic</strong> = week ÷ 4-week avg; <strong>yellow &gt;1, RED &gt;2</strong> (over <strong>2.11 → 3.4× injury risk</strong>). High chronic load = protective.
+- Progress <strong>task-based, not calendar-based</strong> (StARRT: health/activity/tolerance). <strong>&ldquo;Cleared&rdquo; ≠ &ldquo;conditioned.&rdquo;</strong> Never override medical clearance.</p>
+    <p class="ch-oneliner" style="margin-top:4px">Full depth: Level Three Manual, Ch. 8.</p>
+  </div>
+</details>
+
+<details class="chapter" id="d3" data-title="medical red lines — when &#x27;sore&#x27; is actually an emergency" style="--accent:#1a6aa8">
+  <summary class="ch-summary">
+    <span class="ch-chevron" aria-hidden="true">&#8250;</span>
+    <div class="ch-sum-text">
+      <div class="ch-meta">
+        <span class="ch-badge">Delta 3 of 6</span>
+      </div>
+      <h2 class="ch-title">When &#x27;Sore&#x27; Is Actually an Emergency</h2>
+      <p class="ch-oneliner">You know DOMS and you know when to send someone home. The L3 sharpens that instinct into named emergencies with bright lines: rhabdomyolysis, compartment syndrome, the soreness-vs-damage distinction, and contagious skin infections — what they look like, why they hide as normal soreness, and the moment coaching stops and medicine starts.</p>
+    </div>
+  </summary>
+  <div class="ch-body">
+    <p class="framing">You know DOMS and you know when to send someone home. The L3 sharpens that instinct into named emergencies with bright lines: rhabdomyolysis, compartment syndrome, the soreness-vs-damage distinction, and contagious skin infections — what they look like, why they hide as normal soreness, and the moment coaching stops and medicine starts.</p>
+    <p>You already send someone home when they&rsquo;re beat up, and you know DOMS from a tweak in your sleep. What the L3 adds is the short list of <strong>named emergencies that wear soreness as a disguise</strong> — and the exact word (&ldquo;ER now,&rdquo; &ldquo;physician now&rdquo;) each one demands. This is the trap bucket: every condition here can be mistaken for a normal hard-workout ache by an athlete who&rsquo;s proud of grinding through pain. Your job is not to diagnose or treat any of it. Your job is to know the bright line — the one sign that separates &ldquo;adapting&rdquo; from &ldquo;call for help&rdquo; — and refer out the instant you see it. Get the referral trigger wrong and an athlete loses a limb, a kidney, or worse.</p>
+<h2>The Baseline Line: Soreness vs. Muscle Damage</h2>
+<blockquote>
+<p><strong>You already know:</strong> DOMS is normal, it&rsquo;s the body adapting, and mild-to-moderate soreness is fine to train through.
+<strong>New at L3:</strong> the formal DOMS window and the mechanism, defended in exam vocabulary. DOMS <strong>onsets ~8 hours</strong> post-exercise, <strong>peaks at 24–48 hours</strong>, and <strong>clears in ~4–5 days.</strong> Anything outside that window is abnormal and gets flagged. Cause is <strong>mechanical, not metabolic</strong> — the lactic-acid theory is disproven. Damage comes from <strong>eccentric (lengthening-under-load) actions</strong>, which cause the most soreness <em>and</em> the most adaptation, while producing <em>less</em> lactate (the fact that killed the metabolic theory). The <strong>repeated bout effect</strong> protects you after one exposure but fades within weeks of a layoff. Know the myths you must correct: lactic acid does NOT cause DOMS; static stretching does NOT prevent it; ice and NSAIDs don&rsquo;t reliably reduce it and NSAIDs may <em>blunt adaptation</em> and mask a real problem.
+<strong>→ Full Level Three Manual, Chapter 6.</strong></p>
+</blockquote>
+<p>The trap inside the trap: <strong>absence of soreness ≠ full recovery.</strong> Strength, power, range of motion, and proprioception stay depressed for days after soreness fades. &ldquo;I&rsquo;m not sore&rdquo; is not &ldquo;I&rsquo;m recovered.&rdquo;</p>
+<h3>Why CrossFit generates more soreness (program to it)</h3>
+<blockquote>
+<p><strong>You already know:</strong> constantly varied work leaves people sore in new places all the time.
+<strong>New at L3:</strong> the <em>reason</em>, stated cleanly — CV movements keep hitting muscles with <strong>unaccustomed</strong> patterns, so DOMS is baked into the methodology. High-rep bodyweight (a round-heavy Cindy = 100 pull-ups / 200 push-ups / 300 squats) can out-sore a heavy 3-rep day because <strong>total volume is huge and reps move fast</strong> — fast eccentrics near full stretch (bottom of a wall-ball) do the most damage. Same-vs-different rule for the next day: rest a <strong>severely</strong> sore group, don&rsquo;t repeat the pattern that trashed it, but a <em>different</em> movement is lower risk.
+<strong>→ Full Level Three Manual, Chapter 6.</strong></p>
+</blockquote>
+<h2>Rhabdomyolysis — the whole-body emergency</h2>
+<blockquote>
+<p><strong>You already know:</strong> a brutal, unaccustomed session leaves people wrecked and swollen.
+<strong>New at L3:</strong> <strong>rhabdo</strong> is muscle breaking down and dumping its contents (creatine kinase, myoglobin, potassium) into the blood — heavy enough to cause <strong>kidney failure and heart-rhythm disturbances.</strong> It&rsquo;s not a leg problem; it&rsquo;s a systemic one. <strong>The bright-line sign is dark, cola- or tea-colored urine</strong> in the hours-to-days after a hard, high-volume eccentric workout. Pair it with <strong>disproportionate swelling and severe pain.</strong> CK runs wildly high (the case here ran <strong>~19,000 against a normal ~24–170</strong>) — you&rsquo;ll never run the lab, but that&rsquo;s the marker doctors track.</p>
+<p><strong>Referral trigger (unmistakable):</strong> cola-colored urine after a hard session = <strong>ER NOW.</strong> Not &ldquo;rest and hydrate,&rdquo; not &ldquo;flush it with a light workout,&rdquo; not ibuprofen. Outside your scope, full stop.
+<strong>→ Full Level Three Manual, Chapter 6.</strong></p>
+</blockquote>
+<p><strong>Highest-risk athlete:</strong> the <strong>underprepared</strong> one — brand-new, deconditioned, or back from a layoff — buried in high-volume or heavy eccentric work on day one. <strong>The prevention answer is almost always the same: gradual, judicious progression into intensity.</strong> Don&rsquo;t bury a beginner in volume.</p>
+<h2>Compartment Syndrome — the masquerade that costs the limb</h2>
+<blockquote>
+<p><strong>You already know:</strong> shin pain and tight, pumped legs after hard work are common and usually settle with rest.
+<strong>New at L3:</strong> <strong>acute exertional compartment syndrome (AECS)</strong> is pressure building inside the muscle&rsquo;s fascial compartment <strong>from hard exercise alone — no hit, no fall needed</strong> — choking off blood supply (ischemia). It <em>masquerades as soreness</em>, which is exactly why it&rsquo;s lethal to a limb: athletes assume they just &ldquo;cooked their legs&rdquo; and wait it out while muscle and nerve die.</p>
+<p><strong>The bright line that separates it from shin splints / stress fracture / DOMS: pain that is grossly out of proportion and does NOT ease with rest.</strong> Everyday stuff eases with rest; this doesn&rsquo;t. Add the warning signs — a tight, hard, swollen area that hurts <em>more</em> on stretch; <strong>numbness/tingling (paresthesia)</strong>; a <strong>foot that won&rsquo;t lift (foot drop / loss of dorsiflexion).</strong></p>
+<p>Know the <strong>6 P&rsquo;s:</strong> <strong>Pain, Paresthesia, Pallor, Pulselessness, Paralysis, Poikilothermia.</strong> Pain and paresthesia are <em>early</em>; the other four are <em>late and bad.</em> Don&rsquo;t wait for the late ones.</p>
+<p><strong>It is time-critical.</strong> Treated within <strong>~24 hours</strong> (emergency <strong>fasciotomy</strong> — surgically opening the fascia to release pressure) = full recovery. Wait too long = permanent muscle and nerve death.</p>
+<p><strong>Referral trigger:</strong> severe rest-resistant limb pain ± numbness or foot drop = <strong>ER NOW / activate your EAP.</strong> Do NOT measure pressure, do NOT ice-wrap-and-reassess, do NOT &ldquo;rest 48 hours.&rdquo; You recognize and refer; a surgeon does the rest.
+<strong>→ Full Level Three Manual, Chapter 6.</strong></p>
+</blockquote>
+<h2>Contagious Skin Infections — prevent, spot, refer, and bar</h2>
+<blockquote>
+<p><strong>You already know:</strong> ripped hands, bloody shins, and shared sweaty gear are daily gym reality.
+<strong>New at L3:</strong> the <strong>escalation ladder</strong> and where a coach stops on it. A break in the skin (sometimes too small to see) lets bacteria in → <strong>cellulitis</strong> (spreading redness, warmth, swelling, pain) → <strong>abscess</strong> (a walled pocket of pus that <strong>must be drained</strong> — antibiotics alone can&rsquo;t penetrate it) → at the far, rare end, <strong>necrotizing fasciitis</strong>, a fast-spreading soft-tissue infection the source names <strong>life- and limb-threatening.</strong> Usual bugs: <strong>strep and staph aureus</strong>; <strong>MRSA</strong> is the staph strain that resists standard antibiotics. <strong>Tetanus</strong> (clostridium tetani) rides in on any wound — low risk if immunization is current.
+<strong>→ Full Level Three Manual, Chapter 13.</strong></p>
+</blockquote>
+<p><strong>What the coach owns (prevent):</strong>
+- <strong>Wash the wound with soap and water</strong> — the single most important step; it dramatically cuts infection risk. Then, if significant, antibiotic ointment, cover, and protect during the next workout.
+- <strong>Facility hygiene:</strong> clean dirty equipment; <strong>disinfect anything bloody with an antiseptic (bleach or iodine)</strong> — a dry wipe doesn&rsquo;t cut it. Blood can carry more than skin bacteria (HIV, hepatitis), so it gets special handling.
+- <strong>Personal responsibility:</strong> fitness gives <em>some</em> resilience but athletes still get infected — don&rsquo;t let &ldquo;I never get sick&rdquo; skip wound care. Keep <strong>tetanus current every ~10 years; booster after 5 years</strong> with a significant/dirty wound (TdaP adds pertussis).</p>
+<p><strong>Referral trigger — when to bar and send out:</strong>
+- <strong>Spreading redness, worsening pain, increasing tenderness, pus, or red streaking</strong> = get it checked by a provider <strong>promptly.</strong> The judgment call is simple: <strong>improving = you handle it; escalating = refer.</strong>
+- <strong>Suspected necrotizing fasciitis (rapidly spreading, severe) = ER immediately.</strong>
+- <strong>Bar from class</strong> anyone with an active, draining, or uncovered contagious infection until a provider clears it and it can be securely covered — that&rsquo;s the equipment-sharing risk your hygiene rules exist to stop.
+- <strong>Never diagnose, name the bug, recommend a specific antibiotic, or drain anything.</strong> Palpating for abscess, checking lymph nodes, marking the redness border to track spread — all doctor&rsquo;s work, not yours.</p>
+<h2>Cram Sheet</h2>
+<p><strong>Soreness baseline (Ch 6)</strong>
+- DOMS: onset <strong>~8 h</strong>, peak <strong>24–48 h</strong>, clears <strong>~4–5 days.</strong> Outside that window = flag it.
+- Cause is <strong>mechanical (eccentric damage)</strong>, NOT lactic acid. Eccentric = most soreness + most adaptation.
+- Myths to correct: lactic acid, static stretching, ice/NSAIDs don&rsquo;t fix DOMS; NSAIDs may blunt adaptation + mask problems.
+- <strong>No soreness ≠ recovered.</strong> Chronic soreness (past 4–5 days) + low motivation = <strong>overtraining → rest, not more work.</strong>
+- Same-vs-different: rest a severely sore group, don&rsquo;t repeat the pattern, a different movement is OK.</p>
+<p><strong>Rhabdomyolysis (Ch 6)</strong>
+- Bright line: <strong>dark / cola-colored urine</strong> + disproportionate swelling &amp; pain after hard eccentric work.
+- Systemic: <strong>kidney failure + heart-rhythm</strong> risk. CK sky-high (case ~19,000 vs normal ~24–170).
+- Highest risk: <strong>new / deconditioned / returning</strong> athlete overloaded day one. Prevention = <strong>gradual progression.</strong>
+- <strong>Trigger: ER NOW.</strong> Never rest/hydrate, &ldquo;flush it,&rdquo; or NSAIDs.</p>
+<p><strong>Compartment syndrome — AECS (Ch 6)</strong>
+- Can come from <strong>exercise alone</strong>, no trauma. Masquerades as soreness.
+- Bright line: <strong>severe pain out of proportion that does NOT ease with rest</strong> (vs shin splints/stress fracture/DOMS which do).
+- Signs: tight/hard/swollen, worse on stretch, <strong>paresthesia</strong>, <strong>foot drop.</strong>
+- <strong>6 P&rsquo;s:</strong> Pain, Paresthesia, Pallor, Pulselessness, Paralysis, Poikilothermia (last four = late/bad).
+- Time-critical: <strong>fasciotomy within ~24 h = full recovery</strong>; late = permanent damage.
+- <strong>Trigger: ER NOW / activate EAP.</strong> Don&rsquo;t ice, don&rsquo;t wait, don&rsquo;t measure pressure.</p>
+<p><strong>Skin infections (Ch 13)</strong>
+- Ladder: break in skin → <strong>cellulitis</strong> → <strong>abscess</strong> (needs draining) → <strong>necrotizing fasciitis</strong> (life/limb emergency).
+- Bugs: <strong>strep, staph aureus, MRSA</strong> (resistant). <strong>Tetanus:</strong> ~10-yr update, 5-yr booster for significant wound.
+- Coach owns: <strong>wash with soap &amp; water</strong> (most important), cover, protect; disinfect blood with <strong>bleach/iodine.</strong>
+- <strong>Trigger:</strong> spreading redness / worsening pain / pus / streaking = refer promptly; necrotizing = <strong>ER now.</strong>
+- <strong>Bar from class</strong> active/uncovered contagious infections until cleared. Never diagnose, prescribe, or drain.</p>
+<p><strong>The one-line spine:</strong> every condition here can look like &ldquo;just sore.&rdquo; The coach&rsquo;s job is <strong>recognize + refer</strong>, never diagnose or treat. When in doubt, refer out.</p>
+    <p class="ch-oneliner" style="margin-top:4px">Full depth: Level Three Manual, Ch. 6, 13.</p>
+  </div>
+</details>
+
+<details class="chapter" id="d4" data-title="the professional &amp; legal layer — scope, paperwork &amp; the credential&#x27;s rules" style="--accent:#5a5a2a">
+  <summary class="ch-summary">
+    <span class="ch-chevron" aria-hidden="true">&#8250;</span>
+    <div class="ch-sum-text">
+      <div class="ch-meta">
+        <span class="ch-badge">Delta 4 of 6</span>
+      </div>
+      <h2 class="ch-title">Scope, Paperwork &amp; the Credential&#x27;s Rules</h2>
+      <p class="ch-oneliner">This is close to 100% new. L1/L2 were about coaching; the L3 is about being trusted with any athlete, unsupervised, over time — which means the profession itself: scope-of-practice as a hard line, screening/consent/waivers/insurance, the emergency action plan, facility and environmental safety, and the credential&#x27;s own rules (recert, CEUs, the candidate handbook, ISO/ANAB accreditation).</p>
+    </div>
+  </summary>
+  <div class="ch-body">
+    <p class="framing">This is close to 100% new. L1/L2 were about coaching; the L3 is about being trusted with any athlete, unsupervised, over time — which means the profession itself: scope-of-practice as a hard line, screening/consent/waivers/insurance, the emergency action plan, facility and environmental safety, and the credential&#x27;s own rules (recert, CEUs, the candidate handbook, ISO/ANAB accreditation).</p>
+    <p>This is the bucket L1 and L2 never touched. Those credentials asked one question: can you coach the movement in front of you? The L3 asks a different one: can you be trusted with any athlete, unsupervised, over time — running a business, carrying legal weight, and knowing the exact line where a coach stops and a doctor starts. Almost nothing here is a movement skill. It is scope-of-practice as a hard boundary, the paperwork-and-insurance stack every athlete triggers, the Emergency Action Plan, the facility and environmental hazards you own as owner and coach, and the credential&rsquo;s own rulebook — recert intervals, CEU counts, eligibility hours, and the accreditation that makes those rules strict. Domain 7 is only 8% of the exam, but nearly every fact in it is a discrete number or bright line you either know or don&rsquo;t.</p>
+<h2>Scope of Practice — The Hard Line</h2>
+<p><strong>You already know:</strong> how to scale a workout for the person in front of you.
+<strong>New at L3:</strong> <em>scope of practice</em> is the exam&rsquo;s spine, and it is defined by what you may NOT do. Inside your lane: design and run safe, effective workouts for anyone <strong>apparently healthy OR medically cleared</strong>, from beginner to advanced; teach functional movement; assess and program to goals, level, readiness, lifestyle, and nutrition; reduce risk; motivate; run an ethical practice; and respond to emergencies. Outside your lane, always: <strong>diagnosing</strong> disease, <strong>treating</strong> injuries, <strong>prescribing</strong> medication, prescribing a <strong>disease-specific diet</strong>, or providing <strong>therapy</strong>. When an athlete&rsquo;s need crosses that line, the correct move is never &ldquo;handle it yourself&rdquo; — it is <strong>refer out</strong> to the right professional (physician, physical therapist, registered dietitian, mental-health provider). Referring is part of your job, not a failure at it.
+<strong>→ Full Level Three Manual, Ch 13 &amp; 14.</strong></p>
+<p><strong>You already know:</strong> to send someone home when they look off.
+<strong>New at L3:</strong> recognizing conditions/injuries outside scope that require referral is its own testable competency. The trigger is any clear medical question mark — chest pain, an undiagnosed condition, a symptom that is plainly clinical. You do not get to decide such a person is &ldquo;probably fine.&rdquo; <strong>Apparently healthy or medically cleared</strong> is the whole gate.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> you coach lifts you&rsquo;re good at.
+<strong>New at L3:</strong> <em>train within your realm</em> is scope-of-practice at the movement level, and it is an ethics duty, not just a preference. If you have never coached a near-max snatch, the professional answer to &ldquo;coach me to a 1RM today&rdquo; is to <strong>decline the max attempt and build it with lighter loads within your competence</strong>. Coaching beyond your competence is how people — and businesses — get hurt. A waiver does not transfer that responsibility away from you.
+<strong>→ Full Level Three Manual, Ch 14.</strong></p>
+<h2>Screening, Consent, Waivers &amp; Insurance</h2>
+<p><strong>You already know:</strong> exercise is hard and carries some risk.
+<strong>New at L3:</strong> the professional posture is that injury is <strong>statistically inevitable</strong> — with perfect screening, consent, technique, and supervision, someone eventually gets hurt; you just can&rsquo;t predict who or when. That single premise is why the whole paperwork-and-insurance stack exists. And the public&rsquo;s assumption — that all exercise is healthy, so any injury means someone screwed up — is <strong>false</strong>, but it is what shapes how a lawsuit plays out against you.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> new members fill something out before they start.
+<strong>New at L3:</strong> the onboarding sequence, in order, is <strong>screen → informed consent + waiver → insurance</strong>, and each piece is distinct.
+- <strong>Screening</strong> exists to flag who needs a doctor&rsquo;s clearance, who needs the program adapted, and who shouldn&rsquo;t train under you at all. The named tool a gym can actually use is the <strong>PAR-Q (Physical Activity Readiness Questionnaire)</strong> — <strong>seven questions</strong>. A clean <strong>&ldquo;No&rdquo; to every question</strong> clears a low-risk participant to start. <strong>A single &ldquo;Yes&rdquo; means stop and get a physician&rsquo;s clearance before you supervise any training</strong> — do not just let them begin, and do not diagnose the cause yourself.
+- <strong>Informed consent</strong> spells out, in writing and signed by both parties, the services provided, what the athlete will experience, the benefits, and the risks — including listing common injuries and the fact that exercise <strong>can kill</strong>.
+- <strong>Assumption of risk</strong> (usually on the same form): the athlete states, in writing, that they willingly accept the real risks of training.
+- <strong>Waiver of liability / release</strong>: the athlete releases the trainer and facility from certain claims, including some claims of negligence. <strong>Indemnification</strong> makes the athlete financially responsible for damage they cause through their own negligence and for the gym&rsquo;s costs to enforce the agreement.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> paying clients sign a waiver.
+<strong>New at L3:</strong> <strong>EVERYONE signs — no exceptions.</strong> Paying or free, friend, family, or stranger, garage or full gym, drop-in or member. <strong>Anyone under 18 needs a parent/guardian signature.</strong> Relationship is not protection: when an injury stops someone from working and the bills stack up, even a best friend may have to come after you — the friendly, no-paperwork setup is the <em>most</em> dangerous one. Skip the signature and you&rsquo;re &ldquo;literally one bad day away from bankruptcy.&rdquo;
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> the waiver protects the business.
+<strong>New at L3:</strong> <strong>a signed waiver is not bulletproof and cannot stand alone.</strong> It can be thrown out in court. It only holds up if you <em>also</em> screened properly, coached competently, and can <strong>defend your programming choices</strong> — explaining not just <em>what</em> exercises you used but <em>why</em>, what they do to the body, and why they were safe for that specific athlete. If an opposing attorney or expert witness sounds more knowledgeable than you, the jury may doubt your competence — which is one reason the trainer needs real anatomy and physiology knowledge, not just a clipboard. Note too: a doctor&rsquo;s pre-participation physical did <strong>not</strong> reduce injury rates in the research — clearance can&rsquo;t hurt, but it is not a magic shield.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> most people know coaching involves some liability.
+<strong>New at L3:</strong> the two documents are not interchangeable. Task <strong>7.2.1</strong> — informed consent + waiver of liability — is signed by <strong>every</strong> athlete. Task <strong>7.2.2</strong> — a <strong>written, signed medical release</strong> — is a <strong>physician&rsquo;s sign-off</strong> required only when an athlete&rsquo;s health raises a flag. When a health history raises concern, a standard waiver is <strong>not</strong> enough; you need the medical release. Knowing which paper applies when is the whole competency.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> the intake asks health questions.
+<strong>New at L3:</strong> those questions are a live <strong>screening and programming tool</strong>, not just legal cover, and they set what you watch for on the floor.
+- <strong>Chronic conditions</strong> (high blood pressure, asthma, diabetes, heart conditions) rarely disqualify — but you must <strong>know the limitation and scale accordingly</strong>. Informed coaching, not exclusion.
+- <strong>Medications</strong>: you need to know what a med is <strong>FOR</strong>, not its exact name or dose. BP, diabetes, and anxiety meds can cause <strong>dizziness, fainting, or vomiting</strong> under intensity — so you scale load/reps/expectations, add rest, and watch closely. Telling someone to stop a medication is far outside scope.
+- <strong>Injury history / surgery</strong>: a recent un-rehabbed knee surgery means you ramp up and verify strength before any box-jump or double-under work.
+- <strong>Lifestyle</strong>: smoking may warrant scaled intensity and more rest; heavy drinking flags overall health.
+- A <strong>catch-all &ldquo;any other conditions&rdquo;</strong> question forces disclosure and strengthens your legal position — if they left something out, that&rsquo;s on them.
+- The <strong>emergency contact</strong> is collected on intake and used <strong>for emergencies only</strong> — never your marketing list. A separate <strong>photography/video release</strong> protects marketing use of member images.
+- <strong>In-session warning signs to stop and check:</strong> sudden <strong>paleness, flushing, eye rolling, dizziness, nausea, extreme heavy breathing.</strong>
+File every signed waiver (even for people who never join) and ask a lawyer in your state how long to keep them.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> a gym needs insurance.
+<strong>New at L3:</strong> <strong>professional liability insurance is a non-negotiable</strong> because injury is treated as a certainty — but it only holds if you did the screening and can defend your system. Three insurance realities: a <strong>homeowner&rsquo;s policy does NOT cover training</strong> (the garage-gym trap), missing business licensing/registration brings <strong>fines</strong>, and if you&rsquo;re sued without coverage you can lose everything. Task <strong>7.2.5</strong> also bundles <strong>employment status</strong> (correctly classifying employee vs. contractor) and <strong>truth in advertising</strong> into your legal responsibilities.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<h2>Emergency Action Plan &amp; Facility / Environmental Safety</h2>
+<p><strong>You already know:</strong> you&rsquo;d call 911 and grab the first-aid kit.
+<strong>New at L3:</strong> the <strong>Emergency Action Plan (EAP)</strong> is a named, testable requirement you both <strong>create AND practice</strong>. Its required contents: how to <strong>report</strong> an emergency; <strong>evacuation routes and procedures</strong>; who (if anyone) stays for <strong>critical operations</strong>; how you&rsquo;ll <strong>account for everyone</strong> after evacuation; <strong>rescue/first-aid</strong> steps; a <strong>contact</strong> for plan information; and how people are <strong>alerted</strong> (e.g., an alarm). Hit all of those and the format is flexible. Very small U.S. operations (<strong>under 10 employees</strong>) may deliver it verbally, but you write it anyway for reference and staff training, name the key people, and rehearse it periodically. When a member shows warning signs of a real emergency, you <strong>activate the EAP, provide first aid within scope, arrange emergency care — and do not diagnose or treat</strong>.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> you keep the gym reasonably tidy.
+<strong>New at L3:</strong> you own health-and-safety as a <strong>workplace AND a public space</strong>, and the governing rule is <strong>authority can be delegated, but responsibility cannot</strong> — &ldquo;I handed it off&rdquo; is not a defense. The standard you&rsquo;re judged against is <strong>&ldquo;so far as is reasonably practicable&rdquo;</strong>: you can&rsquo;t remove every risk, but you must reduce every one you reasonably can. A safety plan is built on four OSHA elements: management sets policy, someone analyzes the worksite for hazards (ongoing), hazards get controlled, and everyone is trained to recognize and act. Safety must be <strong>proactive</strong> — reviewed at least <strong>once a year</strong>, never written after an accident. Roughly <strong>97% of worksite accidents are human factor</strong>, only ~3% equipment/environment — which is why training and supervision carry the weight. The risk loop: <strong>Identify, Analyze, Solve, Implement, Evaluate</strong> (identification is the most important step). Voluntary risk (hopping on the treadmill — the gym&rsquo;s most dangerous machine) vs. involuntary risk (a chemical leak, a trip hazard).
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> frayed gear should get pulled.
+<strong>New at L3:</strong> the concrete numbers and rules.
+- <strong>Supervision:</strong> an unattended floor is a top liability — inadequate supervision was a factor in <strong>80% of injury lawsuits</strong> reviewed. Actively survey and instruct even in a pay-for-access model.
+- <strong>Equipment arrangement:</strong> <strong>crash pads under climbing ropes</strong>; <strong>no exposed concrete under pull-up bars or rings.</strong> Walkways roughly <strong>36–48 in</strong> between free-weight areas/platforms, <strong>24–36 in</strong> between machines; commercial buildings generally need <strong>at least two exits</strong> placed far apart.
+- <strong>Maintenance cadence:</strong> <strong>daily</strong> — clean shared grips, scan for slips/trips/sharp edges; <strong>weekly</strong> — check for dangerous wear (frayed ropes, missing pads); <strong>monthly</strong> — check bands for separation, ropes at attachment points, rack/bar connections, under mats.
+- <strong>DIY gear is out:</strong> no inner-tube stretch bands, no drywall-only shelving without studs, no homemade pull-up bars — failure can be catastrophic.
+- <strong>Spotting myth:</strong> &ldquo;always use a spotter or don&rsquo;t lift&rdquo; is <strong>largely false</strong> — untrained spotters endanger themselves and the lifter; teaching athletes to <strong>bail/dump/miss safely</strong> (as USAW teaches) is often safer. Any spotter used must be trained and competent.
+- <strong>OSHA reporting:</strong> every <strong>fatality, hospitalization, amputation, or loss of an eye</strong> must be reported even by tiny exempt gyms; <strong>deaths or three-or-more simultaneous hospitalizations within 8 hours.</strong> Keep injury/illness records <strong>at least five years</strong>. A written policy is legally required at <strong>10+ employees (U.S.) / 5+ (U.K.).</strong>
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> fire extinguishers and cleaning supplies live in the closet.
+<strong>New at L3:</strong> the fire, chemical, and blood specifics.
+- <strong>Fire extinguisher — PASS:</strong> <strong>P</strong>ull the pin, <strong>A</strong>im low at the base, <strong>S</strong>queeze the lever, <strong>S</strong>weep side to side. Stand <strong>6–8 ft</strong> back, use only with a clear escape route — <strong>evacuation beats fighting the fire.</strong> Travel distance to any extinguisher <strong>≤ 75 ft</strong>, one per floor near the stairway; <strong>visual check monthly, maintenance annually.</strong>
+- <strong>Smoke alarms:</strong> at least <strong>one per floor including basement</strong>, mounted high, tested monthly, <strong>replaced ~every 10 years.</strong>
+- <strong>Chemicals — routes of entry:</strong> <strong>inhalation</strong> (fastest, most common), <strong>absorption</strong>, <strong>ingestion</strong> (slowest). Five health-hazard categories: <strong>toxic, corrosive, carcinogenic, reproductive, sensitizer.</strong> Keep a <strong>Safety Data Sheet (SDS)</strong> — 16 standard sections — for <strong>every</strong> chemical, accessible to staff. <strong>Label secondary containers</strong> (the spray-bottle rule). <strong>Never mix bleach and ammonia</strong> — it makes <strong>chloramine gas</strong> that can knock someone unconscious and burst a closed container. Store off the floor, no higher than eye level, heavier low.
+- <strong>Blood / universal precautions:</strong> treat all body fluids as infectious. <strong>Blood</strong> is the real concern (<strong>hepatitis B, hepatitis C, HIV</strong>); sweat/tears/urine are low-risk unless visibly bloody — but sweat still spreads <strong>MRSA</strong>. The OSHA bloodborne-pathogen rule usually doesn&rsquo;t bind a normal gym (it kicks in for contact sports like boxing/wrestling/MMA) — adopt the precautions anyway. <strong>Cleanup:</strong> clear everyone but the PPE-equipped cleaner, soak with disposable absorbent material, disinfect and sanitize, then bag/seal/dispose; cover open wounds.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<p><strong>You already know:</strong> you&rsquo;d move class inside if it&rsquo;s brutally hot.
+<strong>New at L3:</strong> <strong>recognizing and responding to extreme environmental conditions is an explicit professional duty (7.2.4).</strong> Most gyms are climate-controlled and fine, but saunas and outdoor training raise <strong>hyperthermia (heat illness)</strong> and <strong>hypothermia</strong> risk. On a heat-advisory day you modify, relocate, or scale — and this ties directly to the <strong>rhabdo</strong> and heat-illness content in Domain 1.
+<strong>→ Full Level Three Manual, Ch 13.</strong></p>
+<h2>The Credential&rsquo;s Rules</h2>
+<p><strong>You already know:</strong> you earned an L1 and L2.
+<strong>New at L3:</strong> the CCFT is a <strong>maintained</strong> credential, and the numbers are testable.
+- <strong>Eligibility — two paths:</strong> <strong>Path 1</strong> = current <strong>Level 2 + 375 coaching hours</strong>; <strong>Path 2</strong> = <strong>1,000 hours</strong> of collegiate/pro strength-and-conditioning. Hours must be <strong>GPP-based</strong> (not sport-specific), accrued in the <strong>last five years</strong>, and <strong>verified by someone other than you</strong> (affiliate owner, fellow coach, head S&amp;C coach, athletic director). <strong>Self-verification is prohibited</strong> and faking hours is a Standards violation.
+- <strong>Medical prerequisite:</strong> proof of <strong>CPR and AED training within the last two years</strong> — renewed <strong>every two years for life.</strong> Responding to a medical emergency is explicitly <strong>inside</strong> a fitness pro&rsquo;s scope, which is why CPR is non-negotiable.
+- <strong>The exam:</strong> <strong>160 multiple-choice questions</strong>, <strong>140 scored + 20 unscored &ldquo;pretest,&rdquo;</strong> <strong>3 hours 55 minutes</strong>, at <strong>Pearson VUE.</strong> No trick questions, one best answer each; answer all 160. Questions come from the <strong>Content Outline</strong>, not the reading articles.
+<strong>→ Full Level Three Manual, Ch 14.</strong></p>
+<p><strong>You already know:</strong> certifications expire.
+<strong>New at L3:</strong> the <strong>recertification interval is three years</strong>, and renewal is <strong>five steps</strong> completed before it expires: (1) keep following the <strong>Standards of Professional Practice</strong>, (2) keep <strong>CPR</strong> current, (3) complete <strong>36 CEUs</strong>, (4) log <strong>150 coaching hours</strong>, (5) <strong>pay the fee.</strong>
+- <strong>CEUs: 36 per interval</strong>, where <strong>1 CEU = one contact (clock) hour.</strong> They only count if earned <strong>inside</strong> the interval — no banking early, no carrying leftovers. Three CPD categories: CrossFit Professional Development and General Professional Development (no minimum) and <strong>Individualized Professional Development, capped at 15 CEUs.</strong> The <strong>Learning Needs Assessment (LNA)</strong> is mandatory — a self-survey rating your knowledge <strong>1–3</strong> per area — and your CEU log stays <strong>locked</strong> until you complete it.
+- <strong>150 coaching hours</strong> must be real coaching/programming/staff development — <strong>administrative duties don&rsquo;t count.</strong>
+- <strong>CPR is a trap:</strong> its renewal does NOT line up with the recert interval, it can lapse <strong>mid-interval</strong>, and keeping it current is <strong>solely your responsibility</strong> — no one reminds you.
+- <strong>Audits:</strong> the Certification Department can audit <strong>anyone at any time</strong>; failing to produce documentation is itself a <strong>Standards violation.</strong>
+<strong>→ Full Level Three Manual, Ch 14.</strong></p>
+<p><strong>You already know:</strong> you can say you&rsquo;re CrossFit-certified.
+<strong>New at L3:</strong> the sharp legal edges of the title.
+- <strong>Standards of Professional Practice</strong> (the ethics constitution): obey national/local laws (business, employment, copyright, IP); treat everyone fairly regardless of gender, age, disability, race, religion, orientation; don&rsquo;t damage CrossFit&rsquo;s reputation — <strong>including on social media</strong>; act in the <strong>client&rsquo;s best interest</strong> and protect them from harm; keep client info <strong>confidential</strong> (no release without a <strong>written release</strong> unless law requires); refer out; and continually self-assess and improve.
+- <strong>Designation ≠ affiliation:</strong> the CCFT lets you put <strong>&ldquo;Certified CrossFit Trainer&rdquo;</strong> after your name. It does <strong>NOT</strong> grant use of the CrossFit <strong>name, logos, or Journal content for a business</strong> — that needs a separate <strong>affiliate license.</strong> You may say <strong>certified</strong>, never <strong>&ldquo;licensed&rdquo; or &ldquo;registered.&rdquo;</strong>
+- <strong>NDA:</strong> discussing specific exam questions anywhere (including online) is a serious violation, binding <strong>even after</strong> you&rsquo;re certified — grounds to be barred or revoked.
+- <strong>Status levels:</strong> <strong>Active</strong> (may use the title/directory), <strong>Expired</strong>, <strong>Suspended</strong> (appealable), <strong>Revoked</strong> (permanent). An <strong>Appeal</strong> challenges a decision about <em>your</em> cert status; it <strong>cannot</strong> turn a failing exam grade into a pass. A <strong>Complaint</strong> is someone reporting a trainer.
+- <strong>Accreditation:</strong> the CCFT meets <strong>ISO/IEC 17024</strong> and is accredited by <strong>ANAB</strong> — &ldquo;the first and only fitness certification accredited to an international standard.&rdquo; That accreditation is <em>why</em> the fairness, security, and impartiality rules are so strict.
+<strong>→ Full Level Three Manual, Ch 14.</strong></p>
+<p><strong>You already know how the exam feels; the L3 makes you study it on purpose.</strong>
+<strong>New at L3:</strong> the exam is built from a <strong>practice analysis</strong> of what working trainers actually do, so it rewards <strong>applied judgment over memorization</strong> — and the reading list only <strong>supports</strong> the outline, it isn&rsquo;t the test. Domain weights, for where your study pays off: <strong>Screening 8%, Programming 14%, Educating 19%, Training 24%, Leadership &amp; Management 16%, Lifestyle Education 11%, Professional Responsibilities 8%.</strong> Training + Educating together are ~<strong>43%.</strong> The current Content Outline is <strong>V3.0 (2023)</strong> — study from the current version. Self-assess two ways: can you <strong>demonstrate</strong> each skill in your coaching, and do you <strong>know</strong> the listed knowledge.
+<strong>→ Full Level Three Manual, Ch 14.</strong></p>
+<h2>Cram Sheet</h2>
+<p><strong>Scope of practice — the bright line</strong>
+- May: coach the apparently healthy or medically cleared; teach movement; program; reduce risk; motivate; respond to emergencies.
+- May NOT, ever: <strong>diagnose, treat injuries, prescribe meds, prescribe a disease-specific diet, do therapy.</strong> Cross the line → <strong>refer out.</strong>
+- <em>Train within your realm</em> — decline a max lift you&rsquo;re not qualified to coach; build it lighter. A waiver doesn&rsquo;t transfer that responsibility.</p>
+<p><strong>Paperwork stack (order: screen → consent + waiver → insurance)</strong>
+- <strong>PAR-Q = 7 questions.</strong> All &ldquo;No&rdquo; → clear. <strong>One &ldquo;Yes&rdquo; → physician&rsquo;s clearance first</strong> (don&rsquo;t just start).
+- Informed consent (written, signed, both parties) + <strong>assumption of risk</strong> + <strong>waiver/release</strong> + <strong>indemnification.</strong>
+- <strong>EVERYONE signs</strong> — free, friend, family, drop-in; <strong>under 18 = guardian signs.</strong>
+- A waiver is <strong>not bulletproof</strong> — must be paired with proper screening, competent coaching, insurance, licensing.
+- <strong>7.2.1</strong> consent/waiver = every athlete. <strong>7.2.2</strong> medical release = physician sign-off, only when health raises a flag.
+- Meds: know what they&rsquo;re <strong>FOR</strong>, not the name; scale + watch for <strong>dizziness/fainting/vomiting.</strong>
+- In-session stop signs: <strong>paleness, flushing, eye rolling, dizziness, nausea, extreme heavy breathing.</strong>
+- <strong>Professional liability insurance is mandatory</strong>; homeowner&rsquo;s policy does <strong>not</strong> cover training.</p>
+<p><strong>Facility / environmental / EAP</strong>
+- <strong>Authority delegates; responsibility does not.</strong> Standard: <strong>&ldquo;reasonably practicable.&rdquo;</strong> Review the plan <strong>annually. 97% of accidents = human factor.</strong>
+- Risk loop: <strong>Identify → Analyze → Solve → Implement → Evaluate.</strong>
+- Supervision failure = factor in <strong>80% of injury lawsuits.</strong>
+- <strong>Crash pads under ropes; no bare concrete under bars/rings.</strong> Walkways <strong>36–48 in / 24–36 in.</strong>
+- OSHA report: fatality/hospitalization/amputation/eye loss; <strong>≤ 8 hrs</strong> for deaths or 3+ hospitalizations. Keep records <strong>5 yrs.</strong> Written policy at <strong>10+ (U.S.) / 5+ (U.K.)</strong> employees.
+- <strong>PASS</strong> = Pull, Aim, Squeeze, Sweep; <strong>6–8 ft</strong> back; extinguisher <strong>≤ 75 ft</strong>, monthly visual / annual maintenance. Smoke alarms <strong>1/floor</strong>, replace <strong>~10 yrs.</strong>
+- Chemical routes: <strong>inhalation (fastest) → absorption → ingestion.</strong> Keep an <strong>SDS (16 sections)</strong> for every chemical. <strong>Never mix bleach + ammonia</strong> (chloramine gas). <strong>Blood = HepB/HepC/HIV</strong>; universal precautions; sweat spreads <strong>MRSA.</strong>
+- <strong>EAP</strong> must cover: report, evacuate, critical-ops staff, headcount, rescue/first aid, contact, alert. Verbal OK <strong>under 10 employees</strong> — write it anyway; <strong>practice it.</strong>
+- <strong>Extreme conditions (7.2.4):</strong> plan hyperthermia/hypothermia for saunas/outdoor training.</p>
+<p><strong>The credential&rsquo;s numbers</strong>
+- Eligibility: <strong>L2 + 375 hrs</strong> OR <strong>1,000 hrs</strong> S&C; GPP-based, last <strong>5 yrs</strong>, verified by <strong>someone else</strong> (no self-verify).
+- <strong>CPR/AED within 2 yrs</strong>, renewed <strong>every 2 yrs for life</strong> — your sole responsibility, can lapse mid-interval.
+- Exam: <strong>160 Q (140 scored + 20 pretest), 3 h 55 min, Pearson VUE</strong>, one best answer, from the Content Outline.
+- <strong>Recert = 3 yrs, 5 steps:</strong> Standards + CPR + <strong>36 CEUs</strong> + <strong>150 coaching hours</strong> + fee.
+- <strong>36 CEUs (1 CEU = 1 hr)</strong>, earned inside the interval; <strong>Individualized capped at 15</strong>; <strong>LNA</strong> (rate 1–3) unlocks the CEU log.
+- Status: <strong>Active / Expired / Suspended (appealable) / Revoked (permanent).</strong> Appeal ≠ turning a failed exam into a pass.
+- <strong>CCFT ≠ affiliate license</strong> — title only; no CrossFit name/logo for business. Say <strong>certified</strong>, never <strong>licensed/registered.</strong>
+- <strong>NDA</strong> binds forever. <strong>Audit anytime</strong> — no records = violation.
+- <strong>ISO/IEC 17024 + ANAB accredited</strong> — first/only fitness cert to an international standard.
+- Domain weights: <strong>8 / 14 / 19 / 24 / 16 / 11 / 8</strong>; Training + Educating ≈ <strong>43%.</strong> Content Outline <strong>V3.0 (2023).</strong></p>
+    <p class="ch-oneliner" style="margin-top:4px">Full depth: Level Three Manual, Ch. 13, 14.</p>
+  </div>
+</details>
+
+<details class="chapter" id="d5" data-title="defend the fundamentals deeper — energy systems, vo₂, power &amp; anthropometry" style="--accent:#9a6312">
+  <summary class="ch-summary">
+    <span class="ch-chevron" aria-hidden="true">&#8250;</span>
+    <div class="ch-sum-text">
+      <div class="ch-meta">
+        <span class="ch-badge">Delta 5 of 6</span>
+      </div>
+      <h2 class="ch-title">Energy Systems, VO₂, Power &amp; Anthropometry</h2>
+      <p class="ch-oneliner">You can run a metcon; the L3 asks you to DEFEND why it works in the exam&#x27;s precise language. The delta here is depth, not new topics: the three energy systems and the aerobic paradox, why VO₂max is not the gold standard, human power output across the whole range, the novice-vs-advanced adaptation curve, and how body proportions (anthropometry) change a lift.</p>
+    </div>
+  </summary>
+  <div class="ch-body">
+    <p class="framing">You can run a metcon; the L3 asks you to DEFEND why it works in the exam&#x27;s precise language. The delta here is depth, not new topics: the three energy systems and the aerobic paradox, why VO₂max is not the gold standard, human power output across the whole range, the novice-vs-advanced adaptation curve, and how body proportions (anthropometry) change a lift.</p>
+    <p>You have run a thousand metcons and watched them work. What the L3 adds isn&rsquo;t a new workout — it&rsquo;s the obligation to <strong>defend the mechanism</strong> in the exam&rsquo;s exact vocabulary. When an athlete or a rival coach repeats old cardio wisdom, you can&rsquo;t just say &ldquo;trust the program&rdquo;; you must name the physiology: the three energy systems and their time domains, why intensity (not duration) drives adaptation, why VO₂max is <em>not</em> CrossFit&rsquo;s definition of fitness, why power = force × distance ÷ time is the physics under &ldquo;intensity,&rdquo; why beginners gain on anything and vets need variety, and how a body&rsquo;s proportions decide what a &ldquo;correct&rdquo; position even looks like. Same floor knowledge — but now stated crisply enough to survive a test question. This is depth, not new topics.</p>
+<hr />
+<h2>The Three Energy Systems &amp; the Aerobic Paradox</h2>
+<p><strong>You already know:</strong> short workouts feel anaerobic and burny; long ones feel like &ldquo;cardio,&rdquo; and CrossFit builds endurance without long slow runs.</p>
+<p><strong>New at L3 — name the three systems and their domains precisely:</strong>
+- <strong>Phosphagen (ATP/CP) system</strong> — the instant, no-oxygen fuel for maximal efforts of roughly <strong>1–~10 seconds</strong>: a heavy single, a short sprint, a throw. Huge power, tiny duration.
+- <strong>Glycolytic system</strong> — powers hard efforts from <strong>seconds up to ~2 minutes</strong> (a 200–400 m sprint, &ldquo;Fran&rdquo;). Burns carbohydrate/glycogen without oxygen; produces <strong>lactate</strong>; can&rsquo;t last long.
+- <strong>Oxidative (aerobic) system</strong> — the oxygen-using engine for <strong>longer, steadier work</strong> (rows, runs). Lower power, runs almost indefinitely; supplies ~99% of marathon energy.</p>
+<p><strong>The bright line the exam wants:</strong> these systems <strong>overlap</strong> — it is never purely one. A ~6-minute effort still pulls ~20% from anaerobic sources; a ~14-second sprint still gets ~10% aerobically. You name the <strong>predominant</strong> system by the effort&rsquo;s power and duration, never claim it&rsquo;s the only one running.</p>
+<p><strong>The Aerobic Paradox — why hard beats long-and-slow:</strong>
+- The master rule (from <strong>General Adaptation Syndrome</strong>, Selye, 1936): <strong>no disruption of homeostasis, no adaptation.</strong> A system only improves if you push it past comfortable. A trained person&rsquo;s easy jog never does that.
+- &ldquo;Aerobic&rdquo; literally means &ldquo;in the presence of oxygen.&rdquo; If oxygen supply keeps up with demand the whole time, you <strong>never disrupt oxygen balance</strong> — so by definition that pace <strong>cannot drive a VO₂max gain</strong> in a trained athlete.
+- What long-slow-distance (LSD) <em>does</em> train: it drains glycogen and pushes the fat-burning ceiling, so the athlete runs <strong>longer, not faster</strong>. Endurance improves; VO₂max does not.
+- What intervals do that LSD can&rsquo;t: going fast enough forces the muscle to <strong>demand more oxygen than it can take up</strong>. <em>That shortfall</em> is the disruption that raises VO₂max.
+- <strong>Numbers to hold:</strong> blood O₂ saturation sits at <strong>~98% at rest</strong>. A <strong>1% dip (to ~97%)</strong> is enough stress for a <strong>beginner</strong>; an intermediate-to-elite athlete must drive it to <strong>~91% or lower</strong>. LSD stops being a specific-enough stress after roughly <strong>3–9 months</strong> of consistent training.
+- <strong>The lactate trap:</strong> lactate is <strong>not the enemy and not the goal</strong> — it&rsquo;s a byproduct that appears alongside the real driver (exceeding oxygen-consumption capacity). Chasing &ldquo;lactate tolerance&rdquo; misses the mechanism.
+- <strong>The recovery-day exception:</strong> a <strong>~70% effort</strong> can&rsquo;t disrupt oxygen balance, so it <strong>builds no new VO₂max</strong> — which is exactly why it works for active recovery without losing condition. (Common trap: don&rsquo;t mistake easy recovery work for the work that builds fitness. The genuinely productive interval intensity is far above the textbook 85–105% of VO₂max — think <strong>~150–250%</strong> for a trained athlete.)</p>
+<p><strong>→ Full Level Three Manual, Chapter 7</strong> (physiology / energy systems). <strong>Ch 1</strong> for the definition of fitness this supports.</p>
+<hr />
+<h2>Why VO₂max Isn&rsquo;t the Gold Standard</h2>
+<p><strong>You already know:</strong> CrossFit measures fitness with repeatable named benchmarks (Fran, Grace, a 5K), not lab tests.</p>
+<p><strong>New at L3 — defend <em>why</em> the lab number falls short, and state what CrossFit&rsquo;s definition actually is:</strong>
+- <strong>VO₂max defined:</strong> the most oxygen the body can take in <strong>and use</strong> during all-out work — the emphasis is on <strong>consume</strong>, not merely deliver. It&rsquo;s the conventional lab measure of aerobic fitness.
+- <strong>It&rsquo;s four things, not one.</strong> At sea level VO₂max depends on: (1) the <strong>heart&rsquo;s pumping ability</strong> (stroke volume), (2) the <strong>oxygen-carrying capacity of the blood</strong>, (3) the <strong>muscle&rsquo;s ability to accept a large blood supply</strong> (capillary density), and (4) the <strong>cells&rsquo; ability to extract and use oxygen</strong> (mitochondria). Getting air into the lungs is <strong>not</strong> the limiter at sea level.
+- <strong>The specificity punchline:</strong> factors 3 and 4 are <strong>local to the muscles you trained</strong>. So there is no single VO₂max — there is a &ldquo;running VO₂max,&rdquo; a &ldquo;cycling VO₂max,&rdquo; a &ldquo;thruster VO₂max.&rdquo; A runner scores lower on a bike and vice versa. This is the split between <strong>systemic/central</strong> adaptations (heart, whole body) and <strong>peripheral</strong> adaptations (a specific muscle&rsquo;s capillaries and mitochondria).
+- <strong>Daily noise:</strong> VO₂max can swing <strong>up to ~8% day to day</strong> (sleep, hydration, nutrition, temperature). One test — or even two — can&rsquo;t separate real change from noise.
+- <strong>Why CrossFit&rsquo;s answer is better:</strong> re-run a cheap, standardized, <strong>demand-matching benchmark</strong> many times and the noise cancels; a real trend line emerges — for free. The benchmark must <strong>mirror the athlete&rsquo;s actual demands</strong> (the wrestler gets a thruster-and-pull-up test, not a treadmill test) and, to gauge the aerobic engine, the movement must be <strong>sustainable continuously for ~6+ minutes</strong> (lighten a too-heavy wall ball so you never stop).
+- <strong>The scope/definition bright line:</strong> CrossFit does <strong>not</strong> define fitness as a lab VO₂max score. It defines fitness as <strong>observable, measurable, repeatable work capacity across broad time and modal domains.</strong> The lab number is a single input to factor 4, not the target.</p>
+<p><strong>→ Full Level Three Manual, Chapter 1</strong> (definition of fitness, benchmarking). <strong>Ch 7</strong> for the physiology.</p>
+<hr />
+<h2>Human Power Output — The Physics Under &ldquo;Intensity&rdquo;</h2>
+<p><strong>You already know:</strong> intensity is what makes CrossFit work, and metcons crush specialists.</p>
+<p><strong>New at L3 — state the physics and the whole-power-range argument:</strong>
+- <strong>Power = force × distance ÷ time</strong> (work per unit time). This is the exam&rsquo;s definition of intensity. Every activity sits somewhere on a <strong>power scale</strong>, and where it sits <strong>decides which energy system and which muscle fibers</strong> run the show — max lift near the top, marathon pace near the bottom.
+- <strong>Relative, not absolute:</strong> expressed as a percentage of <em>your own</em> max — Olympic lifts and sprints near 100%, a 400 m ~40%, marathon pace ~10%. Your 100% and a novice&rsquo;s 100% are different absolute numbers.
+- <strong>Fiber types and the recruitment ladder (name them right):</strong>
+  - <strong>Type I (slow-twitch)</strong> — low force, fatigue-resistant; the <strong>first</strong> fibers switched on and the last to quit; light/long/aerobic work.
+  - <strong>Type IIa</strong> — powerful but more fatigue-resistant; sustained power (a 400 m, repeated submax lifts).
+  - <strong>Type IIb/IIx</strong> — most powerful, fastest to fatigue; recruited <strong>only</strong> at max/near-max effort.
+  - A <strong>motor unit</strong> = one nerve plus all the fibers it controls, and they are <strong>all the same type</strong>. So the CNS recruits muscle <strong>one &ldquo;flavor&rdquo; at a time</strong>, in order of need: Type I first, then IIa (around 20% of max, where lactate appears), then IIb at true max.
+- <strong>Why beginners get fast early strength:</strong> only trained athletes can recruit <strong>all</strong> their motor units. Novice gains are <strong>neural</strong> — learning to switch on fibers they already have — not new muscle yet.
+- <strong>Why single-mode specialists have gaps:</strong>
+  - <strong>Capillary dilution</strong> — heavy strength-only training grows Type II fibers bigger, spreading existing capillaries farther apart, so oxygen delivery lags. Aerobic training does the <strong>opposite</strong> (raises capillary density). The two styles pull the body in opposite directions.
+  - Pure strength work doesn&rsquo;t challenge delivery/waste-clearance, so it <strong>does not</strong> improve cardiac output or blood volume. &ldquo;Ferrari engine, lawnmower fuel pump.&rdquo;
+- <strong>Why metcons punish harder than the sum of parts:</strong> they tax <strong>all fiber types, all three energy systems, the heart, AND the nervous system</strong> at once. <strong>CNS/neural fatigue</strong> is real and separate from sore muscles (depleted neurotransmitters drop physical <em>and</em> mental output) — a genuine over-training signal. Mid-workout modality switches (sprint → kettlebell) force blood to redirect, and it isn&rsquo;t instant; max pull-ups after a hard run drop for three reasons: <strong>blood-flow lag, CNS re-coordination to a new movement, and it simply feels harder.</strong> Circuit training (small groups, one at a time, with rest) is <strong>not</strong> the same stimulus.
+- <strong>Relative load in action:</strong> two athletes doing &ldquo;Grace&rdquo; at 135 lb — the 270-lb-clean athlete works at ~50% and recruits more fibers as he fatigues; the 150-lb-clean athlete fires a huge recruitment wave from rep one, gassing the CNS early. Same workout, different demand — this is relative intensity.</p>
+<p><strong>→ Full Level Three Manual, Chapter 7</strong> (power, energy systems, anatomy &amp; physiology).</p>
+<hr />
+<h2>Novice vs. Advanced Adaptation — the Fish Diagram</h2>
+<p><strong>You already know:</strong> beginners improve on almost anything; seasoned athletes stall and need more.</p>
+<p><strong>New at L3 — state the model precisely:</strong>
+- The <strong>fish diagram</strong> plots three things together — <strong>how much fitness you&rsquo;re gaining, how fast you&rsquo;re adapting, and how complex your training must be.</strong> The single most important relationship: <strong>the closer an athlete is to their genetic ceiling, the MORE complex and varied training must become to keep improving.</strong> Beginners gain from anything; advanced athletes work harder for smaller gains.
+- <strong>Linear progression</strong> (adding load each session → each week → each month) works beautifully for novices and <strong>runs out</strong> as they climb toward their ceiling — because a beginner is adapted to nothing, so any work above the couch is a new disruptive stress (this is <strong>specificity</strong> showing up on the floor).
+- <strong>The breakthrough:</strong> treat <strong>fitness as ONE whole entity</strong>, not a stack of separate buckets. Trying to train strength, conditioning, and gymnastics in isolation gets faster gains in <em>that</em> element but stalls or reverses the others — defeating broad capacity.
+- <strong>Two rules the exam rewards:</strong> (1) your <strong>weakest element always improves fastest</strong> under a balanced approach — the program self-corrects toward weaknesses; (2) <strong>recovery capacity is finite</strong> — the &ldquo;100 work units in 72 hours&rdquo; example: an 80/20 bias toward strength makes strength race and conditioning crawl, but <strong>total fitness gain stays roughly the same</strong> — you only change <em>which</em> elements grow.
+- <strong>Counterintuitive payoff:</strong> training <strong>more elements at once lets programming stay simpler for longer</strong> — the variety does the work that complex periodization otherwise would. Honest caveat: there&rsquo;s an unmeasurable &ldquo;black box&rdquo; bonus from mixing that the math can&rsquo;t fully explain.
+- <strong>The judgment bright line:</strong> athletes who duck their weaknesses — the &ldquo;running geeks&rdquo; who scale weight down, the &ldquo;old lifters&rdquo; who won&rsquo;t run — are making an <strong>unacceptable modification</strong> that forfeits full results. Part of your job is to <strong>call it out and coach honest training across all elements</strong>, while still respecting a legitimate sport-specific goal.</p>
+<p><strong>→ Full Level Three Manual, Chapter 1</strong> (GPP, definition of fitness). <strong>Ch 7</strong> for programming physiology.</p>
+<h3>One Goal, Many Roads — the Row2K Model</h3>
+<p><strong>You already know:</strong> you vary workouts to keep athletes progressing.</p>
+<p><strong>New at L3 — the transferable template for attacking a single benchmark:</strong> hold one fixed target (a <strong>7-minute 2K row</strong> = a <strong>1:45 / 500 m split</strong>) and hit it from <strong>incremental, metabolically distinct, converging</strong> paths, ranked easiest → hardest:
+- <strong>Distance priority</strong> — row the full 2000 m, log the time, repeat.
+- <strong>Time priority</strong> — fix the clock at 7:00, push meters up until you clear 2000.
+- <strong>Pace priority</strong> — lock the 1:45 split and extend how long you hold it.
+- <strong>Interval ladders</strong> — e.g., 10 × 42 s work / 30 s rest at 200 m each; then shave the rest 5 s per successful session until rest hits zero and you&rsquo;ve rowed a <strong>true continuous 2K/7</strong> (progressive overload); or start with many tiny 10 s efforts and march toward fewer, longer bouts.</p>
+<p><strong>The exam-aligned move when an athlete stalls on a benchmark:</strong> don&rsquo;t just re-test the same all-out effort — <strong>attack it from a different angle or break it into paced pieces.</strong> The <strong>breadth of stimulus matters more than any single clever method</strong>, giving both a physiological (more energy gears trained) and psychological (less staleness) edge. Drop this template onto any benchmark — Fran, a max effort — not just the rower.</p>
+<p><strong>→ Full Level Three Manual, Chapter 1</strong> (programming with variance, benchmarking).</p>
+<hr />
+<h2>Anthropometry &amp; Leverage — Reading the Build</h2>
+<p><strong>You already know:</strong> you can fix a squat in your sleep and spot a fault instantly.</p>
+<p><strong>New at L3 — the delta is knowing when a &ldquo;fault&rdquo; is actually correct geometry:</strong>
+- <strong>Anthropometry</strong> = the relative size of a person&rsquo;s body segments (upper arm, forearm, torso, thigh, shin). Segment proportions <strong>change how a correct movement looks AND how it performs</strong> — so there is <strong>no single template of &ldquo;correct&rdquo; body angles</strong> every athlete must hit.
+- <strong>The at-a-glance method</strong> (simplest level of movement analysis — no muscle or bone names needed): use the <strong>head as a measuring stick</strong> (Vitruvian / da Vinci model, ~<strong>7.5–8 heads tall</strong>). In the 8-head model the <strong>elbow sits about at navel level</strong> — an elbow well <strong>below</strong> the navel means a longer-than-average arm (torso average). Compare segments to the average template.
+- <strong>The thesis:</strong> if the segments differ, the <strong>angles must differ</strong> — so identical <em>correct</em> technique simply looks different from athlete to athlete. Change one side of the deadlift/clean <strong>central triangle</strong> (say, arm length) and every angle in it changes.
+- <strong>Setup rules that flow from build:</strong>
+  - <strong>Snatch grip</strong> is dictated by <strong>arm length</strong>, not a fixed rule — long arms → <strong>wider</strong> grip (to shorten bar travel), short arms → <strong>narrower</strong>. Long <strong>forearms</strong> also push toward a wider grip when racking/receiving a clean.
+  - <strong>Thigh length sets hip height and back angle:</strong> long thighs → <strong>hips higher, back flatter/more horizontal</strong>; short thighs → hips lower, back more upright. Same correct pull, different look.
+  - A <strong>larger midsection</strong> needs a <strong>wider stance, toes out</strong> a bit more for room and proper mechanics.
+  - <strong>Long arms</strong> (&ldquo;Magilla Gorilla&rdquo;): the bar legitimately starts <strong>low on the thigh</strong> (~2 in above the knee). <strong>Do NOT</strong> cue him higher — that forces a <strong>bent-arm pull</strong>, a real fault you&rsquo;d be <em>creating</em>.
+- <strong>The scope-of-practice / risk bright line:</strong> geometry is <strong>not</strong> flexibility. If a body literally <strong>cannot</strong> assume a position because of its proportions, you <strong>adapt the setup or modify the exercise</strong> — you do <strong>not</strong> grind them into it (that raises inefficiency and injury risk). When deviations are extreme (very long thighs pushing the bar over the toes with shoulders behind it), the safe answer is to <strong>change the movement</strong> — e.g., a <strong>sumo deadlift</strong> so bar, mid-foot, and shoulder blade re-align, even if it&rsquo;s not optimal for full development.</p>
+<p><strong>→ Full Level Three Manual, Chapter 7</strong> (biomechanics / mechanics of movement). <strong>Ch 1</strong> for the coaching/screening frame.</p>
+<hr />
+<h2>Virtuosity — The Standard Under All of It</h2>
+<p><strong>You already know:</strong> mechanics before intensity; teach the air squat before the overhead squat before the snatch.</p>
+<p><strong>New at L3 — own the exact term of art and the model session:</strong>
+- <strong>Virtuosity</strong> = <strong>&ldquo;performing the common uncommonly well.&rdquo;</strong> It is elusive but instantly recognized by athlete, coach, and audience — the mark of true mastery. Even flawless, error-free execution only earns a &ldquo;9.7&rdquo;; virtuosity is the last tenth.
+- The <strong>novice&rsquo;s curse</strong> (afflicts learners <em>and</em> coaches): rushing past boring basics toward flashy moves — chasing <strong>risk</strong> (attempting the likely-to-be-botched) and <strong>originality</strong> (never-seen-before). It produces excessive adornment, weak fundamentals, and <strong>delayed</strong> mastery. Being taught by the very best is surprisingly <strong>simple, fundamental, basic.</strong>
+- What <strong>dooms</strong> a program is <strong>lack of commitment to fundamentals</strong> — on both fronts: the workouts you <strong>design</strong> and how strictly you <strong>police movement</strong> on the floor. Skipping a prerequisite (snatch before overhead squat) is a <strong>&ldquo;colossal mistake&rdquo;</strong> and a <strong>&ldquo;sucker&rsquo;s move&rdquo;</strong> — it raises injury risk, delays progress, and blunts the athlete&rsquo;s rate of return.
+- <strong>The model session (use as a class-plan checklist):</strong> warm-up → practice a basic skill or chase a PR → <strong>critique the athletes&rsquo; efforts</strong> (real coaching feedback) → a <strong>tight couplet or triplet</strong> → some <strong>play</strong>. Play (tire flips, relays, tag, Hooverball) is <strong>&ldquo;seasoning, like salt, pepper, and oregano&rdquo;</strong> — essential but <strong>not</strong> the main course; it never replaces skill work and the hard couplet/triplet at the center.
+- <strong>The standard:</strong> <em>&ldquo;good enough never is.&rdquo;</em> Insisting on flawless basics doesn&rsquo;t bore athletes — it makes them <strong>respect you and advance faster.</strong></p>
+<p><strong>→ Full Level Three Manual, Chapter 1</strong> (definition of CrossFit, mechanics-consistency-intensity, progressions).</p>
+<hr />
+<h2>Cram Sheet</h2>
+<ul>
+<li><strong>Three energy systems:</strong> <strong>phosphagen (ATP/CP)</strong> ~1–10 s max efforts · <strong>glycolytic</strong> ~10 s–2 min hard efforts (makes lactate) · <strong>oxidative (aerobic)</strong> long/steady (~99% of a marathon). Systems <strong>overlap</strong> — name the predominant one, never the only one.</li>
+<li><strong>Master rule:</strong> <strong>no disruption of homeostasis → no adaptation</strong> (General Adaptation Syndrome, Selye 1936).</li>
+<li><strong>Aerobic paradox:</strong> LSD builds fuel stores → run <strong>longer, not faster</strong>; intervals force O₂ demand &gt; uptake → the disruption that raises <strong>VO₂max</strong>.</li>
+<li><strong>O₂ saturation numbers:</strong> ~<strong>98%</strong> rest · <strong>1% dip (~97%)</strong> enough for a beginner · <strong>~91% or lower</strong> for intermediate/elite. LSD stops working after <strong>~3–9 months</strong>. <strong>70%</strong> effort = recovery only (builds no new VO₂max).</li>
+<li><strong>Lactate</strong> is a byproduct, <strong>not</strong> the goal and not poison. Productive interval intensity ≈ <strong>150–250%</strong> of VO₂max, not the soft 85–105%.</li>
+<li><strong>VO₂max = 4 factors:</strong> heart pump (stroke volume) · blood O₂ capacity · muscle capillary density · cell mitochondria. Last two are <strong>local</strong> → there&rsquo;s a &ldquo;running VO₂max,&rdquo; &ldquo;cycling VO₂max,&rdquo; etc. <strong>Lungs are not the limiter</strong> at sea level.</li>
+<li><strong>VO₂max daily swing:</strong> up to <strong>~8%</strong>. One test can&rsquo;t prove change → use <strong>repeatable, demand-matching benchmarks</strong> re-run over time. Aerobic test movement must be sustainable <strong>~6+ min continuously</strong>.</li>
+<li><strong>CrossFit&rsquo;s definition of fitness</strong> = observable, <strong>measurable, repeatable work capacity</strong> across broad domains — <strong>not</strong> a lab VO₂max score.</li>
+<li><strong>Power = force × distance ÷ time</strong> = intensity. Expressed as <strong>% of your own max</strong> (relative, not absolute).</li>
+<li><strong>Fiber recruitment ladder:</strong> Type I first → Type IIa (~20% max, lactate appears) → Type IIb/IIx at max. <strong>Motor unit</strong> = one nerve + fibers, <strong>all one type</strong>.</li>
+<li><strong>Novice strength gains = neural</strong> (learning to recruit existing fibers), not new muscle.</li>
+<li><strong>Capillary dilution:</strong> strength-only growth spreads capillaries apart → poor O₂ delivery; aerobic training does the opposite. <strong>Circuit training ≠ metcon.</strong></li>
+<li><strong>CNS/neural fatigue</strong> is real and separate from soreness → over-training signal.</li>
+<li><strong>Fish diagram:</strong> closer to genetic ceiling → <strong>more complexity/variety</strong> needed. <strong>Weakest element improves fastest.</strong> Recovery is finite — <strong>bias changes which elements grow, not total gain.</strong> More elements at once → simpler programming for longer.</li>
+<li><strong>Unacceptable modification:</strong> athletes ducking their weaknesses (&ldquo;running geeks,&rdquo; &ldquo;old lifters&rdquo;) — coach must call it out.</li>
+<li><strong>Row2K template:</strong> one target (<strong>7-min 2K = 1:45/500 m split</strong>) via <strong>distance-priority → time-priority → pace-priority → interval ladders</strong> (shrink rest to zero). <strong>Breadth of stimulus &gt; any one method.</strong> Stalled benchmark → attack from a new angle, don&rsquo;t just re-test.</li>
+<li><strong>Anthropometry:</strong> head as ruler (<strong>~7.5–8 heads tall</strong>); elbow ≈ navel in 8-head model. <strong>Segments differ → angles differ</strong>; same correct lift looks different.</li>
+<li><strong>Build-driven setup:</strong> long arms → wider grip / bar starts <strong>low</strong> on thigh (don&rsquo;t cue higher → bent-arm fault); long thighs → <strong>hips high, back flat</strong>; big belly → wider stance, toes out.</li>
+<li><strong>Geometry ≠ flexibility.</strong> Don&rsquo;t force an impossible position → <strong>adapt setup or modify the movement</strong> (e.g., <strong>sumo deadlift</strong> for very long thighs).</li>
+<li><strong>Virtuosity = &ldquo;performing the common uncommonly well.&rdquo;</strong> Flawless-but-ordinary = only a &ldquo;9.7.&rdquo; <strong>Novice&rsquo;s curse</strong> = skipping basics for risk/originality. Skipping a <strong>progression</strong> = &ldquo;colossal mistake / sucker&rsquo;s move.&rdquo; Model session: warm-up → skill/PR → critique → tight couplet/triplet → play (<strong>&ldquo;seasoning, not the main course&rdquo;</strong>). <em>&ldquo;Good enough never is.&rdquo;</em></li>
+</ul>
+    <p class="ch-oneliner" style="margin-top:4px">Full depth: Level Three Manual, Ch. 1, 7.</p>
+  </div>
+</details>
+
+<details class="chapter" id="d6" data-title="whole-person coaching &amp; the scope line — nutrition, sleep &amp; the mental game" style="--accent:#1a8aa0">
+  <summary class="ch-summary">
+    <span class="ch-chevron" aria-hidden="true">&#8250;</span>
+    <div class="ch-sum-text">
+      <div class="ch-meta">
+        <span class="ch-badge">Delta 6 of 6</span>
+      </div>
+      <h2 class="ch-title">Nutrition, Sleep &amp; the Mental Game</h2>
+      <p class="ch-oneliner">You already talk to athletes about eating, sleeping, and staying in the fight. The L3 formalizes it — goal-setting and behavior change, CBT and mental toughness, sleep as a performance variable, and nutrition&#x27;s role in disease — and, critically, draws the exact line between coaching these and practicing medicine or therapy.</p>
+    </div>
+  </summary>
+  <div class="ch-body">
+    <p class="framing">You already talk to athletes about eating, sleeping, and staying in the fight. The L3 formalizes it — goal-setting and behavior change, CBT and mental toughness, sleep as a performance variable, and nutrition&#x27;s role in disease — and, critically, draws the exact line between coaching these and practicing medicine or therapy.</p>
+    <p>You already coach food, sleep, and grit — you tell athletes to eat cleaner, sleep more, and push through the ugly part of a metcon. What the L3 adds is not new topics; it&rsquo;s two upgrades on the topics you already own. First, the <strong>formal framework</strong> behind each one: the named hormones, the actual grams and thresholds, the goal-setting recipe, the CBT vocabulary, the fueling math. Second — and this is the spine of the whole bucket — the <strong>scope line</strong>: the exact point where general lifestyle guidance becomes diagnosing, treating, prescribing, or doing therapy, and you must refer out. Every item below gives you the coaching move AND the bright line where a coach stops and a physician, dietitian, or mental-health professional takes over.</p>
+<h2>Sleep as Performance</h2>
+<h3>Sleep is a training input, and it runs on three hormones</h3>
+<blockquote>
+<p><strong>You already know:</strong> athletes recover and perform better when they sleep more.
+<strong>New at L3:</strong> sleep drives recovery through three named hormones, and you must know the direction of each. <strong>Growth hormone</strong> (repairs bone and muscle, burns fat) — <strong>50–60%</strong> of the daily release happens at night, mostly the first half. <strong>Leptin</strong> (the fat-cell &ldquo;I&rsquo;m satisfied&rdquo; hormone) — released during sleep, suppresses appetite and helps regulate insulin; poor sleep drops it and spikes cravings, the biggest threat to a diet. <strong>Cortisol</strong> (stress hormone) — the ONE you want LOW; chronically high cortisol breaks down muscle, promotes weight gain, and blocks good energy use. Sleep is the reset button that lowers it. Want adequate growth hormone and leptin; want low cortisol.
+<strong>→ Full Level Three Manual, Chapter 9.</strong></p>
+</blockquote>
+<h3>The performance data and the levers you can actually coach</h3>
+<blockquote>
+<p><strong>You already know:</strong> elite athletes prioritize sleep.
+<strong>New at L3:</strong> the specific evidence and the highest-leverage habit. Extending college basketball players to ~<strong>10 hours</strong> of sleep produced faster sprint times, higher shooting percentage, and less fatigue — real performance data, not &ldquo;sleep is good for you.&rdquo; Total sleep is what mattered, and <strong>naps counted</strong> toward the target. If an athlete can&rsquo;t hit the hours, the single best lever is a <strong>consistent routine</strong> — same bed and wake time daily. Note <strong>retrospective bias</strong>: we misremember how bad short sleep felt, so we keep shortchanging it. Chronically high cortisol from a stressful job flirts with the overtraining line — sleep is how they stay on the right side of it.
+<strong>→ Full Level Three Manual, Chapter 9.</strong></p>
+</blockquote>
+<p><strong>Scope line — sleep:</strong> You give general sleep-routine guidance (set a schedule, prioritize hours, nap to close gaps). A genuine, ongoing <strong>sleep disorder</strong> — insomnia, sleep apnea — is a medical referral; you do not diagnose or treat it. Persistent non-recovery despite good sleep signals overtraining or an underlying medical issue worth a referral, not just &ldquo;sleep more.&rdquo; And the science itself is admittedly a &ldquo;big mystery,&rdquo; so coach it as lifestyle guidance, not as a clinician.</p>
+<h2>The Mental Game — Goals, CBT &amp; Toughness</h2>
+<h3>Goal-setting has a three-part recipe</h3>
+<blockquote>
+<p><strong>You already know:</strong> athletes do better with goals.
+<strong>New at L3:</strong> a good goal has exactly three ingredients — <strong>specific</strong> (50 unbroken pull-ups, so you can plan it and know when it&rsquo;s hit), <strong>positive tense</strong> (state what you WANT, not what you fear — &ldquo;I want to string 20 double-unders,&rdquo; never &ldquo;I don&rsquo;t want to fail,&rdquo; because the subconscious drops the &ldquo;don&rsquo;t&rdquo; and hears the fear), and a <strong>realistic-yet-challenging deadline</strong> (too far kills urgency, too soon breeds discouragement). Before setting the timeframe, get the athlete&rsquo;s <strong>current baseline</strong> — a plan for 50 pull-ups is meaningless until you know they have 5 or 45 today. Break big goals into <strong>milestones</strong> (10, 20, then 50); each is a real win that rebuilds confidence. The coach&rsquo;s job word is <strong>ACHIEVE</strong>, not just motivate. Post goals on the whiteboard for public accountability — and it drives retention.
+<strong>→ Full Level Three Manual, Chapter 10.</strong></p>
+</blockquote>
+<h3>The positive-tense rule also governs your cues</h3>
+<blockquote>
+<p><strong>You already know:</strong> how to cue a fault.
+<strong>New at L3:</strong> the same positive-tense rule from goal-setting applies to correcting movement and to mid-workout encouragement. Cue the fix you want, not the fault: <strong>&ldquo;maintain your lumbar curve&rdquo;</strong> beats &ldquo;stop rounding your back&rdquo;; &ldquo;drive two inches deeper&rdquo; beats &ldquo;you missed the bottom&rdquo;; <strong>&ldquo;big set, get one more&rdquo;</strong> beats &ldquo;don&rsquo;t put the bar down&rdquo; (the mind fixates on the action word and skips the &ldquo;don&rsquo;t&rdquo;). Framing programs belief: &ldquo;with your work ethic you&rsquo;ll get better at gymnastics&rdquo; builds a self-fulfilling prophecy; &ldquo;you need to work on your gymnastics&rdquo; reinforces &ldquo;I&rsquo;m bad at this.&rdquo; There are three windows when athletes are most receptive: the half hour before &ldquo;3-2-1-Go,&rdquo; <strong>during</strong> the workout (often the most receptive of all), and right after.
+<strong>→ Full Level Three Manual, Chapter 10.</strong></p>
+</blockquote>
+<h3>Mental toughness has a definition — and a hard safety exception</h3>
+<blockquote>
+<p><strong>You already know:</strong> hard workouts are as mental as physical, and you push athletes to keep going.
+<strong>New at L3:</strong> toughness has a formal definition and a bright line. <strong>Mental toughness</strong> = sticking to your plan and values even when negative thoughts and emotions push the other way. The physiology: as effort crosses the <strong>lactate threshold</strong> into the anaerobic zone, byproducts fire pain receptors and the <strong>affective response</strong> turns negative — producing the mid-workout <strong>negotiating</strong> (&ldquo;maybe three rounds is enough&rdquo;). That bargaining is NORMAL, not a sign something&rsquo;s wrong. The vocabulary comes from <strong>third-wave CBT / Acceptance and Commitment Therapy (ACT)</strong>: you don&rsquo;t eliminate hard thoughts, you raise tolerance for them. <strong>Cognitive defusion</strong> = stepping back so you <em>have</em> thoughts instead of <em>being</em> them. <strong>Committed action</strong> = doing the planned thing when you don&rsquo;t feel like it. <strong>Acting from outside and in</strong> = the feeling follows the action, not the reverse — so you start, and the mood catches up. Surviving a hard effort produces <strong>cognitive restructuring</strong>: &ldquo;if I keep going, I&rsquo;ll get through it.&rdquo; <strong>The hard exception:</strong> &ldquo;never quit&rdquo; ends the instant there&rsquo;s a <strong>risk of injury</strong> — form breakdown under load is exactly that risk. Stop or scale; toughness never overrides safety. And <strong>start beginners at the right level</strong> — they need success, not failure; nobody gets tougher by failing or getting hurt.
+<strong>→ Full Level Three Manual, Chapter 10.</strong></p>
+</blockquote>
+<h3>The mental-prep toolkit: belief, preparation, toughness</h3>
+<blockquote>
+<p><strong>You already know:</strong> confidence matters and doubt sabotages lifts.
+<strong>New at L3:</strong> three named pillars of <strong>psychological readiness</strong>, each coachable. <strong>Positive beliefs</strong> (Bannister &ldquo;realized&rdquo; the sub-4 mile was possible, then did it — belief changes what athletes attempt). <strong>Mental preparation</strong> (a deliberate pre-effort routine pairing a physical action — grip the bar, set the feet, a breath — with a focused image of the perfect rep; tuned for max-lift focus vs. metcon nerve-calming). <strong>Mental toughness</strong> (<strong>T-CUP — thinking correctly under pressure</strong>; concentration is the muscle that fails first). Reframe negative self-talk with the <strong>six-step CBT process</strong> (trigger → write the self-talk → spot the distortion → say it aloud → reframe positive → rehearse). Listen for <strong>cognitive distortions</strong>: all-or-nothing, overgeneralizing, selective focus, jumping to conclusions, selective memory. Two in-workout toughness tactics: <strong>dissociation</strong> (pull attention off pain — chunk the counting, use a cue, &ldquo;listen to your coach&rdquo;) and <strong>association</strong> (tune INTO the body&rsquo;s signals to manage effort).
+<strong>→ Full Level Three Manual, Chapter 10.</strong></p>
+</blockquote>
+<h3>The deeper side: rapport, awareness, and leadership</h3>
+<blockquote>
+<p><strong>You already know:</strong> you connect with your members.
+<strong>New at L3:</strong> the formal distinction between good and great, and the leadership vocabulary. A <strong>good</strong> coach fixes movement; a <strong>great</strong> coach connects with the human, builds trust, and creates an atmosphere of success. <strong>Flip the golden rule</strong> — coach each athlete the way THEY need, not the way you like to be coached (the &ldquo;presence and attitude&rdquo; of <strong>awareness</strong>: read mood, motivation, learning style, capacity, and adapt). Great coaches build <strong>rapport</strong> by <strong>listening</strong>, not by proving how much they know — people trust you when they feel you&rsquo;ve influenced them. <strong>Lead by example</strong> includes being <strong>loyal to those not present</strong> (gossip teaches listeners you&rsquo;ll do the same to them). And <strong>the pursuit of excellence</strong> is concrete, not a slogan: the <strong>golf-balls / pebbles / sand</strong> parable — golf balls are relationships, community, member health, and integrity; pebbles are programming, coach education, clean facility; sand is marketing, pricing, software. Fill the jar with sand first and the golf balls won&rsquo;t fit. The daily posture is <strong>&ldquo;Them not me.&rdquo;</strong> The single filter for any task: does it improve the member&rsquo;s experience? (Fixing that broken rower is a golf ball; a broken-form problem member is addressed, not avoided.)
+<strong>→ Full Level Three Manual, Chapter 10.</strong></p>
+</blockquote>
+<p><strong>Scope line — the mental game:</strong> Building mental skills — belief, focus, toughness, goal-setting, CBT-style reframing — is squarely in your lane. <strong>Diagnosing or treating a clinical condition</strong> — clinical anxiety, depression, eating disorders, trauma — is NOT; refer to a qualified mental-health professional. CBT-style reframing here is a <em>performance tool</em>, not therapy. Never force a visibly fearful or panicking athlete through a movement for the sake of toughness — reframe and progress first.</p>
+<h2>Nutrition, Disease &amp; Behavior Change</h2>
+<h3>The scope line is the whole point — cancer and the ketogenic theory</h3>
+<blockquote>
+<p><strong>You already know:</strong> less sugar is better and CrossFit pushes carb control.
+<strong>New at L3:</strong> the <em>rationale</em> you can teach, and the hard wall where you stop. The teachable general-education chain: chronic excess sugar and refined carbs → spikes insulin → drives <strong>systemic inflammation</strong> → raises disease risk. The medical-theory terms (know the word, don&rsquo;t coach the treatment): <strong>mitochondria</strong> (the cell&rsquo;s ATP powerhouse), <strong>reactive oxygen species</strong> (damaging &ldquo;chemical bombs&rdquo;), the <strong>Warburg Effect</strong> (tumor cells ferment huge amounts of glucose to grow), and the metabolic-vs-genetic cancer debate — a <strong>contested</strong> theory, not settled fact. The <strong>ketogenic diet</strong> shifts fuel to fat/ketones at roughly <strong>≤50 g carbs/day</strong>; you may describe what keto IS in general terms. <strong>The bright line:</strong> a member with a diagnosis asking you to design a diet to TREAT it is OUT of scope — refer to their physician and a <strong>registered dietitian</strong>. Never advise delaying, replacing, or stopping medical treatment; even the researchers position keto only as an <strong>adjuvant</strong> (add-on to chemo/radiation), never a cure.
+<strong>→ Full Level Three Manual, Chapter 11.</strong></p>
+</blockquote>
+<h3>Sports drinks, added-sugar numbers, and the diabetes referral</h3>
+<blockquote>
+<p><strong>You already know:</strong> sports drinks are mostly sugar and water usually wins.
+<strong>New at L3:</strong> the exact numbers and the referral trap. A 20-oz Gatorade = <strong>34 g sugar</strong>; a 24-oz Powerade = <strong>40 g</strong> (~10 teaspoons). AHA added-sugar limits: <strong>~26 g/day for women, ~38 g/day for men</strong> — one bottle can blow the whole day. &ldquo;Lite&rdquo; G2 swaps sugar for <strong>sucralose</strong>, so &ldquo;lower sugar&rdquo; ≠ good choice — read the label. Electrolyte replacement only genuinely matters past <strong>~2 hours of continuous effort</strong> (a normal WOD isn&rsquo;t close); coconut water beats a sports drink if the concern is real. <strong>The scope trap:</strong> frequent thirst + constant urination + muscle weakness + unexplained weight loss = classic warning signs (here, undiagnosed Type 1 diabetes — at diagnosis blood glucose was <strong>900 mg/dL</strong> vs. a normal <strong>80–120</strong>; coma nears 600). You <strong>refer to a doctor, you never diagnose.</strong> And don&rsquo;t assume a lean athlete is safe — this member wasn&rsquo;t overweight.
+<strong>→ Full Level Three Manual, Chapter 11.</strong></p>
+</blockquote>
+<h3>Carb selection — right carb for the right job</h3>
+<blockquote>
+<p><strong>You already know:</strong> whole foods beat processed, and a doughnut isn&rsquo;t an orange.
+<strong>New at L3:</strong> the four-factor selection framework and the glucose/fructose split. Choose a carb by: <strong>total carbohydrate</strong> (governs body composition — even clean carbs in excess stall goals), <strong>non-caloric constituents</strong> (equal grams ≠ equal food — the orange carries fiber, <strong>13 vitamins / 14 minerals</strong>, and phytonutrients the doughnut lacks; <strong>Ames triage theory</strong> says a short-supplied nutrient gets spent on today and shortchanges the long game), <strong>fiber</strong> (slows digestion, blunts the insulin spike, boosts <strong>satiety</strong> — great for fat loss, bad when you want fast carbs), and <strong>glucose vs. fructose</strong> (<strong>glucose</strong> spikes insulin and refills <strong>muscle glycogen</strong> for high-intensity work; <strong>fructose</strong> goes to the liver or to fat and does neither — so post-workout refueling wants glucose). Fruit and added sugar = fructose; basically everything else = glucose. Post-workout timing is LOW priority for the once-a-day recreational athlete and rises with volume. Drop &ldquo;good/bad&rdquo; labels — it&rsquo;s the right tool for the job.
+<strong>→ Full Level Three Manual, Chapter 11.</strong></p>
+</blockquote>
+<h3>How much to eat — a process, not a calculator</h3>
+<blockquote>
+<p><strong>You already know:</strong> intake has to match the goal.
+<strong>New at L3:</strong> the trackable method with real numbers. <strong>Track honestly ≥3 days</strong> (up to a week if days swing &gt;<strong>500 cal</strong>) to find a <strong>maintenance baseline</strong> — real tracked intake beats any calculator because it bakes in genetics and actual activity. Start from a <strong>40/30/30</strong> (carb/protein/fat, the Zone split); avoid extreme splits (10/20/70 leaves athletes sluggish and takes longer to tune). &ldquo;Consistent&rdquo; = staying within <strong>~50 cal</strong> of target. Total daily energy = <strong>BMR + thermogenesis + thermic effect of feeding (~10%)</strong>. Adjust one lever at a time: sluggish → raise carbs; want muscle → raise protein; leaning out with fat &gt;30% → lower fat. Gain/lose by <strong>10–20%</strong> only — bigger cuts drive under-eating and binge behavior. Calculators DO help to confirm <strong>under-eating</strong> (eating 1,500 while calcs say 2,300–2,800). Watch the trade-off: eating below needs favors looks over performance.
+<strong>→ Full Level Three Manual, Chapter 11.</strong></p>
+</blockquote>
+<h3>Meal timing and intermittent fasting — a preference dial with hard stops</h3>
+<blockquote>
+<p><strong>You already know:</strong> athletes ask about fasting and meal timing.
+<strong>New at L3:</strong> timing is a dial layered on top of food quality and quantity — and the screening bright lines. <strong>IF</strong> = deliberately extending the gap between meals (12/16/24 h); everyone already does 12/12 overnight. The single most exam-relevant idea: <strong>once food quality and quantity are handled, meal frequency is personal preference.</strong> Grazing does NOT speed metabolism (myth). Most IF research is <strong>animal-model</strong>; human evidence is years off — frame it as an experiment, never proven medicine. IF stacks on any diet (Paleo, Zone, vegan). Screen candidates: good fit = experienced, tracks food, low life stress, schedule slack; poor fit = new to diet/exercise, high daily training volume, client-facing job, major life stress (&ldquo;stress is stress&rdquo;). <strong>Hard stops:</strong> <strong>pregnant women</strong> and <strong>anyone with a history of disordered eating</strong> — do NOT recommend extreme fasting; this is a refer-out, not a coaching call.
+<strong>→ Full Level Three Manual, Chapter 11.</strong></p>
+</blockquote>
+<h3>Race-day fueling — the numbers and the two deadly sodium states</h3>
+<blockquote>
+<p><strong>You already know:</strong> long events need fuel and most WODs don&rsquo;t.
+<strong>New at L3:</strong> the fueling math and two named emergencies. Fueling is three separate jobs — <strong>food, water, salt.</strong> A trained athlete&rsquo;s <strong>glycogen tank ≈ 2,000 cal ≈ 1.5–2 hours</strong> of hard work — so events <strong>under ~90 min (nearly every WOD) need NO mid-workout fuel</strong>; past 2 hours you must refuel. You burn faster (~400–750 cal/hr) than you can absorb (~300–550 cal/hr) — start a long event ~<strong>300 cal + ~20 oz water/hour</strong> and adjust; never binge-fuel to &ldquo;catch up.&rdquo; Multi-WOD weekends: top off glycogen at <strong>breakfast and lunch</strong> (~2 extra blocks) because complex carbs take <strong>~18 hours</strong> to process (the night-before dinner is too late). Post-workout recovery: <strong>3:1 or 4:1 carb-to-protein</strong> (chocolate milk is the cheap example). Daily water = <strong>bodyweight ÷ 2 in oz</strong>, + ~16 oz per training hour. <strong>Sweat rate:</strong> weigh before/after — 1 lb lost ≈ 16 oz fluid. <strong>The two emergencies:</strong> <strong>hyponatremia</strong> (dangerously LOW sodium from over-drinking plain water — weakness, cramping, nausea, vomiting; has killed marathoners) and <strong>hypernatremia</strong> (dangerously HIGH sodium, usually from dehydration). Both can be fatal.
+<strong>→ Full Level Three Manual, Chapter 11.</strong></p>
+</blockquote>
+<h3>Milk — the myth to debunk and the allergy-vs-intolerance line</h3>
+<blockquote>
+<p><strong>You already know:</strong> dairy questions come up and chocolate milk is a decent recovery drink.
+<strong>New at L3:</strong> the evidence to correct the myth and a life-or-death distinction. Milk is a legitimate, <strong>macro-balanced</strong> recovery drink (protein + carb from lactose + fat) — the &ldquo;adults shouldn&rsquo;t drink milk&rdquo; claim is a myth. Recommend <strong>modest amounts</strong> (as little as an 8-oz serving up to ADA levels), NOT the gallon-a-day &ldquo;anabolic&rdquo; quantities. <strong>The safety core:</strong> <strong>lactose intolerance</strong> (common, benign — reduced <strong>lactase</strong> enzyme, causes gas/bloating/diarrhea, uncomfortable but not dangerous) is a <em>different thing</em> from a <strong>milk allergy</strong> (rare — ~<strong>0.4%</strong> of first-graders — an immune reaction that can cause <strong>anaphylaxis</strong>: dropping blood pressure, trouble breathing, potentially lethal). Quick screen: if they eat cheese and yogurt fine, it&rsquo;s not an allergy. No one loses ALL lactase (~90% max drop) — a <strong>12-oz serving usually causes no symptoms</strong>, and it often takes <strong>over a liter</strong> to provoke true intolerance, so &ldquo;I can&rsquo;t have any dairy&rdquo; rarely matches the real threshold; keep as much dairy as tolerated. <strong>The bright line:</strong> hives, swelling, or breathing trouble after dairy = suspected allergy = <strong>refer to a physician</strong>, never a coaching adjustment.
+<strong>→ Full Level Three Manual, Chapter 11.</strong></p>
+</blockquote>
+<h2>Cram Sheet</h2>
+<p><strong>Sleep (Ch 9)</strong>
+- Three hormones: <strong>growth hormone</strong> (50–60% released at night, repair) + <strong>leptin</strong> (appetite/insulin, drops with poor sleep → cravings) = want adequate; <strong>cortisol</strong> (stress, muscle breakdown) = want LOW.
+- Stanford basketball: ~<strong>10 h</strong> sleep → faster sprints, better shooting; <strong>naps count</strong>; <strong>consistent bed/wake time</strong> is the #1 lever.
+- <strong>Retrospective bias</strong> = we forget how bad short sleep felt.
+- Scope: refer persistent <strong>insomnia / sleep apnea</strong>; don&rsquo;t diagnose.</p>
+<p><strong>Mental game (Ch 10)</strong>
+- Goal = <strong>specific + positive tense + realistic-yet-challenging deadline</strong>; get the <strong>baseline</strong> first; use <strong>milestones</strong>; key word <strong>ACHIEVE</strong>.
+- Positive-tense cues: &ldquo;<strong>maintain your lumbar curve</strong>,&rdquo; &ldquo;<strong>big set, get one more</strong>&rdquo; (mind skips the &ldquo;don&rsquo;t&rdquo;).
+- Receptive windows: 30 min before, <strong>during</strong> (most receptive), right after.
+- <strong>Mental toughness</strong> = stick to plan despite negative thoughts; mid-workout <strong>negotiating</strong> is normal (lactate threshold → negative <strong>affective response</strong>).
+- <strong>ACT</strong> vocabulary: <strong>cognitive defusion</strong>, <strong>committed action</strong>, <strong>acting from outside in</strong>, <strong>cognitive restructuring</strong>.
+- <strong>&ldquo;Never quit&rdquo; ends at risk of injury</strong> (form breakdown under load = stop/scale). Start beginners for <strong>success, not failure</strong>.
+- Readiness pillars: <strong>positive beliefs</strong> (Bannister), <strong>mental preparation</strong> (pre-lift routine), <strong>T-CUP</strong>. Six-step CBT reframe; watch <strong>cognitive distortions</strong>. <strong>Dissociation</strong> vs. <strong>association</strong>.
+- Great &gt; good = connect, not just fix. <strong>Flip the golden rule</strong>; build trust by <strong>listening</strong>; <strong>loyal to those not present</strong>.
+- Excellence parable: <strong>golf balls</strong> (relationships/integrity) → <strong>pebbles</strong> (programming/facility) → <strong>sand</strong> (marketing/pricing); <strong>&ldquo;Them not me.&rdquo;</strong>
+- Scope: build mental skills, YES; diagnose/treat <strong>clinical anxiety, depression, eating disorders, trauma</strong>, NO — refer.</p>
+<p><strong>Nutrition (Ch 11)</strong>
+- Sugar → insulin → <strong>systemic inflammation</strong> is teachable; disease <strong>treatment</strong> is not. Keto = <strong>≤50 g carbs/day</strong>; only an <strong>adjuvant</strong>, never a cure. Refer to physician + <strong>registered dietitian</strong>.
+- Sports drinks: <strong>34 g</strong> (20-oz Gatorade), <strong>40 g</strong> (24-oz Powerade). AHA limit <strong>26 g</strong> women / <strong>38 g</strong> men. Electrolytes matter only past <strong>~2 h</strong> continuous.
+- <strong>Diabetes referral cluster:</strong> thirst + urination + weakness + unexplained weight loss → <strong>see a doctor</strong> (glucose 900 vs. normal <strong>80–120</strong>). Never diagnose.
+- Carb 4-factor: <strong>total carbs</strong> (body comp) / <strong>non-caloric constituents</strong> (equal grams ≠ equal; <strong>13 vitamins, 14 minerals</strong>; <strong>Ames triage</strong>) / <strong>fiber</strong> (satiety, slows carbs) / <strong>glucose</strong> (refills muscle glycogen) vs. <strong>fructose</strong> (liver/fat).
+- How much: track <strong>≥3 days</strong> (&gt;500-cal swing → a week), baseline, <strong>40/30/30</strong>, consistent = <strong>±50 cal</strong>, adjust <strong>10–20%</strong> at a time, one lever at a time.
+- <strong>IF:</strong> timing is preference once food quality/quantity set; grazing doesn&rsquo;t speed metabolism; mostly <strong>animal data</strong>. Hard stops: <strong>pregnancy</strong> and <strong>disordered-eating history</strong> → refer.
+- Fueling: glycogen ≈ <strong>2,000 cal ≈ 1.5–2 h</strong>; <strong>under 90 min = no mid-WOD fuel</strong>; burn 400–750 vs. absorb 300–550 cal/hr; long event ~<strong>300 cal + 20 oz/hr</strong>; multi-day → carbs at <strong>breakfast/lunch</strong> (complex carbs take <strong>~18 h</strong>); recovery <strong>3:1–4:1</strong> carb:protein; water = <strong>BW ÷ 2 oz</strong> + 16 oz/training hr.
+- <strong>Hyponatremia</strong> (LOW sodium, over-drinking water) &amp; <strong>hypernatremia</strong> (HIGH sodium, dehydration) — both fatal emergencies, refer.
+- <strong>Milk:</strong> balanced recovery drink; modest amounts, NOT a gallon. <strong>Lactose intolerance</strong> (benign, gas/bloating; 12-oz usually fine, &gt;1 L to provoke) ≠ <strong>milk allergy</strong> (~0.4%, <strong>anaphylaxis</strong> risk → refer). Cheese/yogurt tolerance rules out allergy.</p>
+    <p class="ch-oneliner" style="margin-top:4px">Full depth: Level Three Manual, Ch. 9, 10, 11.</p>
+  </div>
+</details>
+
+
+    <p class="footnote">The Level Three Delta &mdash; the &ldquo;what&rsquo;s new vs. L1/L2&rdquo; companion to the
+       Level Three Manual. 6 deltas. Static &mdash; no AI, no login.</p>
+  </main>
+</div>
+<a href="#top" class="fab-top" aria-label="Back to top">&uarr;</a>
+<script>
+(function(){
+  document.querySelectorAll('.jump-menu a').forEach(function(el){
+    el.addEventListener('click', function(){ var d=document.querySelector('.jump[open]'); if(d) d.removeAttribute('open'); });
+  });
+
+  // --- sidebar: collapse on small screens (open on desktop) ---
+  var sidenav = document.querySelector('.sidenav');
+  var isNarrow = function(){ return window.matchMedia('(max-width:900px)').matches; };
+  if(sidenav && isNarrow()) sidenav.open = false;
+  document.querySelectorAll('.contents-link, a[href="#contents"]').forEach(function(a){
+    a.addEventListener('click', function(){ if(sidenav && isNarrow()) sidenav.open = true; });
+  });
+  // close the mobile sidebar after picking a title
+  document.querySelectorAll('.toc-a').forEach(function(a){
+    a.addEventListener('click', function(){ if(sidenav && isNarrow()) sidenav.open = false; });
+  });
+
+  // --- open a collapsed chapter when you navigate to it ---
+  function openTarget(hash){
+    if(!hash || hash.length<2) return;
+    var el; try { el = document.querySelector(hash); } catch(e){ return; }
+    if(!el) return;
+    var det = el.closest ? el.closest('details.chapter') : null;
+    if(!det && el.tagName==='DETAILS' && el.classList.contains('chapter')) det = el;
+    if(det) det.open = true;
+  }
+  document.querySelectorAll('.toc-a, .jump-menu a, .contents-link').forEach(function(a){
+    a.addEventListener('click', function(){
+      var href = a.getAttribute('href')||'';
+      if(href.charAt(0)==='#') setTimeout(function(){ openTarget(href); }, 0);
+    });
+  });
+  window.addEventListener('hashchange', function(){ openTarget(location.hash); });
+  if(location.hash) setTimeout(function(){ openTarget(location.hash);
+    var e; try { e=document.querySelector(location.hash); } catch(x){} if(e) e.scrollIntoView(); }, 40);
+
+  // --- expand / collapse all (visible) chapters ---
+  document.querySelectorAll('.ctl').forEach(function(b){
+    b.addEventListener('click', function(){
+      var open = b.getAttribute('data-act')==='expand';
+      document.querySelectorAll('details.chapter').forEach(function(d){
+        if(d.style.display!=='none') d.open = open;
+      });
+    });
+  });
+
+  // --- filter chapters by title ---
+  var f = document.getElementById('ch-filter');
+  if(f){
+    f.addEventListener('input', function(){
+      var q = f.value.trim().toLowerCase();
+      document.querySelectorAll('details.chapter').forEach(function(d){
+        var t = d.getAttribute('data-title')||'';
+        d.style.display = (!q || t.indexOf(q)>=0) ? '' : 'none';
+      });
+      document.querySelectorAll('.toc-a').forEach(function(a){
+        var t = (a.textContent||'').toLowerCase();
+        a.style.display = (!q || t.indexOf(q)>=0) ? '' : 'none';
+      });
+      document.querySelectorAll('section.domain').forEach(function(s){
+        var vis = [].slice.call(s.querySelectorAll('details.chapter')).some(function(d){ return d.style.display!=='none'; });
+        s.style.display = vis ? '' : 'none';
+      });
+    });
+  }
+
+  function updateProgress(block){
+    var total = block.querySelectorAll('.hunt-check').length;
+    var done = block.querySelectorAll('.hunt-check:checked').length;
+    var p = block.querySelector('.hunt-progress');
+    if(p){ p.textContent = done + '/' + total + ' found'; p.classList.toggle('done', done===total && total>0); }
+  }
+  document.querySelectorAll('.hunt-check').forEach(function(cb){
+    var k = 'ccft:' + cb.getAttribute('data-k');
+    try { if(localStorage.getItem(k)==='1') cb.checked = true; } catch(e){}
+    cb.addEventListener('change', function(){
+      try { localStorage.setItem(k, cb.checked ? '1' : '0'); } catch(e){}
+      var blk = cb.closest('.hunt'); if(blk) updateProgress(blk);
+    });
+  });
+  document.querySelectorAll('.hunt').forEach(updateProgress);
+})();
+</script>
+</body>
+</html>
